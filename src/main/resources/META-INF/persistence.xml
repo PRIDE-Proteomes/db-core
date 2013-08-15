@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+             version="1.0">
+
+    <persistence-unit name="pride-proteomes-db-core" transaction-type="RESOURCE_LOCAL">
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.modification.Modification</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParam</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamSample</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideModification</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinModification</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.ReferencedPeptide</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.QMethod</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Score</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Star</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+    </persistence-unit>
+
+</persistence>
