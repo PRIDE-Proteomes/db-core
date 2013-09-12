@@ -3,7 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/task"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd
+       http://www.springframework.org/schema/jdbc
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/data/jpa
+       http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd">
 
     <import resource="classpath:/META-INF/spring/app-context.xml"/>
 
@@ -12,9 +19,9 @@
     <jpa:repositories base-package="uk.ac.ebi.pride.proteomes.db.core.api"/>
 
     <jdbc:embedded-database id="proteomesDataSource">
-        <jdbc:script location="classpath:db/hsqldb-config.sql"/>
+        <jdbc:script location="db/hsqldb-config.sql"/>
         <jdbc:script location="db/schema.sql"/>
-        <jdbc:script location="classpath:db/test-data.sql"/>
+        <jdbc:script location="db/test-data.sql"/>
     </jdbc:embedded-database>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

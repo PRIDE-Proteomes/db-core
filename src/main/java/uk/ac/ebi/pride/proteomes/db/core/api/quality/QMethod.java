@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Time: 10:06
  * To change this template use File | Settings | File Templates.
  */
-@Table(name = "Q_METHOD", schema = "PRIDEPROT", catalog = "")
+@Table(name = "Q_METHOD", schema = "PRIDEPROT")
 @Entity
 public class QMethod {
 

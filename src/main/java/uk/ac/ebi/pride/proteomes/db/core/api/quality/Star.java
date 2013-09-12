@@ -1,9 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +9,7 @@ import javax.persistence.Id;
  * Time: 10:07
  * To change this template use File | Settings | File Templates.
  */
+@Table(name = "STAR", schema = "PRIDEPROT")
 @Entity
 public class Star {
 
@@ -20,10 +18,11 @@ public class Star {
     private Integer id;
 
     @Basic
-    @Column(name = "COUNT", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "STAR_COUNT", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer count;
 
     @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", nullable = true, insertable = true, updatable = true, length = 90, precision = 0)
     private StarType type;
 //    private Collection<Score> scoresByStarPk;

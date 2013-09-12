@@ -8,10 +8,10 @@ package uk.ac.ebi.pride.proteomes.db.core.api.quality;
  * To change this template use File | Settings | File Templates.
  */
 public enum StarType {
-    NONE("none"),
-    BRONZE("bronze"),
-    SILVER("silver"),
-    GOLD("gold");
+    NONE("NONE"),
+    BRONZE("BRONZE"),
+    SILVER("SILVER"),
+    GOLD("GOLD");
 
     private final String value;
 
