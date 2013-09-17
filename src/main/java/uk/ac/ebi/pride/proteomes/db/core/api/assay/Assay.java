@@ -2,21 +2,20 @@ package uk.ac.ebi.pride.proteomes.db.core.api.assay;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Where;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamCellType;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamSample;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created with IntelliJ IDEA.
  * User: ntoro
  * Date: 14/08/2013
  * Time: 10:06
- * To change this template use File | Settings | File Templates.
  */
 @Table(name = "ASSAY", schema = "PRIDEPROT")
 @Entity
@@ -34,36 +33,39 @@ public class Assay {
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer taxid;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = CvParamCellType.class)
     @JoinTable(
-            name = "ASSAY_CV",
+            name = "ASSAY_CV", schema = "PRIDEPROT",
             joinColumns = {@JoinColumn( name = "ASSAY_FK_PK" )},
             inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<CvParamSample> cvParamSamples;
+    @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
+    private Collection<CvParamCellType> cvParamCellType;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = CvParamDisease.class)
     @JoinTable(
-            name = "ASSAY_CV",
+            name = "ASSAY_CV", schema = "PRIDEPROT",
             joinColumns = {@JoinColumn( name = "ASSAY_FK_PK" )},
             inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<CvParamDisease> cvParamDiseases;
+    @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
+    private Collection<CvParamDisease> cvParamDisease;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = CvParamTissue.class)
     @JoinTable(
-            name = "ASSAY_CV",
+            name = "ASSAY_CV", schema = "PRIDEPROT",
             joinColumns = {@JoinColumn( name = "ASSAY_FK_PK" )},
             inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<CvParamTissue> cvParamTissues;
+    @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
+    private Collection<CvParamTissue> cvParamTissue;
 
     @ManyToMany
     @JoinTable(
-            name = "PEP_ASSAY",
+            name = "PEP_ASSAY", schema = "PRIDEPROT",
             joinColumns = {@JoinColumn( name = "ASSAY_FK_PK")},
             inverseJoinColumns = {@JoinColumn(name = "PEPTIDE_FK_PK")}
     )
@@ -99,28 +101,28 @@ public class Assay {
         this.taxid = taxid;
     }
 
-    public Collection<CvParamSample> getCvParamSamples() {
-        return cvParamSamples;
+    public Collection<CvParamCellType> getCvParamCellType() {
+        return cvParamCellType;
     }
 
-    public void setCvParamSamples(Collection<CvParamSample> cvParamSamples) {
-        this.cvParamSamples = cvParamSamples;
+    public void setCvParamCellType(Collection<CvParamCellType> cvParamSamples) {
+        this.cvParamCellType = cvParamSamples;
     }
 
-    public Collection<CvParamDisease> getCvParamDiseases() {
-        return cvParamDiseases;
+    public Collection<CvParamDisease> getCvParamDisease() {
+        return cvParamDisease;
     }
 
-    public void setCvParamDiseases(Collection<CvParamDisease> cvParamDiseases) {
-        this.cvParamDiseases = cvParamDiseases;
+    public void setCvParamDisease(Collection<CvParamDisease> cvParamDiseases) {
+        this.cvParamDisease = cvParamDiseases;
     }
 
-    public Collection<CvParamTissue> getCvParamTissues() {
-        return cvParamTissues;
+    public Collection<CvParamTissue> getCvParamTissue() {
+        return cvParamTissue;
     }
 
-    public void setCvParamTissues(Collection<CvParamTissue> cvParamTissues) {
-        this.cvParamTissues = cvParamTissues;
+    public void setCvParamTissue(Collection<CvParamTissue> cvParamTissues) {
+        this.cvParamTissue = cvParamTissues;
     }
 
     public Collection<Peptide> getPeptides() {
@@ -147,11 +149,11 @@ public class Assay {
         Assay assay = (Assay) o;
 
         if (!assayAccession.equals(assay.assayAccession)) return false;
-        if (cvParamDiseases != null ? !cvParamDiseases.equals(assay.cvParamDiseases) : assay.cvParamDiseases != null)
+        if (cvParamDisease != null ? !cvParamDisease.equals(assay.cvParamDisease) : assay.cvParamDisease != null)
             return false;
-        if (cvParamSamples != null ? !cvParamSamples.equals(assay.cvParamSamples) : assay.cvParamSamples != null)
+        if (cvParamCellType != null ? !cvParamCellType.equals(assay.cvParamCellType) : assay.cvParamCellType != null)
             return false;
-        if (cvParamTissues != null ? !cvParamTissues.equals(assay.cvParamTissues) : assay.cvParamTissues != null)
+        if (cvParamTissue != null ? !cvParamTissue.equals(assay.cvParamTissue) : assay.cvParamTissue != null)
             return false;
         if (peptides != null ? !peptides.equals(assay.peptides) : assay.peptides != null) return false;
         if (projectAccession != null ? !projectAccession.equals(assay.projectAccession) : assay.projectAccession != null)
@@ -167,9 +169,9 @@ public class Assay {
         int result = assayAccession.hashCode();
         result = 31 * result + (projectAccession != null ? projectAccession.hashCode() : 0);
         result = 31 * result + (taxid != null ? taxid.hashCode() : 0);
-        result = 31 * result + (cvParamSamples != null ? cvParamSamples.hashCode() : 0);
-        result = 31 * result + (cvParamDiseases != null ? cvParamDiseases.hashCode() : 0);
-        result = 31 * result + (cvParamTissues != null ? cvParamTissues.hashCode() : 0);
+        result = 31 * result + (cvParamCellType != null ? cvParamCellType.hashCode() : 0);
+        result = 31 * result + (cvParamDisease != null ? cvParamDisease.hashCode() : 0);
+        result = 31 * result + (cvParamTissue != null ? cvParamTissue.hashCode() : 0);
         result = 31 * result + (peptides != null ? peptides.hashCode() : 0);
         result = 31 * result + (reprocessed != null ? reprocessed.hashCode() : 0);
         return result;
@@ -181,9 +183,9 @@ public class Assay {
                 "assayAccession='" + assayAccession + '\'' +
                 ", projectAccession='" + projectAccession + '\'' +
                 ", taxid=" + taxid +
-                ", cvParamSamples=" + cvParamSamples +
-                ", cvParamDiseases=" + cvParamDiseases +
-                ", cvParamTissues=" + cvParamTissues +
+                ", cvParamSamples=" + cvParamCellType +
+                ", cvParamDiseases=" + cvParamDisease +
+                ", cvParamTissues=" + cvParamTissue +
                 ", peptides=" + peptides +
                 ", reprocessed=" + reprocessed +
                 '}';

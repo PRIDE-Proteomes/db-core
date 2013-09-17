@@ -8,20 +8,22 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.modification.Modification</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParam</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamSample</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamCellType</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideModification</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideSymbolic</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinModification</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.ReferencedPeptide</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.QMethod</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Score</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Star</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
     </persistence-unit>

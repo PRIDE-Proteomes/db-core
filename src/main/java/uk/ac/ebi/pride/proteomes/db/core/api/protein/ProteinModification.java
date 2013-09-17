@@ -11,7 +11,7 @@ import javax.persistence.*;
  * Time: 10:06
  * To change this template use File | Settings | File Templates.
  */
-@Table(name = "PROTEIN_MOD", schema = "PRIDEPROT", catalog = "")
+@Table(name = "PROTEIN_MOD", schema = "PRIDEPROT")
 @Entity
 public class ProteinModification {
 

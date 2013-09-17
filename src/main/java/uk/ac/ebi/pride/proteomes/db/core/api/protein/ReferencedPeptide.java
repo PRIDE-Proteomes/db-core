@@ -3,6 +3,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.protein;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +14,7 @@ import javax.persistence.*;
  */
 @Table(name = "PROT_PEP", schema = "PRIDEPROT")
 @Entity
-public class ReferencedPeptide {
+public class ReferencedPeptide implements Serializable {
 
     @Id
     @Column(name = "PROTEIN_FK_PK", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)

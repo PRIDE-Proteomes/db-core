@@ -10,12 +10,14 @@ import javax.persistence.*;
  * Time: 10:06
  * To change this template use File | Settings | File Templates.
  */
-@Table(name = "Q_METHOD", schema = "PRIDEPROT")
 @Entity
+@Table(name = "Q_METHOD", schema = "PRIDEPROT")
+@SequenceGenerator(name="Q_METHOD_SEQ", schema = "PRIDEPROT", sequenceName="Q_METHOD_QUALITY_METHOD_PK_SEQ")
 public class QMethod {
 
     @Id
     @Column(name = "QUALITY_METHOD_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @GeneratedValue(generator = "Q_METHOD_SEQ", strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @Basic

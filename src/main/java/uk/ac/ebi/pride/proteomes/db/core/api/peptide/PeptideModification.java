@@ -11,6 +11,8 @@ import javax.persistence.*;
  * Time: 10:06
  * To change this template use File | Settings | File Templates.
  */
+
+//TODO needs refactoring because of the compound primary key
 @Entity
 @Table(name = "PEPTIDE_MOD", schema = "PRIDEPROT")
 public class PeptideModification {

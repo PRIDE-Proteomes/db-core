@@ -2,32 +2,32 @@ package uk.ac.ebi.pride.proteomes.db.core.api.peptide;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamCellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamSample;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 /**
- * Created with IntelliJ IDEA.
  * User: ntoro
  * Date: 14/08/2013
  * Time: 10:06
- * To change this template use File | Settings | File Templates.
  */
 @Entity
 @Table(name = "PEPTIDE", schema = "PRIDEPROT")
-@DiscriminatorColumn(name = "CANONICAL", discriminatorType = DiscriminatorType.STRING, length = 1)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "SYMBOLIC", discriminatorType = DiscriminatorType.STRING )
+@SequenceGenerator(name="PEPTIDE_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.PEPTIDE_PEPTIDE_PK_SEQ")
 public class Peptide {
 
     @Id
     @Column(name = "PEPTIDE_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @GeneratedValue(generator = "PEPTIDE_SEQ", strategy = GenerationType.SEQUENCE)
     private Integer peptideId;
 
     @Basic
@@ -40,47 +40,47 @@ public class Peptide {
     private String description;
 
     @Basic
-    @NotNull
-    @Type(type = "true_false")
-    @Column(name = "CANONICAL", nullable = false, insertable = true, updatable = true, length = 1, precision = 0)
-    private Boolean canonical;    //TODO: Need to be a bool
-
-    @Basic
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer taxid;
 
-    @OneToMany(mappedBy = "peptide")
+    @OneToMany(mappedBy = "peptide", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<PeptideModification> peptideModifications;
 
     @ManyToMany(mappedBy = "peptides")
-    @LazyCollection(LazyCollectionOption.FALSE)private Collection<Assay> assays;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Collection<Assay> assays;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = CvParamCellType.class, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "PEP_CV",
-            joinColumns = {@JoinColumn( name = "PEPTIDE_FK_PK" )},
-            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
+            name = "PEP_CV", schema ="PRIDEPROT" ,
+            joinColumns = {@JoinColumn( name = "PEPTIDE_FK_PK")},
+            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK")}
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<CvParamSample> cvParamSamples;
+    @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
+    private Collection<CvParamCellType> cvParamCellType;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = CvParamDisease.class, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "PEP_CV",
-            joinColumns = {@JoinColumn( name = "PEPTIDE_FK_PK" )},
-            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
+            name = "PEP_CV", schema ="PRIDEPROT",
+            joinColumns = {@JoinColumn( name = "PEPTIDE_FK_PK")},
+            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK")}
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<CvParamDisease> cvParamDiseases;
+    @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
+    private Collection<CvParamDisease> cvParamDisease;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = CvParamTissue.class, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "PEP_CV",
-            joinColumns = {@JoinColumn( name = "PEPTIDE_FK_PK" )},
-            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
+
+            name = "PEP_CV", schema ="PRIDEPROT",
+            joinColumns = {@JoinColumn( name = "PEPTIDE_FK_PK")},
+            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK")}
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<CvParamTissue> cvParamTissues;
+    @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
+    private Collection<CvParamTissue> cvParamTissue;
 
 
     @ManyToMany(mappedBy = "peptides")
@@ -116,20 +116,20 @@ public class Peptide {
         this.description = description;
     }
 
-    public Boolean getCanonical() {
-        return canonical;
-    }
-
-    public void setCanonical(Boolean canonical) {
-        this.canonical = canonical;
-    }
-
     public Integer getTaxid() {
         return taxid;
     }
 
     public void setTaxid(Integer taxid) {
         this.taxid = taxid;
+    }
+
+    public Collection<PeptideModification> getPeptideModifications() {
+        return peptideModifications;
+    }
+
+    public void setPeptideModifications(Collection<PeptideModification> peptideModifications) {
+        this.peptideModifications = peptideModifications;
     }
 
     public Collection<Assay> getAssays() {
@@ -140,30 +140,29 @@ public class Peptide {
         this.assays = pepAssaysByPeptidePk;
     }
 
-    public Collection<CvParamSample> getCvParamSamples() {
-        return cvParamSamples;
+    public Collection<CvParamCellType> getCvParamCellType() {
+        return cvParamCellType;
     }
 
-    public void setCvParamSamples(Collection<CvParamSample> cvParamSamples) {
-        this.cvParamSamples = cvParamSamples;
+    public void setCvParamCellType(Collection<CvParamCellType> cvParamCellType) {
+        this.cvParamCellType = cvParamCellType;
     }
 
-    public Collection<CvParamDisease> getCvParamDiseases() {
-        return cvParamDiseases;
+    public Collection<CvParamTissue> getCvParamTissue() {
+        return cvParamTissue;
     }
 
-    public void setCvParamDiseases(Collection<CvParamDisease> cvParamDiseases) {
-        this.cvParamDiseases = cvParamDiseases;
+    public void setCvParamTissue(Collection<CvParamTissue> cvParamTissues) {
+        this.cvParamTissue = cvParamTissues;
     }
 
-    public Collection<CvParamTissue> getCvParamTissues() {
-        return cvParamTissues;
+    public Collection<CvParamDisease> getCvParamDisease() {
+        return cvParamDisease;
     }
 
-    public void setCvParamTissues(Collection<CvParamTissue> cvParamTissues) {
-        this.cvParamTissues = cvParamTissues;
+    public void setCvParamDisease(Collection<CvParamDisease> cvParamDisease) {
+        this.cvParamDisease = cvParamDisease;
     }
-
 
     public Collection<Protein> getProteins() {
         return proteins;
@@ -189,12 +188,12 @@ public class Peptide {
         Peptide peptide = (Peptide) o;
 
         if (assays != null ? !assays.equals(peptide.assays) : peptide.assays != null) return false;
-        if (canonical != null ? !canonical.equals(peptide.canonical) : peptide.canonical != null) return false;
-        if (cvParamDiseases != null ? !cvParamDiseases.equals(peptide.cvParamDiseases) : peptide.cvParamDiseases != null)
+        //TODO change the comparison of the collections
+        if (cvParamDisease != null ? !cvParamDisease.equals(peptide.cvParamDisease) : peptide.cvParamDisease != null)
             return false;
-        if (cvParamSamples != null ? !cvParamSamples.equals(peptide.cvParamSamples) : peptide.cvParamSamples != null)
+        if (cvParamCellType != null ? !cvParamCellType.equals(peptide.cvParamCellType) : peptide.cvParamCellType != null)
             return false;
-        if (cvParamTissues != null ? !cvParamTissues.equals(peptide.cvParamTissues) : peptide.cvParamTissues != null)
+        if (cvParamTissue != null ? !cvParamTissue.equals(peptide.cvParamTissue) : peptide.cvParamTissue != null)
             return false;
         if (description != null ? !description.equals(peptide.description) : peptide.description != null) return false;
         if (!peptideId.equals(peptide.peptideId)) return false;
@@ -213,13 +212,12 @@ public class Peptide {
         int result = peptideId.hashCode();
         result = 31 * result + (sequence != null ? sequence.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (canonical != null ? canonical.hashCode() : 0);
         result = 31 * result + taxid.hashCode();
         result = 31 * result + (peptideModifications != null ? peptideModifications.hashCode() : 0);
         result = 31 * result + (assays != null ? assays.hashCode() : 0);
-        result = 31 * result + (cvParamSamples != null ? cvParamSamples.hashCode() : 0);
-        result = 31 * result + (cvParamDiseases != null ? cvParamDiseases.hashCode() : 0);
-        result = 31 * result + (cvParamTissues != null ? cvParamTissues.hashCode() : 0);
+        result = 31 * result + (cvParamCellType != null ? cvParamCellType.hashCode() : 0);
+        result = 31 * result + (cvParamDisease != null ? cvParamDisease.hashCode() : 0);
+        result = 31 * result + (cvParamTissue != null ? cvParamTissue.hashCode() : 0);
         result = 31 * result + (proteins != null ? proteins.hashCode() : 0);
         result = 31 * result + (score != null ? score.hashCode() : 0);
         return result;
@@ -231,13 +229,12 @@ public class Peptide {
                 "peptideId=" + peptideId +
                 ", sequence=" + sequence +
                 ", description='" + description + '\'' +
-                ", canonical='" + canonical + '\'' +
                 ", taxid=" + taxid +
                 ", peptideModifications=" + peptideModifications +
                 ", assays=" + assays +
-                ", cvParamSamples=" + cvParamSamples +
-                ", cvParamDiseases=" + cvParamDiseases +
-                ", cvParamTissues=" + cvParamTissues +
+                ", cvParamCellType=" + cvParamCellType +
+                ", cvParamDiseases=" + cvParamDisease +
+                ", cvParamTissues=" + cvParamTissue +
                 ", proteins=" + proteins +
                 ", score=" + score +
                 '}';

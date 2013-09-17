@@ -1,5 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.modification;
 
+import org.hibernate.annotations.Type;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideModification;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinModification;
 
@@ -19,8 +20,8 @@ public class Modification {
 
     private String cvTerm;
     private String cvName;
-    private Integer monoDelta;
-    private String biologicalSignificant;
+    private Double monoDelta;
+    private Boolean biologicalSignificant;
     private String description;
 
     private Collection<PeptideModification> peptideModifications;
@@ -48,21 +49,22 @@ public class Modification {
 
     @Column(name = "MONO_DELTA", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
     @Basic
-    public Integer getMonoDelta() {
+    public Double getMonoDelta() {
         return monoDelta;
     }
 
-    public void setMonoDelta(Integer monoDelta) {
+    public void setMonoDelta(Double monoDelta) {
         this.monoDelta = monoDelta;
     }
 
     @Column(name = "BIOLOGICAL_SIGNIFICANT", nullable = true, insertable = true, updatable = true, length = 1, precision = 0)
+    @Type(type="true_false")
     @Basic
-    public String getBiologicalSignificant() {
+    public Boolean getBiologicalSignificant() {
         return biologicalSignificant;
     }
 
-    public void setBiologicalSignificant(String biologicalSignificant) {
+    public void setBiologicalSignificant(Boolean biologicalSignificant) {
         this.biologicalSignificant = biologicalSignificant;
     }
 
@@ -76,14 +78,14 @@ public class Modification {
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "modification")
-    public Collection<PeptideModification> getPeptideModifications() {
-        return peptideModifications;
-    }
-
-    public void setPeptideModifications(Collection<PeptideModification> peptideModsByCvTerm) {
-        this.peptideModifications = peptideModsByCvTerm;
-    }
+//    @OneToMany(mappedBy = "modification")
+//    public Collection<PeptideModification> getPeptideModifications() {
+//        return peptideModifications;
+//    }
+//
+//    public void setPeptideModifications(Collection<PeptideModification> peptideModsByCvTerm) {
+//        this.peptideModifications = peptideModsByCvTerm;
+//    }
 
     @OneToMany(mappedBy = "modification")
     public Collection<ProteinModification> getProteinModifications() {

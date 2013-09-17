@@ -3,28 +3,29 @@ package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 import javax.persistence.*;
 
 /**
- * Created with IntelliJ IDEA.
  * User: ntoro
  * Date: 14/08/2013
  * Time: 10:07
- * To change this template use File | Settings | File Templates.
  */
-@Table(name = "STAR", schema = "PRIDEPROT")
 @Entity
+@Table(name = "STAR", schema = "PRIDEPROT")
+@SequenceGenerator(name="STAR_SEQ", schema = "PRIDEPROT", sequenceName="STAR_STAR_PK_SEQ")
 public class Star {
 
     @Id
     @Column(name = "STAR_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @GeneratedValue(generator = "STAR_SEQ", strategy = GenerationType.SEQUENCE)
     private Integer id;
 
     @Basic
-    @Column(name = "STAR_COUNT", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "STAR_COUNT", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer count;
 
     @Basic
     @Enumerated(EnumType.STRING)
-    @Column(name = "TYPE", nullable = true, insertable = true, updatable = true, length = 90, precision = 0)
+    @Column(name = "STAR_TYPE", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private StarType type;
+
 //    private Collection<Score> scoresByStarPk;
 
 

@@ -15,16 +15,18 @@ import java.util.Collection;
  * Time: 10:06
  * To change this template use File | Settings | File Templates.
  */
-@Table(name = "PROT_GROUP", schema = "PRIDEPROT")
 @Entity
+@Table(name = "PROT_GROUP", schema = "PRIDEPROT")
+@SequenceGenerator(name="PROT_GROUP_SEQ", schema = "PRIDEPROT", sequenceName="PROT_GROUP_PROT_GROUP_PK_SEQ")
 public class ProteinGroup {
 
     private Long id;
     private String description;
     private Collection<Protein> proteins;
 
-    @Column(name = "PROTEIN_GROUP_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     @Id
+    @Column(name = "PROT_GROUP_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @GeneratedValue(generator = "PROT_GROUP_SEQ", strategy = GenerationType.SEQUENCE)
     public Long getId() {
         return id;
     }

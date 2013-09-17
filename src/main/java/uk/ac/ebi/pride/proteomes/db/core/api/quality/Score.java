@@ -3,23 +3,23 @@ package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 import javax.persistence.*;
 
 /**
- * Created with IntelliJ IDEA.
  * User: ntoro
  * Date: 14/08/2013
  * Time: 10:07
- * To change this template use File | Settings | File Templates.
  */
 @Entity
 @Table(name = "SCORE", schema = "PRIDEPROT")
+@SequenceGenerator(name="SCORE_SEQ", schema = "PRIDEPROT", sequenceName="SCORE_SCORE_PK_SEQ")
 public class Score {
 
     @Id
     @Column(name = "SCORE_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @GeneratedValue(generator = "SCORE_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Basic
-    @Column(name = "VALUE", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
-    private Integer value;
+    @Column(name = "VALUE", nullable = false, insertable = true, updatable = true)
+    private Double value;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "QUALITY_METHOD_FK", referencedColumnName = "QUALITY_METHOD_PK", nullable = false)
@@ -40,11 +40,11 @@ public class Score {
         this.id = scorePk;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

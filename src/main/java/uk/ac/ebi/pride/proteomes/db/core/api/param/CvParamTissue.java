@@ -11,6 +11,6 @@ import javax.persistence.Entity;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@DiscriminatorValue( value = "tissue" )
+@DiscriminatorValue( value = "TISSUE" )
 public class CvParamTissue extends CvParam {
 }

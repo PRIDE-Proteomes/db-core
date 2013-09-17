@@ -22,7 +22,8 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ScoreRepositoryTest {
 
-    private static final Integer SCORE_VALUE = 2;
+    private static final Double SCORE_VALUE = 2.0;
+    private static final Integer STAR_COUNT = 2;
     private static final Integer NUM_SCORES_GREATER_THAN = 5;
     private static final Integer NUM_SCORES_LESS_THAN = 3;
     private static final Integer SCORE_WITH_TWO_STARS = 3;
@@ -33,13 +34,14 @@ public class ScoreRepositoryTest {
     private static final Integer NUM_SCORES_GREATER_THAN_TWO_STARS_GOLD = 1;
     private static final Integer NUM_SCORES_LESS_THAN_TWO_STARS_GOLD = 1;
     private static final Integer NUM_SCORES_BETWEEN_TWO_STARS_GOLD = 2;
-    private static final Integer MIN = 1;
-    private static final Integer MAX = 3;
+    private static final Double MIN = 1.0;
+    private static final Double MAX = 3.0;
+
     @Autowired
     private ScoreRepository scoreRepository;
 
     @Test
-    @Transactional
+    @Transactional(readOnly = true)
     public void testFindByMethods() throws Exception {
 
         List<Score> scores = scoreRepository.findByValueGreaterThan(SCORE_VALUE);
@@ -52,12 +54,12 @@ public class ScoreRepositoryTest {
         assertNotNull(scores);
         assertThat(scores.size(), is(NUM_SCORES_LESS_THAN));
 
-        scores = scoreRepository.findByStarCountGreaterThanAndStarType(SCORE_VALUE, StarType.SILVER);
+        scores = scoreRepository.findByStarCountGreaterThanAndStarType(STAR_COUNT, StarType.SILVER);
 
         assertNotNull(scores);
         assertThat(scores.size(), is(SCORES_WITH_SILVER_AND_VALUE_GREATER_THAT));
 
-        scores = scoreRepository.findByStarCountLessThanAndStarType(SCORE_VALUE, StarType.SILVER);
+        scores = scoreRepository.findByStarCountLessThanAndStarType(STAR_COUNT, StarType.SILVER);
 
         assertNotNull(scores);
         assertThat(scores.size(), is(SCORES_WITH_SILVER_AND_VALUE_LESS_THAT));

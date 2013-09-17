@@ -18,6 +18,7 @@ import java.util.Collection;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
+@Table(name = "PROTEIN", schema = "PRIDEPROT")
 public class Protein {
 
     @Id

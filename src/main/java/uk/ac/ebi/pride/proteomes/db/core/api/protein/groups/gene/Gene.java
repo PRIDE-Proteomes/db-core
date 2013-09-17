@@ -15,6 +15,7 @@ import java.util.Collection;
  * Time: 10:06
  * To change this template use File | Settings | File Templates.
  */
+@Table(name = "GENE", schema = "PRIDEPROT")
 @Entity
 public class Gene {
 

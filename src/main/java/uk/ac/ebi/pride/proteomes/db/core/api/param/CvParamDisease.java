@@ -9,6 +9,6 @@ import javax.persistence.Entity;
  * Time: 11:00
  */
 @Entity
-@DiscriminatorValue( value = "disease" )
+@DiscriminatorValue( value = "DISEASE" )
 public class CvParamDisease extends CvParam {
 }
