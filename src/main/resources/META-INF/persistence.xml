@@ -13,7 +13,7 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideModification</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideSymbolic</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup</class>

@@ -6,15 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamCellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideModRepository;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideRepository;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.HashSet;
@@ -50,9 +45,6 @@ public class AssayRepositoryTest {
     private static final String CELL_TYPE_NAME = "hepatocyte";
     private static final String DISEASE_TERM = "";
     private static final String DISEASE_NAME = "";
-    private static final String MOD_TERM = "MOD:00696";
-    private static final Integer MOD_POS = 7;
-    private static final String MOD_NAME = "phosphorylated residue";
 
     @Autowired
     EntityManagerFactory entityManagerFactory;
@@ -63,14 +55,6 @@ public class AssayRepositoryTest {
     @Autowired
     private CvParamRepository cvParamRepository;
 
-    @Autowired
-    private PeptideRepository peptideRepository;
-
-    @Autowired
-    private ModificationRepository modificationRepository;
-
-    @Autowired
-    private PeptideModRepository peptideModRepository;
 
     @Test
     @Transactional(readOnly = true)
@@ -138,54 +122,6 @@ public class AssayRepositoryTest {
         diseases.add(disease);
         assay.setCvParamDisease(diseases);
 
-        //Peptides
-        PeptideVariant peptideVariant = new PeptideVariant();
-        peptideVariant.setTaxid(TAXID);
-//
-//        //PeptideModifications
-//        PeptideModification pepMod = new PeptideModification();
-//
-//        //Modification
-//        Modification modification = modificationRepository.findByCvTerm(MOD_TERM);
-//        if(modification == null){
-//            modification = new Modification();
-//            modification.setCvTerm(MOD_TERM);
-//            modification.setCvName(MOD_NAME);
-//            modification = modificationRepository.save(modification);
-//        }
-//        pepMod.setModification(modification);
-//        pepMod.setPeptide(peptideVariant);
-//        pepMod.setPosition(MOD_POS);
-//
-//        Object mod_id = entityManagerFactory.getPersistenceUnitUtil().getIdentifier(pepMod);
-//        if( mod_id == null){
-//            pepMod = peptideModRepository.save(pepMod);
-//        }
-//        else{
-//            pepMod = peptideModRepository.findOne((Integer) mod_id);
-//        }
-//        Set<PeptideModification> modifications = new HashSet<PeptideModification>();
-//        modifications.add(pepMod);
-//        peptideVariant.setPeptideModifications(modifications);
-
-        //We know that they were persisted for the assay
-        //Can be a way to automatically create this relationship ?
-        peptideVariant.setCvParamTissue(tissues);
-        peptideVariant.setCvParamDisease(diseases);
-        peptideVariant.setCvParamCellType(cellTypes);
-
-        Object id = entityManagerFactory.getPersistenceUnitUtil().getIdentifier(peptideVariant);
-        if(id == null){
-             peptideVariant = (PeptideVariant) peptideRepository.save(peptideVariant);
-        }
-        else {
-             peptideVariant = (PeptideVariant) peptideRepository.findOne((Long) id);
-        }
-
-        Set<Peptide> peptides = new HashSet<Peptide>();
-        peptides.add(peptideVariant);
-        assay.setPeptides(peptides);
-
         assay = assayRepository.save(assay);
 
         //id set after save
@@ -196,7 +132,6 @@ public class AssayRepositoryTest {
 
         // delete the assay
         assayRepository.delete(other);
-
 
 
     }
@@ -210,7 +145,6 @@ public class AssayRepositoryTest {
         checkCvParamCellType(assay);
         checkCvParamDisease(assay);
         checkCvParamTissue(assay);
-        checkPeptides(assay);
     }
 
 
@@ -225,11 +159,5 @@ public class AssayRepositoryTest {
     private void checkCvParamTissue(Assay assay) {
         //To change body of created methods use File | Settings | File Templates.
     }
-
-    private void checkPeptides(Assay assay) {
-        //To change body of created methods use File | Settings | File Templates.
-    }
-
-
 
 }

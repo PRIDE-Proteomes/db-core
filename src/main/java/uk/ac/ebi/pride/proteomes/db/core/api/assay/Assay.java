@@ -6,7 +6,6 @@ import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamCellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed;
 
 import javax.persistence.*;
@@ -63,15 +62,6 @@ public class Assay {
     @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
     private Collection<CvParamTissue> cvParamTissue;
 
-    @ManyToMany
-    @JoinTable(
-            name = "PEP_ASSAY", schema = "PRIDEPROT",
-            joinColumns = {@JoinColumn( name = "ASSAY_FK_PK")},
-            inverseJoinColumns = {@JoinColumn(name = "PEPTIDE_FK_PK")}
-    )
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Peptide> peptides;
-
     @OneToMany(mappedBy = "assay")
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Reprocessed> reprocessed;
@@ -125,13 +115,13 @@ public class Assay {
         this.cvParamTissue = cvParamTissues;
     }
 
-    public Collection<Peptide> getPeptides() {
-        return peptides;
-    }
-
-    public void setPeptides(Collection<Peptide> pepAssaysByAssayAccession) {
-        this.peptides = pepAssaysByAssayAccession;
-    }
+//    public Collection<Peptide> getPeptides() {
+//        return peptides;
+//    }
+//
+//    public void setPeptides(Collection<Peptide> pepAssaysByAssayAccession) {
+//        this.peptides = pepAssaysByAssayAccession;
+//    }
 
     public Collection<Reprocessed> getReprocessed() {
         return reprocessed;
@@ -155,7 +145,7 @@ public class Assay {
             return false;
         if (cvParamTissue != null ? !cvParamTissue.equals(assay.cvParamTissue) : assay.cvParamTissue != null)
             return false;
-        if (peptides != null ? !peptides.equals(assay.peptides) : assay.peptides != null) return false;
+//        if (peptides != null ? !peptides.equals(assay.peptides) : assay.peptides != null) return false;
         if (projectAccession != null ? !projectAccession.equals(assay.projectAccession) : assay.projectAccession != null)
             return false;
         if (reprocessed != null ? !reprocessed.equals(assay.reprocessed) : assay.reprocessed != null) return false;
@@ -172,7 +162,7 @@ public class Assay {
         result = 31 * result + (cvParamCellType != null ? cvParamCellType.hashCode() : 0);
         result = 31 * result + (cvParamDisease != null ? cvParamDisease.hashCode() : 0);
         result = 31 * result + (cvParamTissue != null ? cvParamTissue.hashCode() : 0);
-        result = 31 * result + (peptides != null ? peptides.hashCode() : 0);
+//        result = 31 * result + (peptides != null ? peptides.hashCode() : 0);
         result = 31 * result + (reprocessed != null ? reprocessed.hashCode() : 0);
         return result;
     }
@@ -186,7 +176,7 @@ public class Assay {
                 ", cvParamSamples=" + cvParamCellType +
                 ", cvParamDiseases=" + cvParamDisease +
                 ", cvParamTissues=" + cvParamTissue +
-                ", peptides=" + peptides +
+//                ", peptides=" + peptides +
                 ", reprocessed=" + reprocessed +
                 '}';
     }

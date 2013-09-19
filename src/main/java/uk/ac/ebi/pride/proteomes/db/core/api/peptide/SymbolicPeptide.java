@@ -7,9 +7,9 @@ import javax.persistence.Entity;
  * User: ntoro
  * Date: 13/09/2013
  * Time: 09:53
- */
+*/
 @Entity
 @DiscriminatorValue("TRUE")
-public class PeptideSymbolic extends Peptide{
+public class SymbolicPeptide extends Peptide{
 
 }

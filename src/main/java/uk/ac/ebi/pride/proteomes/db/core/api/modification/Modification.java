@@ -1,11 +1,8 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.modification;
 
 import org.hibernate.annotations.Type;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideModification;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinModification;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,17 +15,29 @@ import java.util.Collection;
 @Table(name = "MOD", schema = "PRIDEPROT")
 public class Modification {
 
+    @Id
+    @Column(name = "CV_TERM", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private String cvTerm;
+
+
+    @Basic
+    @Column(name = "CV_NAME", nullable = false, insertable = true, updatable = true, length = 400, precision = 0)
     private String cvName;
+
+    @Basic
+    @Column(name = "MONO_DELTA", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
     private Double monoDelta;
+
+    @Basic
+    @Column(name = "BIOLOGICAL_SIGNIFICANT", nullable = true, insertable = true, updatable = true, length = 1, precision = 0)
+    @Type(type="true_false")
     private Boolean biologicalSignificant;
+
+    @Basic
+    @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
     private String description;
 
-    private Collection<PeptideModification> peptideModifications;
-    private Collection<ProteinModification> proteinModifications;
 
-    @Column(name = "CV_TERM", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
-    @Id
     public String getCvTerm() {
         return cvTerm;
     }
@@ -37,8 +46,6 @@ public class Modification {
         this.cvTerm = cvTerm;
     }
 
-    @Column(name = "CV_NAME", nullable = false, insertable = true, updatable = true, length = 400, precision = 0)
-    @Basic
     public String getCvName() {
         return cvName;
     }
@@ -47,8 +54,6 @@ public class Modification {
         this.cvName = cvName;
     }
 
-    @Column(name = "MONO_DELTA", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
-    @Basic
     public Double getMonoDelta() {
         return monoDelta;
     }
@@ -57,9 +62,6 @@ public class Modification {
         this.monoDelta = monoDelta;
     }
 
-    @Column(name = "BIOLOGICAL_SIGNIFICANT", nullable = true, insertable = true, updatable = true, length = 1, precision = 0)
-    @Type(type="true_false")
-    @Basic
     public Boolean getBiologicalSignificant() {
         return biologicalSignificant;
     }
@@ -68,32 +70,12 @@ public class Modification {
         this.biologicalSignificant = biologicalSignificant;
     }
 
-    @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
-    @Basic
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-//    @OneToMany(mappedBy = "modification")
-//    public Collection<PeptideModification> getPeptideModifications() {
-//        return peptideModifications;
-//    }
-//
-//    public void setPeptideModifications(Collection<PeptideModification> peptideModsByCvTerm) {
-//        this.peptideModifications = peptideModsByCvTerm;
-//    }
-
-    @OneToMany(mappedBy = "modification")
-    public Collection<ProteinModification> getProteinModifications() {
-        return proteinModifications;
-    }
-
-    public void setProteinModifications(Collection<ProteinModification> proteinModsByCvTerm) {
-        this.proteinModifications = proteinModsByCvTerm;
     }
 
     @Override
