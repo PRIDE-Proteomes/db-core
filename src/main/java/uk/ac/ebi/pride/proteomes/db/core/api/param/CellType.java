@@ -10,7 +10,7 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("CELL_TYPE")
-public class CvParamCellType extends CvParam  {
+public class CellType extends CvParam  {
 
 //    @ManyToMany(mappedBy = "cvParamCellType")
 //    private Collection<Assay> assaysWithCellType;

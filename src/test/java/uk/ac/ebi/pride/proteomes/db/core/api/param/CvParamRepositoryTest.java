@@ -40,7 +40,7 @@ public class CvParamRepositoryTest {
         cvParam = cvParamRepository.findByCvTerm(CV_TERM);
 
         assertNotNull(cvParam);
-        assertTrue(cvParam instanceof CvParamTissue);
+        assertTrue(cvParam instanceof Tissue);
         assertThat(cvParam.getCvTerm(), is(CV_TERM));
 
     }

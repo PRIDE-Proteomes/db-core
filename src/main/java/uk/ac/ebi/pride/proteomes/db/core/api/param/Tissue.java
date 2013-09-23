@@ -4,11 +4,13 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
+ * Created with IntelliJ IDEA.
  * User: ntoro
  * Date: 14/08/2013
  * Time: 11:00
+ * To change this template use File | Settings | File Templates.
  */
 @Entity
-@DiscriminatorValue( value = "DISEASE" )
-public class CvParamDisease extends CvParam {
+@DiscriminatorValue( value = "TISSUE" )
+public class Tissue extends CvParam {
 }

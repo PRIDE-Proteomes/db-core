@@ -8,9 +8,9 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.modification.Modification</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParam</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamCellType</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CellType</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Disease</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideModification</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide</class>

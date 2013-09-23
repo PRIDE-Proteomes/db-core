@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamCellType;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamDisease;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamRepository;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamTissue;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.HashSet;
@@ -81,46 +81,46 @@ public class AssayRepositoryTest {
 
         //Tissue
         //We check first if that not exist in the DB and if not we will persist it
-        CvParamTissue tissue = (CvParamTissue) cvParamRepository.findByCvTerm(TISSUE_TERM);
+        Tissue tissue = (Tissue) cvParamRepository.findByCvTerm(TISSUE_TERM);
         if(tissue == null){
-            tissue = new CvParamTissue();
+            tissue = new Tissue();
             tissue.setCvTerm(TISSUE_TERM);
             tissue.setCvName(TISSUE_NAME);
             tissue.setDescription(NO_DESCRIPTION);
-            tissue = (CvParamTissue) cvParamRepository.save(tissue);
+            tissue = (Tissue) cvParamRepository.save(tissue);
         }
 
-        Set<CvParamTissue> tissues = new HashSet<CvParamTissue>();
+        Set<Tissue> tissues = new HashSet<Tissue>();
         tissues.add(tissue);
-        assay.setCvParamTissue(tissues);
+        assay.setTissues(tissues);
 
         //Cell Type
-        CvParamCellType cellType = (CvParamCellType) cvParamRepository.findByCvTerm(CELL_TYPE_TERM);
+        CellType cellType = (CellType) cvParamRepository.findByCvTerm(CELL_TYPE_TERM);
         if(cellType == null){
-            cellType = new CvParamCellType();
+            cellType = new CellType();
             cellType.setCvTerm(CELL_TYPE_TERM);
             cellType.setCvName(CELL_TYPE_NAME);
             cellType.setDescription(NO_DESCRIPTION);
-            cellType = (CvParamCellType) cvParamRepository.save(cellType);
+            cellType = (CellType) cvParamRepository.save(cellType);
         }
 
-        Set<CvParamCellType> cellTypes = new HashSet<CvParamCellType>();
+        Set<CellType> cellTypes = new HashSet<CellType>();
         cellTypes.add(cellType);
-        assay.setCvParamCellType(cellTypes);
+        assay.setCellTypes(cellTypes);
 
         //Disease
-        CvParamDisease disease = (CvParamDisease) cvParamRepository.findByCvTerm(DISEASE_TERM);
+        Disease disease = (Disease) cvParamRepository.findByCvTerm(DISEASE_TERM);
         if(disease == null){
-            disease = new CvParamDisease();
+            disease = new Disease();
             disease.setCvTerm(DISEASE_TERM);
             disease.setCvName(DISEASE_NAME);
             disease.setDescription(NO_DESCRIPTION);
-            disease = (CvParamDisease) cvParamRepository.save(disease);
+            disease = (Disease) cvParamRepository.save(disease);
 
         }
-        Set<CvParamDisease> diseases = new HashSet<CvParamDisease>();
+        Set<Disease> diseases = new HashSet<Disease>();
         diseases.add(disease);
-        assay.setCvParamDisease(diseases);
+        assay.setDiseases(diseases);
 
         assay = assayRepository.save(assay);
 
@@ -142,22 +142,32 @@ public class AssayRepositoryTest {
         assertThat(assay.getProjectAccession(), is(PROJECT_ACCESSION));
         assertThat(assay.getTaxid(), is(TAXID));
 
-        checkCvParamCellType(assay);
-        checkCvParamDisease(assay);
-        checkCvParamTissue(assay);
+        checkCellType(assay.getCellTypes());
+        checkDisease(assay.getDiseases());
+        checkTissue(assay.getTissues());
     }
 
 
-    private void checkCvParamCellType(Assay assay) {
-        //To change body of created methods use File | Settings | File Templates.
+    private void checkCellType(Set<CellType> cellTypes) {
+        assertNotNull(cellTypes);
+        assertThat(cellTypes.size(), is(1));
+        assertThat(cellTypes.iterator().next().getCvTerm(),is(CELL_TYPE_TERM));
+        assertThat(cellTypes.iterator().next().getCvName(),is(CELL_TYPE_NAME));
     }
 
-    private void checkCvParamDisease(Assay assay) {
-        //To change body of created methods use File | Settings | File Templates.
+    private void checkDisease(Set<Disease> diseases) {
+        assertNotNull(diseases);
+        assertThat(diseases.size(), is(1));
+        assertThat(diseases.iterator().next().getCvTerm(),is(DISEASE_TERM));
+        assertThat(diseases.iterator().next().getCvName(),is(DISEASE_NAME));
     }
 
-    private void checkCvParamTissue(Assay assay) {
-        //To change body of created methods use File | Settings | File Templates.
+    private void checkTissue(Set<Tissue> tissues) {
+        assertNotNull(tissues);
+        assertThat(tissues.size(), is(1));
+        assertThat(tissues.iterator().next().getCvTerm(),is(TISSUE_TERM));
+        assertThat(tissues.iterator().next().getCvName(),is(TISSUE_NAME));
+
     }
 
 }
