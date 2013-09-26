@@ -1,11 +1,8 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.param;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
@@ -17,15 +14,8 @@ import static org.hamcrest.Matchers.is;
  * Date: 12/09/2013
  * Time: 11:35
  */
-@ContextConfiguration(locations = {"/test-context.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
-public class CvParamRepositoryTest {
 
-    private static final String CV_NAME = "aorta thoracica";
-    private static final String CV_TERM = "BTO:0000157";
-
-    @Autowired
-    private CvParamRepository cvParamRepository;
+public class CvParamRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional(readOnly = true)

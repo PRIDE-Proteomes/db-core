@@ -26,8 +26,6 @@ public class Star {
     @Column(name = "STAR_TYPE", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private StarType type;
 
-//    private Collection<Score> scoresByStarPk;
-
 
     public Integer getId() {
         return id;
@@ -60,27 +58,25 @@ public class Star {
 
         Star star = (Star) o;
 
-        if (count != null ? !count.equals(star.count) : star.count != null) return false;
-        if (id != null ? !id.equals(star.id) : star.id != null) return false;
-        if (type != null ? !type.equals(star.type) : star.type != null) return false;
+        if (!count.equals(star.count)) return false;
+        if (type != star.type) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (count != null ? count.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
+        int result = count.hashCode();
+        result = 31 * result + type.hashCode();
         return result;
     }
 
-//    @OneToMany(mappedBy = "star")
-//    public Collection<Score> getScoresByStarPk() {
-//        return scoresByStarPk;
-//    }
-//
-//    public void setScoresByStarPk(Collection<Score> scoresByStarPk) {
-//        this.scoresByStarPk = scoresByStarPk;
-//    }
+    @Override
+    public String toString() {
+        return "Star{" +
+                "id=" + id +
+                ", count=" + count +
+                ", type=" + type +
+                '}';
+    }
 }

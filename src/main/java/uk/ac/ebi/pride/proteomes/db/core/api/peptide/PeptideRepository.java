@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface PeptideRepository extends CrudRepository<Peptide, Long> {
 
+    public Peptide findByPeptideRepresentation(String representation);
     public List<Peptide> findPeptideBySequence(String sequence);
     public List<PeptideVariant> findPeptideVariantBySequence(String sequence);
     public List<SymbolicPeptide> findSymbolicPeptideBySequence(String sequence);

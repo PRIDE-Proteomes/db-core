@@ -9,4 +9,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface GeneRepository extends CrudRepository<Gene, String> {
 
+    Gene findByGeneAccession(String geneAccession);
+
+
 }

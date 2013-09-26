@@ -9,4 +9,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ProteinRepository extends CrudRepository<Protein, String> {
 
+    Protein findByProteinAccession(String proteinAccession);
+
 }

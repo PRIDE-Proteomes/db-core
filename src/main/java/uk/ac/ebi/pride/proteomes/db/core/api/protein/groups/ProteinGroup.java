@@ -6,7 +6,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,16 +17,33 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "PROT_GROUP", schema = "PRIDEPROT")
-@SequenceGenerator(name="PROT_GROUP_SEQ", schema = "PRIDEPROT", sequenceName="PROT_GROUP_PROT_GROUP_PK_SEQ")
+@SequenceGenerator(name="PROT_GROUP_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.PROT_GROUP_PROT_GROUP_PK_SEQ")
 public class ProteinGroup {
-
-    private Long id;
-    private String description;
-    private Collection<Protein> proteins;
 
     @Id
     @Column(name = "PROT_GROUP_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     @GeneratedValue(generator = "PROT_GROUP_SEQ", strategy = GenerationType.SEQUENCE)
+    private Long id;
+
+    @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
+    @Basic
+    private String description;
+
+    @Basic
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PROT_GROUP_TYPE", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
+    private ProteinGroupType type;
+
+    @ManyToMany(mappedBy = "proteinGroups")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Protein> proteins;
+
+
+    @ManyToMany(mappedBy = "proteinGroups")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Gene> genes;
+
+
     public Long getId() {
         return id;
     }
@@ -35,8 +52,6 @@ public class ProteinGroup {
         this.id = id;
     }
 
-    @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
-    @Basic
     public String getDescription() {
         return description;
     }
@@ -45,24 +60,27 @@ public class ProteinGroup {
         this.description = description;
     }
 
-    @ManyToMany(mappedBy = "proteinGroups")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    public Collection<Protein> getProteins() {
+    public ProteinGroupType getType() {
+        return type;
+    }
+
+    public void setType(ProteinGroupType type) {
+        this.type = type;
+    }
+
+    public Set<Protein> getProteins() {
         return proteins;
     }
 
-    public void setProteins(Collection<Protein> proteins) {
+    public void setProteins(Set<Protein> proteins) {
         this.proteins = proteins;
     }
 
-
-    @ManyToMany(mappedBy = "proteinGroup")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    public Collection<Gene> getGenes() {
+    public Set<Gene> getGenes() {
         return genes;
     }
 
-    public void setGenes(Collection<Gene> genes) {
+    public void setGenes(Set<Gene> genes) {
         this.genes = genes;
     }
 
@@ -71,24 +89,18 @@ public class ProteinGroup {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProteinGroup proteinGroup = (ProteinGroup) o;
+        ProteinGroup that = (ProteinGroup) o;
 
-        if (description != null ? !description.equals(proteinGroup.description) : proteinGroup.description != null)
-            return false;
-        if (id != null ? !id.equals(proteinGroup.id) : proteinGroup.id != null)
-            return false;
+        if (proteins != null ? !proteins.equals(that.proteins) : that.proteins != null) return false;
+        if (type != that.type) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = type.hashCode();
+        result = 31 * result + (proteins != null ? proteins.hashCode() : 0);
         return result;
     }
-
-    private Collection<Gene> genes;
-
-
 }

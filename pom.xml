@@ -36,6 +36,7 @@
         <!-- UTF-8 encoding to generate the build-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring.data.version>1.4.1.RELEASE</spring.data.version>
     </properties>
     <!-- How to build -->
     <!-- Here should be an example command that will build the project for a common use case. -->
@@ -114,6 +115,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.data.version}</version>
         </dependency>
 
         <!--other spring framework-->

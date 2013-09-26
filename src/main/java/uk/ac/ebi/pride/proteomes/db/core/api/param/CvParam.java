@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @org.hibernate.annotations.DiscriminatorOptions(force = true)
 @DiscriminatorColumn(name = "CV_TYPE", discriminatorType = DiscriminatorType.STRING, length = 90)
-public class CvParam {
+public abstract class CvParam {
 
     @Id
     @Column(name = "CV_TERM", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
@@ -53,22 +53,20 @@ public class CvParam {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof CvParam)) return false;
 
         CvParam cvParam = (CvParam) o;
 
-        if (cvName != null ? !cvName.equals(cvParam.cvName) : cvParam.cvName != null) return false;
-        if (cvTerm != null ? !cvTerm.equals(cvParam.cvTerm) : cvParam.cvTerm != null) return false;
-        if (description != null ? !description.equals(cvParam.description) : cvParam.description != null) return false;
+        if (!cvName.equals(cvParam.cvName)) return false;
+        if (!cvTerm.equals(cvParam.cvTerm)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = cvTerm != null ? cvTerm.hashCode() : 0;
-        result = 31 * result + (cvName != null ? cvName.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = cvTerm.hashCode();
+        result = 31 * result + cvName.hashCode();
         return result;
     }
 
@@ -80,5 +78,4 @@ public class CvParam {
                 ", description='" + description + '\'' +
                 '}';
     }
-
 }

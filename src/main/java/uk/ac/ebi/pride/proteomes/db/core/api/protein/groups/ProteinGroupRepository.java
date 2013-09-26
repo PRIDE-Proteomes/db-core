@@ -7,6 +7,9 @@ import org.springframework.data.repository.CrudRepository;
  * Date: 14/08/2013
  * Time: 10:06
  */
+
 public interface ProteinGroupRepository extends CrudRepository<ProteinGroup, Long> {
+
+   public ProteinGroup findById(Long proteinGroupId);
 
 }

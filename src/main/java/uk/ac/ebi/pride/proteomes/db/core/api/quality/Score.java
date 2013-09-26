@@ -29,9 +29,6 @@ public class Score {
     @JoinColumn(name = "STAR_FK", referencedColumnName = "STAR_PK", nullable = false)
     private Star star;
 
-//    private Collection<Peptide> peptidesByScorePk;
-//    private Collection<Protein> proteinsByScorePk;
-
     public Long getId() {
         return id;
     }
@@ -71,36 +68,28 @@ public class Score {
 
         Score score = (Score) o;
 
-        if (id != null ? !id.equals(score.id) : score.id != null) return false;
-        if (value != null ? !value.equals(score.value) : score.value != null) return false;
+        if (!qualityMethod.equals(score.qualityMethod)) return false;
+        if (!star.equals(score.star)) return false;
+        if (!value.equals(score.value)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
+        int result = value.hashCode();
+        result = 31 * result + qualityMethod.hashCode();
+        result = 31 * result + star.hashCode();
         return result;
     }
 
-//    @OneToMany(mappedBy = "scoreByScoreFk")
-//    public Collection<Peptide> getPeptidesByScorePk() {
-//        return peptidesByScorePk;
-//    }
-//
-//    public void setPeptidesByScorePk(Collection<Peptide> peptidesByScorePk) {
-//        this.peptidesByScorePk = peptidesByScorePk;
-//    }
-//
-//    @OneToMany(mappedBy = "scoreByScoreFk")
-//    public Collection<Protein> getProteinsByScorePk() {
-//        return proteinsByScorePk;
-//    }
-//
-//    public void setProteinsByScorePk(Collection<Protein> proteinsByScorePk) {
-//        this.proteinsByScorePk = proteinsByScorePk;
-//    }
-
-
+    @Override
+    public String toString() {
+        return "Score{" +
+                "id=" + id +
+                ", value=" + value +
+                ", qualityMethod=" + qualityMethod +
+                ", star=" + star +
+                '}';
+    }
 }

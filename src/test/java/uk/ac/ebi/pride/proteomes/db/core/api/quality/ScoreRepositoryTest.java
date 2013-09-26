@@ -1,11 +1,8 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 
 import java.util.List;
 
@@ -18,27 +15,8 @@ import static org.hamcrest.Matchers.is;
  * Date: 11/09/2013
  * Time: 14:16
  */
-@ContextConfiguration(locations = {"/test-context.xml"})
-@RunWith(SpringJUnit4ClassRunner.class)
-public class ScoreRepositoryTest {
 
-    private static final Double SCORE_VALUE = 2.0;
-    private static final Integer STAR_COUNT = 2;
-    private static final Integer NUM_SCORES_GREATER_THAN = 5;
-    private static final Integer NUM_SCORES_LESS_THAN = 3;
-    private static final Integer SCORE_WITH_TWO_STARS = 3;
-    private static final Integer TWO_STARS = 2;
-    private static final Integer SCORES_WITH_GOLD = 3;
-    private static final Integer SCORES_WITH_SILVER_AND_VALUE_GREATER_THAT = 1;
-    private static final Integer SCORES_WITH_SILVER_AND_VALUE_LESS_THAT = 1;
-    private static final Integer NUM_SCORES_GREATER_THAN_TWO_STARS_GOLD = 1;
-    private static final Integer NUM_SCORES_LESS_THAN_TWO_STARS_GOLD = 1;
-    private static final Integer NUM_SCORES_BETWEEN_TWO_STARS_GOLD = 2;
-    private static final Double MIN = 1.0;
-    private static final Double MAX = 3.0;
-
-    @Autowired
-    private ScoreRepository scoreRepository;
+public class ScoreRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional(readOnly = true)

@@ -6,7 +6,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,14 +34,14 @@ public class Gene {
 
     @ManyToMany(mappedBy = "genes")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Protein> proteins;
+    private Set<Protein> proteins;
 
     @ManyToMany
     @JoinTable(name = "GENE_PGRP", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "GENE_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<ProteinGroup> proteinGroup;
+    private Set<ProteinGroup> proteinGroups;
 
     public String getGeneAccession() {
         return geneAccession;
@@ -67,34 +67,31 @@ public class Gene {
         this.taxid = taxid;
     }
 
-    public Collection<Protein> getProteins() {
+    public Set<Protein> getProteins() {
         return proteins;
     }
 
-    public void setProteins(Collection<Protein> proteins) {
+    public void setProteins(Set<Protein> proteins) {
         this.proteins = proteins;
     }
 
-    public Collection<ProteinGroup> getProteinGroup() {
-        return proteinGroup;
+    public Set<ProteinGroup> getProteinGroups() {
+        return proteinGroups;
     }
 
-    public void setProteinGroup(Collection<ProteinGroup> proteinGroup) {
-        this.proteinGroup = proteinGroup;
+    public void setProteinGroups(Set<ProteinGroup> proteinGroup) {
+        this.proteinGroups = proteinGroup;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Gene)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Gene gene = (Gene) o;
 
-        if (description != null ? !description.equals(gene.description) : gene.description != null) return false;
         if (!geneAccession.equals(gene.geneAccession)) return false;
-        if (proteinGroup != null ? !proteinGroup.equals(gene.proteinGroup) : gene.proteinGroup != null) return false;
-        if (proteins != null ? !proteins.equals(gene.proteins) : gene.proteins != null) return false;
-        if (taxid != null ? !taxid.equals(gene.taxid) : gene.taxid != null) return false;
+        if (!taxid.equals(gene.taxid)) return false;
 
         return true;
     }
@@ -102,10 +99,7 @@ public class Gene {
     @Override
     public int hashCode() {
         int result = geneAccession.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (taxid != null ? taxid.hashCode() : 0);
-        result = 31 * result + (proteins != null ? proteins.hashCode() : 0);
-        result = 31 * result + (proteinGroup != null ? proteinGroup.hashCode() : 0);
+        result = 31 * result + taxid.hashCode();
         return result;
     }
 
@@ -116,7 +110,7 @@ public class Gene {
                 ", description='" + description + '\'' +
                 ", taxid=" + taxid +
                 ", proteins=" + proteins +
-                ", proteinGroup=" + proteinGroup +
+                ", proteinGroups=" + proteinGroups +
                 '}';
     }
 }

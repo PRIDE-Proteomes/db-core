@@ -11,26 +11,4 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("CELL_TYPE")
 public class CellType extends CvParam  {
-
-//    @ManyToMany(mappedBy = "cvParamCellType")
-//    private Collection<Assay> assaysWithCellType;
-//
-//    public Collection<Assay> getAssaysWithCellType() {
-//        return assaysWithCellType;
-//    }
-//
-//    public void setAssaysWithCellType(Collection<Assay> assaysWithCellType) {
-//        this.assaysWithCellType = assaysWithCellType;
-//    }
-
-//    @ManyToMany(mappedBy = "cvParamCellType")
-//    private Collection<Peptide> peptidesWithCellType;
-//
-//    public Collection<Peptide> getPeptidesWithCellType() {
-//        return peptidesWithCellType;
-//    }
-//
-//    public void setPeptidesWithCellType(Collection<Peptide> peptidesWithCellType) {
-//        this.peptidesWithCellType = peptidesWithCellType;
-//    }
 }

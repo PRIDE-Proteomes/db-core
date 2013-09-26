@@ -36,8 +36,8 @@ public class Assay {
     @ManyToMany(targetEntity = CellType.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
-            joinColumns = {@JoinColumn( name = "ASSAY_FK_PK" )},
-            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
+            joinColumns = @JoinColumn( name = "ASSAY_FK_PK" ),
+            inverseJoinColumns = @JoinColumn( name = "CV_PARAM_FK_PK" )
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
@@ -46,8 +46,8 @@ public class Assay {
     @ManyToMany(targetEntity = Disease.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
-            joinColumns = {@JoinColumn( name = "ASSAY_FK_PK" )},
-            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
+            joinColumns = @JoinColumn( name = "ASSAY_FK_PK" ),
+            inverseJoinColumns = @JoinColumn( name = "CV_PARAM_FK_PK" )
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
@@ -56,14 +56,19 @@ public class Assay {
     @ManyToMany(targetEntity = Tissue.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
-            joinColumns = {@JoinColumn( name = "ASSAY_FK_PK" )},
-            inverseJoinColumns = {@JoinColumn( name = "CV_PARAM_FK_PK" )}
+            joinColumns = @JoinColumn( name = "ASSAY_FK_PK" ),
+            inverseJoinColumns = @JoinColumn( name = "CV_PARAM_FK_PK" )
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
     private Set<Tissue> tissues;
 
-    @OneToMany(mappedBy = "assay")
+
+    @ElementCollection
+    @CollectionTable(
+            name = "REPRO", schema = "PRIDEPROT",
+            joinColumns = @JoinColumn(name = "ASSAY_FK_PK", referencedColumnName = "ASSAY_ACCESSION")
+    )
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Reprocessed> reprocessed;
 
@@ -135,22 +140,12 @@ public class Assay {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Assay)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         Assay assay = (Assay) o;
 
         if (!assayAccession.equals(assay.assayAccession)) return false;
-        if (diseases != null ? !diseases.equals(assay.diseases) : assay.diseases != null)
-            return false;
-        if (cellTypes != null ? !cellTypes.equals(assay.cellTypes) : assay.cellTypes != null)
-            return false;
-        if (tissues != null ? !tissues.equals(assay.tissues) : assay.tissues != null)
-            return false;
-//        if (peptides != null ? !peptides.equals(assay.peptides) : assay.peptides != null) return false;
-        if (projectAccession != null ? !projectAccession.equals(assay.projectAccession) : assay.projectAccession != null)
-            return false;
-        if (reprocessed != null ? !reprocessed.equals(assay.reprocessed) : assay.reprocessed != null) return false;
-        if (taxid != null ? !taxid.equals(assay.taxid) : assay.taxid != null) return false;
+        if (!projectAccession.equals(assay.projectAccession)) return false;
 
         return true;
     }
@@ -158,13 +153,7 @@ public class Assay {
     @Override
     public int hashCode() {
         int result = assayAccession.hashCode();
-        result = 31 * result + (projectAccession != null ? projectAccession.hashCode() : 0);
-        result = 31 * result + (taxid != null ? taxid.hashCode() : 0);
-        result = 31 * result + (cellTypes != null ? cellTypes.hashCode() : 0);
-        result = 31 * result + (diseases != null ? diseases.hashCode() : 0);
-        result = 31 * result + (tissues != null ? tissues.hashCode() : 0);
-//        result = 31 * result + (peptides != null ? peptides.hashCode() : 0);
-        result = 31 * result + (reprocessed != null ? reprocessed.hashCode() : 0);
+        result = 31 * result + projectAccession.hashCode();
         return result;
     }
 
@@ -174,10 +163,9 @@ public class Assay {
                 "assayAccession='" + assayAccession + '\'' +
                 ", projectAccession='" + projectAccession + '\'' +
                 ", taxid=" + taxid +
-                ", cvParamSamples=" + cellTypes +
+                ", cellTypes=" + cellTypes +
                 ", diseases=" + diseases +
                 ", tissues=" + tissues +
-//                ", peptides=" + peptides +
                 ", reprocessed=" + reprocessed +
                 '}';
     }

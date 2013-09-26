@@ -2,9 +2,10 @@ package uk.ac.ebi.pride.proteomes.db.core.api.peptide;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * User: ntoro
@@ -15,48 +16,40 @@ import java.util.Collection;
 @DiscriminatorValue(value = "FALSE")
 public class PeptideVariant extends Peptide {
 
-    @ElementCollection
+    @ElementCollection(targetClass=ModificationLocation.class)
     @CollectionTable(
             name = "PEPTIDE_MOD", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PEPTIDE_FK_PK", referencedColumnName = "PEPTIDE_PK")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<PeptideModification> peptideModifications;
+    private Set<ModificationLocation> modificationLocations;
 
-
-    public Collection<PeptideModification> getPeptideModifications() {
-        return peptideModifications;
+    public Set<ModificationLocation> getModificationLocations() {
+        return modificationLocations;
     }
 
-    public void setPeptideModifications(Collection<PeptideModification> peptideModifications) {
-        this.peptideModifications = peptideModifications;
+    public void setModificationLocations(Set<ModificationLocation> modificationLocations) {
+        this.modificationLocations = modificationLocations;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PeptideVariant)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-
-        PeptideVariant that = (PeptideVariant) o;
-
-        if (peptideModifications != null ? !peptideModifications.equals(that.peptideModifications) : that.peptideModifications != null)
-            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (peptideModifications != null ? peptideModifications.hashCode() : 0);
-        return result;
+        return super.hashCode();
     }
 
     @Override
     public String toString() {
         return "PeptideVariant{" +
-                "peptideModifications=" + peptideModifications +
+                "modificationLocations=" + modificationLocations +
                 '}';
     }
 }

@@ -19,7 +19,6 @@ public class Modification {
     @Column(name = "CV_TERM", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private String cvTerm;
 
-
     @Basic
     @Column(name = "CV_NAME", nullable = false, insertable = true, updatable = true, length = 400, precision = 0)
     private String cvName;
@@ -83,28 +82,34 @@ public class Modification {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Modification modification = (Modification) o;
+        Modification that = (Modification) o;
 
-        if (biologicalSignificant != null ? !biologicalSignificant.equals(modification.biologicalSignificant) : modification.biologicalSignificant != null)
+        if (biologicalSignificant != null ? !biologicalSignificant.equals(that.biologicalSignificant) : that.biologicalSignificant != null)
             return false;
-        if (cvName != null ? !cvName.equals(modification.cvName) : modification.cvName != null) return false;
-        if (cvTerm != null ? !cvTerm.equals(modification.cvTerm) : modification.cvTerm != null) return false;
-        if (description != null ? !description.equals(modification.description) : modification.description != null)
-            return false;
-        if (monoDelta != null ? !monoDelta.equals(modification.monoDelta) : modification.monoDelta != null)
-            return false;
+        if (!cvName.equals(that.cvName)) return false;
+        if (!cvTerm.equals(that.cvTerm)) return false;
+        if (monoDelta != null ? !monoDelta.equals(that.monoDelta) : that.monoDelta != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = cvTerm != null ? cvTerm.hashCode() : 0;
-        result = 31 * result + (cvName != null ? cvName.hashCode() : 0);
+        int result = cvTerm.hashCode();
+        result = 31 * result + cvName.hashCode();
         result = 31 * result + (monoDelta != null ? monoDelta.hashCode() : 0);
         result = 31 * result + (biologicalSignificant != null ? biologicalSignificant.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Modification{" +
+                "cvTerm='" + cvTerm + '\'' +
+                ", cvName='" + cvName + '\'' +
+                ", monoDelta=" + monoDelta +
+                ", biologicalSignificant=" + biologicalSignificant +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
