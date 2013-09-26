@@ -83,7 +83,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         pepMod.setModCvTerm(NEW_MOD_TERM);
         pepMod.setPosition(NEW_MOD_POS);
 
-        Set<ModificationLocation> peptideMods = new HashSet<ModificationLocation>();
+        TreeSet<ModificationLocation> peptideMods = new TreeSet<ModificationLocation>();
         peptideMods.add(pepMod);
         peptideVariant.setModificationLocations(peptideMods);
 
@@ -209,7 +209,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         pepMod.setModCvTerm(NEW_MOD_TERM);
         pepMod.setPosition(NEW_MOD_POS);
 
-        Set<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
         modificationLocations.add(pepMod);
 
         samePeptideVariant.setModificationLocations(modificationLocations);
@@ -316,7 +316,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         pepModB.setModCvTerm(NEW_MOD_TERM);
         pepModB.setPosition(SEC_MOD_POS);
 
-        Set<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
         modificationLocations.add(pepModB);
         modificationLocations.add(pepModA);
 
@@ -422,7 +422,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         pepMod.setModCvTerm(NEW_MOD_TERM);
         pepMod.setPosition(NEW_MOD_POS);
 
-        Set<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
         modificationLocations.add(pepMod);
         peptideVariant.setModificationLocations(modificationLocations);
 

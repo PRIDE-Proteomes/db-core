@@ -6,6 +6,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * User: ntoro
@@ -21,6 +22,7 @@ public class PeptideVariant extends Peptide {
             name = "PEPTIDE_MOD", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PEPTIDE_FK_PK", referencedColumnName = "PEPTIDE_PK")
     )
+    @OrderBy("position ASC" )
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<ModificationLocation> modificationLocations;
 
@@ -28,7 +30,7 @@ public class PeptideVariant extends Peptide {
         return modificationLocations;
     }
 
-    public void setModificationLocations(Set<ModificationLocation> modificationLocations) {
+    public void setModificationLocations(SortedSet<ModificationLocation> modificationLocations) {
         this.modificationLocations = modificationLocations;
     }
 

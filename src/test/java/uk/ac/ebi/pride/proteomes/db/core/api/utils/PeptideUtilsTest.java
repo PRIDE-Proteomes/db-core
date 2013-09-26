@@ -1,11 +1,12 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.utils;
 
 import org.junit.Test;
+import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide;
 
-import java.util.Set;
 import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +17,7 @@ import static org.hamcrest.Matchers.is;
  * Date: 26/09/2013
  * Time: 10:45
  */
-public class PeptideUtilsTest {
+public class PeptideUtilsTest extends RepositoryTest {
 
     protected static final String SEQUENCE = "HCGATSAGLR";
     protected static final Integer TAXID = 9606;
@@ -43,7 +44,7 @@ public class PeptideUtilsTest {
 
         //PeptideModifications
 
-        Set<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
 
         ModificationLocation pepModC = new ModificationLocation();
         pepModC.setModCvTerm(C_MOD_TERM);
@@ -100,6 +101,28 @@ public class PeptideUtilsTest {
         String peptideRepresentation = PeptideUtils.peptideRepresentationGenerator(peptideZ);
 
         assertThat(peptideRepresentation, is(PEP_Z));
+
+    }
+
+    @Test
+    public void printRepresentation() {
+
+        Iterable<Peptide> peptides = peptideRepository.findAll();
+
+        for (Peptide peptide : peptides) {
+            System.out.print("\nINSERT INTO PRIDEPROT.PEPTIDE (PEPTIDE_PK, SEQUENCE, REPRESENTATION, DESCRIPTION, SCORE_FK, SYMBOLIC, TAXID)");
+            System.out.print("\n  VALUES (" + peptide.getPeptideId() + ", N'" + peptide.getSequence() + "', N'" + PeptideUtils.peptideRepresentationGenerator(peptide) + "', N'', 1.0, N'" +
+                    isSymbolic(peptide) + "', 9606.0);\n");
+        }
+
+
+    }
+
+    private String isSymbolic(Peptide peptide) {
+        if (peptide instanceof PeptideVariant) {
+            return "FALSE";
+        }
+        return "TRUE";
 
     }
 }
