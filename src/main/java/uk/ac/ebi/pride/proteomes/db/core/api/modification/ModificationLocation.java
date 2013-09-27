@@ -67,6 +67,8 @@ public class ModificationLocation implements Serializable, Comparable {
     @Override
     public int compareTo(Object o) {
 
+        //TODO: REVIEW
+
         if (this == o) return 0;
 
         ModificationLocation that = (ModificationLocation) o;

@@ -9,7 +9,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -57,7 +57,7 @@ public class AssayRepositoryTest extends RepositoryTest {
             tissue = (Tissue) cvParamRepository.save(tissue);
         }
 
-        Set<Tissue> tissues = new HashSet<Tissue>();
+        Collection<Tissue> tissues = new HashSet<Tissue>();
         tissues.add(tissue);
         assay.setTissues(tissues);
 
@@ -71,7 +71,7 @@ public class AssayRepositoryTest extends RepositoryTest {
             cellType = (CellType) cvParamRepository.save(cellType);
         }
 
-        Set<CellType> cellTypes = new HashSet<CellType>();
+        Collection<CellType> cellTypes = new HashSet<CellType>();
         cellTypes.add(cellType);
         assay.setCellTypes(cellTypes);
 
@@ -85,7 +85,7 @@ public class AssayRepositoryTest extends RepositoryTest {
             disease = (Disease) cvParamRepository.save(disease);
 
         }
-        Set<Disease> diseases = new HashSet<Disease>();
+        Collection<Disease> diseases = new HashSet<Disease>();
         diseases.add(disease);
         assay.setDiseases(diseases);
 
@@ -115,21 +115,21 @@ public class AssayRepositoryTest extends RepositoryTest {
     }
 
 
-    private void checkCellType(Set<CellType> cellTypes) {
+    private void checkCellType(Collection<CellType> cellTypes) {
         assertNotNull(cellTypes);
         assertThat(cellTypes.size(), is(1));
         assertThat(cellTypes.iterator().next().getCvTerm(), is(CELL_TYPE_TERM));
         assertThat(cellTypes.iterator().next().getCvName(), is(CELL_TYPE_NAME));
     }
 
-    private void checkDisease(Set<Disease> diseases) {
+    private void checkDisease(Collection<Disease> diseases) {
         assertNotNull(diseases);
         assertThat(diseases.size(), is(1));
         assertThat(diseases.iterator().next().getCvTerm(), is(DISEASE_TERM));
         assertThat(diseases.iterator().next().getCvName(), is(DISEASE_NAME));
     }
 
-    private void checkTissue(Set<Tissue> tissues) {
+    private void checkTissue(Collection<Tissue> tissues) {
         assertNotNull(tissues);
         assertThat(tissues.size(), is(1));
         assertThat(tissues.iterator().next().getCvTerm(), is(TISSUE_TERM));

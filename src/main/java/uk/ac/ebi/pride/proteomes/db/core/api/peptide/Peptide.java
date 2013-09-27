@@ -13,7 +13,6 @@ import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * User: ntoro
@@ -62,7 +61,7 @@ public abstract class Peptide implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "ASSAY_FK_PK")}
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Assay> assays;
+    private Collection<Assay> assays;
 
     @ManyToMany(targetEntity = CellType.class, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -72,7 +71,7 @@ public abstract class Peptide implements Serializable {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
-    private Set<CellType> cellTypes;
+    private Collection<CellType> cellTypes;
 
     @ManyToMany(targetEntity = Disease.class, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -82,7 +81,7 @@ public abstract class Peptide implements Serializable {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
-    private Set<Disease> diseases;
+    private Collection<Disease> diseases;
 
     @ManyToMany(targetEntity = Tissue.class, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -93,12 +92,12 @@ public abstract class Peptide implements Serializable {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
-    private Set<Tissue> tissues;
+    private Collection<Tissue> tissues;
 
 
     @ManyToMany(mappedBy = "peptides")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Protein> proteins;
+    private Collection<Protein> proteins;
 
     @OneToOne
     @JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK", nullable = false)
@@ -149,39 +148,39 @@ public abstract class Peptide implements Serializable {
         return assays;
     }
 
-    public void setAssays(Set<Assay> assays) {
+    public void setAssays(Collection<Assay> assays) {
         this.assays = assays;
     }
 
-    public Set<CellType> getCellTypes() {
+    public Collection<CellType> getCellTypes() {
         return cellTypes;
     }
 
-    public void setCellTypes(Set<CellType> cellType) {
+    public void setCellTypes(Collection<CellType> cellType) {
         this.cellTypes = cellType;
     }
 
-    public Set<Tissue> getTissues() {
+    public Collection<Tissue> getTissues() {
         return tissues;
     }
 
-    public void setTissues(Set<Tissue> tissues) {
+    public void setTissues(Collection<Tissue> tissues) {
         this.tissues = tissues;
     }
 
-    public Set<Disease> getDiseases() {
+    public Collection<Disease> getDiseases() {
         return diseases;
     }
 
-    public void setDiseases(Set<Disease> disease) {
+    public void setDiseases(Collection<Disease> disease) {
         this.diseases = disease;
     }
 
-    public Set<Protein> getProteins() {
+    public Collection<Protein> getProteins() {
         return proteins;
     }
 
-    public void setProteins(Set<Protein> proteins) {
+    public void setProteins(Collection<Protein> proteins) {
         this.proteins = proteins;
     }
 

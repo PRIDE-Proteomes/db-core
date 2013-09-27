@@ -6,7 +6,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,14 +34,14 @@ public class Gene {
 
     @ManyToMany(mappedBy = "genes")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Protein> proteins;
+    private Collection<Protein> proteins;
 
     @ManyToMany
     @JoinTable(name = "GENE_PGRP", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "GENE_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<ProteinGroup> proteinGroups;
+    private Collection<ProteinGroup> proteinGroups;
 
     public String getGeneAccession() {
         return geneAccession;
@@ -67,19 +67,19 @@ public class Gene {
         this.taxid = taxid;
     }
 
-    public Set<Protein> getProteins() {
+    public Collection<Protein> getProteins() {
         return proteins;
     }
 
-    public void setProteins(Set<Protein> proteins) {
+    public void setProteins(Collection<Protein> proteins) {
         this.proteins = proteins;
     }
 
-    public Set<ProteinGroup> getProteinGroups() {
+    public Collection<ProteinGroup> getProteinGroups() {
         return proteinGroups;
     }
 
-    public void setProteinGroups(Set<ProteinGroup> proteinGroup) {
+    public void setProteinGroups(Collection<ProteinGroup> proteinGroup) {
         this.proteinGroups = proteinGroup;
     }
 

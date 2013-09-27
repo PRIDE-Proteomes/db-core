@@ -93,18 +93,18 @@ public class ProteinRepositoryTest extends RepositoryTest {
         checkProteinGroups(other.getProteinGroups());
     }
 
-    private void checkSymbolicPeptides(Set<SymbolicPeptide> symbolicPeptides) {
+    private void checkSymbolicPeptides(Collection<SymbolicPeptide> symbolicPeptides) {
         assertNotNull(symbolicPeptides);
         assertThat(symbolicPeptides.size(), is(3));
     }
 
-    private void checkGenes(Set<Gene> genes) {
+    private void checkGenes(Collection<Gene> genes) {
         assertNotNull(genes);
         assertThat(genes.size(), is(1));
         assertThat(genes.iterator().next().getGeneAccession(), is(GENE_GROUP_ID));
     }
 
-    private void checkProteinGroups(Set<ProteinGroup> proteinGroups) {
+    private void checkProteinGroups(Collection<ProteinGroup> proteinGroups) {
         assertNotNull(proteinGroups);
         assertThat(proteinGroups.size(), is(1));
         assertThat(proteinGroups.iterator().next().getId(), is(PROT_GROUP_ID));

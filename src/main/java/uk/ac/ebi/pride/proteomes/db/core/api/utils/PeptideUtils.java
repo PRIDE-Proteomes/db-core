@@ -4,7 +4,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * User: ntoro
@@ -32,10 +32,11 @@ public class PeptideUtils {
 
     }
 
-    private static String serializeModifications(Set<ModificationLocation> modificationLocations) {
+    private static String serializeModifications(Collection<ModificationLocation> modificationLocations) {
 
         StringBuilder stringBuilder = new StringBuilder();
 
+        //We assume that in this point the modifications were inserted or retrieved in a sorted collection
         if (modificationLocations != null) {
 
             for (ModificationLocation modificationLocation : modificationLocations) {

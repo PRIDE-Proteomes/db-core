@@ -10,7 +10,6 @@ import uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * User: ntoro
@@ -41,7 +40,7 @@ public class Assay {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
-    private Set<CellType> cellTypes;
+    private Collection<CellType> cellTypes;
 
     @ManyToMany(targetEntity = Disease.class)
     @JoinTable(
@@ -51,7 +50,7 @@ public class Assay {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
-    private Set<Disease> diseases;
+    private Collection<Disease> diseases;
 
     @ManyToMany(targetEntity = Tissue.class)
     @JoinTable(
@@ -61,7 +60,7 @@ public class Assay {
     )
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
-    private Set<Tissue> tissues;
+    private Collection<Tissue> tissues;
 
 
     @ElementCollection
@@ -97,27 +96,27 @@ public class Assay {
         this.taxid = taxid;
     }
 
-    public Set<CellType> getCellTypes() {
+    public Collection<CellType> getCellTypes() {
         return cellTypes;
     }
 
-    public void setCellTypes(Set<CellType> cvParamSamples) {
+    public void setCellTypes(Collection<CellType> cvParamSamples) {
         this.cellTypes = cvParamSamples;
     }
 
-    public Set<Disease> getDiseases() {
+    public Collection<Disease> getDiseases() {
         return diseases;
     }
 
-    public void setDiseases(Set<Disease> diseases) {
+    public void setDiseases(Collection<Disease> diseases) {
         this.diseases = diseases;
     }
 
-    public Set<Tissue> getTissues() {
+    public Collection<Tissue> getTissues() {
         return tissues;
     }
 
-    public void setTissues(Set<Tissue> tissues) {
+    public void setTissues(Collection<Tissue> tissues) {
         this.tissues = tissues;
     }
 

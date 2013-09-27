@@ -12,7 +12,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,7 +47,7 @@ public class Protein {
             joinColumns = @JoinColumn(name = "PROTEIN_FK_PK", referencedColumnName = "PROTEIN_ACCESSION")
     )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<ModificationLocation> modificationLocations;
+    private Collection<ModificationLocation> modificationLocations;
 
 
     @ManyToMany
@@ -55,14 +55,14 @@ public class Protein {
             joinColumns = @JoinColumn(name = "PROTEIN_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "GENE_FK_PK"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Gene> genes;
+    private Collection<Gene> genes;
 
     @ManyToMany
     @JoinTable(name = "PROT_PEP", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PROTEIN_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "PEPTIDE_FK_PK"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Peptide> peptides;
+    private Collection<Peptide> peptides;
 
 
     @ManyToMany
@@ -71,7 +71,7 @@ public class Protein {
             inverseJoinColumns = @JoinColumn(name = "PEPTIDE_FK_PK"))
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "SYMBOLIC = 'FALSE'")  //This is necessary :(
-    private Set<PeptideVariant> peptideVariants;
+    private Collection<PeptideVariant> peptideVariants;
 
 
     @ManyToMany
@@ -80,7 +80,7 @@ public class Protein {
             inverseJoinColumns = @JoinColumn(name = "PEPTIDE_FK_PK"))
     @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "SYMBOLIC = 'TRUE'")  //This is necessary :(
-    private Set<SymbolicPeptide> symbolicPeptides;
+    private Collection<SymbolicPeptide> symbolicPeptides;
 
 
     @ManyToMany
@@ -88,7 +88,7 @@ public class Protein {
             joinColumns = @JoinColumn(name = "PROT_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<ProteinGroup> proteinGroups;
+    private Collection<ProteinGroup> proteinGroups;
 
     @OneToOne
     @JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK", nullable = false)
@@ -125,51 +125,51 @@ public class Protein {
         this.taxid = taxid;
     }
 
-    public Set<ModificationLocation> getModificationLocations() {
+    public Collection<ModificationLocation> getModificationLocations() {
         return modificationLocations;
     }
 
-    public void setModificationLocations(Set<ModificationLocation> modificationLocations) {
+    public void setModificationLocations(Collection<ModificationLocation> modificationLocations) {
         this.modificationLocations = modificationLocations;
     }
 
-    public Set<Gene> getGenes() {
+    public Collection<Gene> getGenes() {
         return genes;
     }
 
-    public void setGenes(Set<Gene> genes) {
+    public void setGenes(Collection<Gene> genes) {
         this.genes = genes;
     }
 
-    public Set<Peptide> getPeptides() {
+    public Collection<Peptide> getPeptides() {
         return peptides;
     }
 
-    public void setPeptides(Set<Peptide> peptides) {
+    public void setPeptides(Collection<Peptide> peptides) {
         this.peptides = peptides;
     }
 
-    public Set<PeptideVariant> getPeptideVariants() {
+    public Collection<PeptideVariant> getPeptideVariants() {
         return peptideVariants;
     }
 
-    public void setPeptideVariants(Set<PeptideVariant> peptideVariants) {
+    public void setPeptideVariants(Collection<PeptideVariant> peptideVariants) {
         this.peptideVariants = peptideVariants;
     }
 
-    public Set<SymbolicPeptide> getSymbolicPeptides() {
+    public Collection<SymbolicPeptide> getSymbolicPeptides() {
         return symbolicPeptides;
     }
 
-    public void setSymbolicPeptides(Set<SymbolicPeptide> symbolicPeptides) {
+    public void setSymbolicPeptides(Collection<SymbolicPeptide> symbolicPeptides) {
         this.symbolicPeptides = symbolicPeptides;
     }
 
-    public Set<ProteinGroup> getProteinGroups() {
+    public Collection<ProteinGroup> getProteinGroups() {
         return proteinGroups;
     }
 
-    public void setProteinGroups(Set<ProteinGroup> proteinGroups) {
+    public void setProteinGroups(Collection<ProteinGroup> proteinGroups) {
         this.proteinGroups = proteinGroups;
     }
 

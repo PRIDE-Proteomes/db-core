@@ -5,7 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Collection;
 import java.util.SortedSet;
 
 /**
@@ -24,9 +24,9 @@ public class PeptideVariant extends Peptide {
     )
     @OrderBy("position ASC" )
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<ModificationLocation> modificationLocations;
+    private Collection<ModificationLocation> modificationLocations;
 
-    public Set<ModificationLocation> getModificationLocations() {
+    public Collection<ModificationLocation> getModificationLocations() {
         return modificationLocations;
     }
 
