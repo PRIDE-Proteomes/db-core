@@ -74,7 +74,7 @@ public class ModificationLocation implements Serializable, Comparable {
         ModificationLocation that = (ModificationLocation) o;
         if(this.equals(that)) return 0;
 
-        int comparison = position.compareTo(that.position);
+        int comparison = position.compareTo(that.getPosition());
         if(comparison == 0){
             return modCvTerm.compareTo(that.getModCvTerm());
         }

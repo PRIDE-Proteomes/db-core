@@ -11,6 +11,9 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -36,8 +39,10 @@ public abstract class Peptide implements Serializable {
     private Long peptideId;
 
     @Basic
-    @Lob
     @Column(name = "SEQUENCE", nullable = false, insertable = true, updatable = true, length = 1000, precision = 0)
+    @NotNull     // validation constrain
+    @Size(min = 6, max = 100)   // validation constrain
+    @Pattern(regexp = "[GPAVLIMCFYWHKRQNEDST]{6,100}")  // validation constrain only valid amino acids
     private String sequence;
 
     @Basic
@@ -48,6 +53,7 @@ public abstract class Peptide implements Serializable {
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer taxid;
 
+    @NotNull     // validation constrain
     @Basic
     @Column(name = "REPRESENTATION", nullable = false, insertable = true, updatable = true, length = 1000, precision = 0)
     private String peptideRepresentation;
@@ -100,7 +106,7 @@ public abstract class Peptide implements Serializable {
     private Collection<Protein> proteins;
 
     @OneToOne
-    @JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK", nullable = false)
+    @JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK")
     private Score score;
 
 

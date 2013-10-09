@@ -1,5 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.utils;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
@@ -105,6 +106,7 @@ public class PeptideUtilsTest extends RepositoryTest {
     }
 
     @Test
+    @Ignore
     public void printRepresentation() {
 
         Iterable<Peptide> peptides = peptideRepository.findAll();

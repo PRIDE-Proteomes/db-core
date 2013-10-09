@@ -30,6 +30,7 @@ public class Protein {
     private String proteinAccession;
 
     @Basic
+    @Lob
     @Column(name = "SEQUENCE", nullable = false, insertable = true, updatable = true)
     private String sequence;
 
@@ -91,7 +92,7 @@ public class Protein {
     private Collection<ProteinGroup> proteinGroups;
 
     @OneToOne
-    @JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK", nullable = false)
+    @JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK")
     private Score score;
 
 

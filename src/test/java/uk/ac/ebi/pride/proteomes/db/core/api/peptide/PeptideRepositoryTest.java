@@ -26,7 +26,6 @@ import static org.hamcrest.Matchers.is;
 
 public class PeptideRepositoryTest extends RepositoryTest {
 
-
     @Test
     @Transactional(readOnly = true)
     public void testFindMethods() throws Exception {
@@ -46,6 +45,28 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
         assertNotNull(symbolicPeptides);
         assertThat(symbolicPeptides.size(), is(PEPS_SYM_WITH_SEQUENCE));
+
+        List<String> sequences = peptideRepository.findAllDistinctSequenceByTaxid(TAXID);
+
+        assertNotNull(sequences);
+        assertThat(sequences.size(), is(NUM_SYMBOLIC));
+
+        List<SymbolicPeptide> symbolicPeptideList = peptideRepository.findAllSymbolicPeptides();
+
+        assertNotNull(symbolicPeptideList);
+        assertThat(symbolicPeptideList.size(), is(NUM_SYMBOLIC));
+
+        SymbolicPeptide symbolicPeptide = peptideRepository.findSymbolicPeptideBySequenceAndTaxid(SEQUENCE, TAXID);
+
+        assertNotNull(symbolicPeptide);
+        assertThat(symbolicPeptide.getSequence(), is(SEQUENCE));
+        assertThat(symbolicPeptide.getTaxid(), is(TAXID));
+
+
+        List<PeptideVariant> peptideVariantList = peptideRepository.findAllPeptideVariants();
+
+        assertNotNull(peptideVariantList);
+        assertThat(peptideVariantList.size(), is(NUM_VARIANTS));
 
     }
 
@@ -477,7 +498,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         peptideVariant.setTissues(tissues);
         peptideVariant.setCellTypes(cellTypes);
         peptideVariant.setDiseases(diseases);
-        peptideVariant = (PeptideVariant) peptideRepository.save(peptideVariant);
+        peptideVariant = (PeptideVariant) peptideRepository.saveAndFlush(peptideVariant);
 
         return peptideVariant;
     }

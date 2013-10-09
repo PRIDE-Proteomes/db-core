@@ -30,6 +30,10 @@ public class ProteinGroup {
     private String description;
 
     @Basic
+    @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    private Integer taxid;
+
+    @Basic
     @Enumerated(EnumType.STRING)
     @Column(name = "PROT_GROUP_TYPE", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private ProteinGroupType type;
@@ -58,6 +62,14 @@ public class ProteinGroup {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getTaxid() {
+        return taxid;
+    }
+
+    public void setTaxid(Integer taxid) {
+        this.taxid = taxid;
     }
 
     public ProteinGroupType getType() {

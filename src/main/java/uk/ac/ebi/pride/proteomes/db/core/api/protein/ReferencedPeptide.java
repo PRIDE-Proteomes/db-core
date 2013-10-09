@@ -32,6 +32,10 @@ public class ReferencedPeptide implements Serializable {
     @Column(name = "TRYPTIC_SCORE", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer trypticScore;
 
+    @Basic
+    @Column(name = "UNIQUENESS", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+    private Integer uniqueness;
+
     @ManyToOne
     @JoinColumn(name = "PEPTIDE_FK_PK", referencedColumnName = "PEPTIDE_PK", nullable = false)
     private Peptide peptide;
@@ -71,6 +75,14 @@ public class ReferencedPeptide implements Serializable {
 
     public void setTrypticScore(Integer trypticScore) {
         this.trypticScore = trypticScore;
+    }
+
+    public Integer getUniqueness() {
+        return uniqueness;
+    }
+
+    public void setUniqueness(Integer uniqueness) {
+        this.uniqueness = uniqueness;
     }
 
     public Peptide getPeptide() {

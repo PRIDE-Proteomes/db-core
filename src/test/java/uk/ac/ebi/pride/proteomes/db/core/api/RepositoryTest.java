@@ -62,6 +62,9 @@ public abstract class RepositoryTest {
     protected static final Integer PEPS_WITH_SEQUENCE = 2;
     protected static final Integer PEPS_VAR_WITH_SEQUENCE = 1;
     protected static final Integer PEPS_SYM_WITH_SEQUENCE = 1;
+    protected static final Integer NUM_SYMBOLIC = 30;
+    protected static final Integer NUM_VARIANTS = 41;
+
 
     protected static final String NEW_MOD_TERM = "MOD:00696";
     protected static final Integer NEW_MOD_POS = 7;
