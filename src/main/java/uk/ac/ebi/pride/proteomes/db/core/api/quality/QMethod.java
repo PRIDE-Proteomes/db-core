@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Q_METHOD", schema = "PRIDEPROT")
-@SequenceGenerator(name="Q_METHOD_SEQ", schema = "PRIDEPROT", sequenceName="Q_METHOD_QUALITY_METHOD_PK_SEQ")
+@SequenceGenerator(name="Q_METHOD_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.Q_METHOD_QUALITY_METHOD_PK_SEQ")
 public class QMethod {
 
     @Id

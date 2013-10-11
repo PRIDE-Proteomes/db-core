@@ -201,4 +201,21 @@ public class Protein {
         result = 31 * result + taxid.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Protein{" +
+                "proteinAccession='" + proteinAccession + '\'' +
+                ", sequence='" + sequence + '\'' +
+                ", description='" + description + '\'' +
+                ", taxid=" + taxid +
+                ", modificationLocations=" + modificationLocations +
+                ", genes=" + genes +
+                ", peptides=" + peptides +
+                ", peptideVariants=" + peptideVariants +
+                ", symbolicPeptides=" + symbolicPeptides +
+                ", proteinGroups=" + proteinGroups +
+                ", score=" + score +
+                '}';
+    }
 }

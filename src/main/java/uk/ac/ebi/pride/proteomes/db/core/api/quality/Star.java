@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STAR", schema = "PRIDEPROT")
-@SequenceGenerator(name="STAR_SEQ", schema = "PRIDEPROT", sequenceName="STAR_STAR_PK_SEQ")
+@SequenceGenerator(name="STAR_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.STAR_STAR_PK_SEQ")
 public class Star {
 
     @Id

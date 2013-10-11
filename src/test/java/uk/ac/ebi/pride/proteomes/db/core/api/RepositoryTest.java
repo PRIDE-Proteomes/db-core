@@ -109,6 +109,14 @@ public abstract class RepositoryTest {
     protected static final String SECOND_GENE = "2";
     protected static final int NUM_PROTS = 2;
 
+    protected static final long DEFAULT_SCORE_ID = 1;
+    protected static final int DEFAULT_QMETHOD_ID = 1;
+    protected static final int DEAFULT_STAR_ID = 1;
+    protected static final String DEFAULT_QMETHOD_DESC = "Default value to initialize the database";
+    protected static final String DEFAULT_QMETHOD_NAME = "default";
+    protected static final int DEAFULT_STAR_COUNT = 0;
+    protected static final double DEFAULT_SCORE_VALUE = 0.0;
+
     @Autowired
     protected EntityManagerFactory entityManagerFactory;
 

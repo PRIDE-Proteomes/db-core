@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SCORE", schema = "PRIDEPROT")
-@SequenceGenerator(name="SCORE_SEQ", schema = "PRIDEPROT", sequenceName="SCORE_SCORE_PK_SEQ")
+@SequenceGenerator(name="SCORE_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.SCORE_SCORE_PK_SEQ")
 public class Score {
 
     @Id
@@ -21,11 +21,11 @@ public class Score {
     @Column(name = "VALUE", nullable = false, insertable = true, updatable = true)
     private Double value;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "QUALITY_METHOD_FK", referencedColumnName = "QUALITY_METHOD_PK", nullable = false)
     private QMethod qualityMethod;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "STAR_FK", referencedColumnName = "STAR_PK", nullable = false)
     private Star star;
 
