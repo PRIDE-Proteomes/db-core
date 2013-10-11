@@ -35,7 +35,7 @@ public class Protein {
     private String sequence;
 
     @Basic
-    @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 90, precision = 0)
+    @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 500, precision = 0)
     private String description;
 
     @Basic
