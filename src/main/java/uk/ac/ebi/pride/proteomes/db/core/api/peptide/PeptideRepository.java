@@ -33,4 +33,7 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
 
     @Query("select distinct p.sequence from Peptide p where p.taxid = :taxid")
     List<String> findAllDistinctSequenceByTaxid(@Param("taxid") Integer taxid);
+
+//    @Query("select p from SymbolicPeptide p where p.taxid = :taxid and p.id")
+    List<SymbolicPeptide> findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(Integer taxid, Long min, Long max);
 }

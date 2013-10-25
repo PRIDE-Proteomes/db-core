@@ -57,10 +57,11 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         proteins.add(proteinRepository.findByProteinAccession(ISOFORM_ACCESSION));
         proteinGroup.setProteins(proteins);
         proteinGroup.setTaxid(TAXID);
+        proteinGroup.setId(PROT_GROUP_ID);
 
         proteinGroup = proteinGroupRepository.save(proteinGroup);
 
-        Long newId = proteinGroup.getId();
+        String newId = proteinGroup.getId();
 
         ProteinGroup other = proteinGroupRepository.findById(newId);
 

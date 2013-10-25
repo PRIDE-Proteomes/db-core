@@ -77,7 +77,7 @@ public abstract class RepositoryTest {
     protected static final int PROTS_IN_GROUP = 2;
     protected static final int NUM_PRO_GROUPS = 1;
 
-    protected static final long PROT_GROUP_ID = 1;
+    protected static final String PROT_GROUP_ID = "1";
     protected static final int NUM_GENES = 1;
 
     protected static final String PROTEIN_ACCESSION = "X12345";

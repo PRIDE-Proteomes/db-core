@@ -166,11 +166,6 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-        </dependency>
-
         <!-- HSQLDB for integration testing -->
         <dependency>
             <groupId>org.hsqldb</groupId>

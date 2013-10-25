@@ -68,6 +68,14 @@ public class PeptideRepositoryTest extends RepositoryTest {
         assertNotNull(peptideVariantList);
         assertThat(peptideVariantList.size(), is(NUM_VARIANTS));
 
+
+        symbolicPeptideList = peptideRepository.findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(TAXID,1L,3L);
+        assertNotNull(symbolicPeptideList);
+        assertThat(symbolicPeptideList.size(), is(3));
+        assertThat(symbolicPeptideList.get(0).getPeptideId(),is(1L));
+        assertThat(symbolicPeptideList.get(1).getPeptideId(),is(2L));
+        assertThat(symbolicPeptideList.get(2).getPeptideId(),is(3L));
+
     }
 
     @Test

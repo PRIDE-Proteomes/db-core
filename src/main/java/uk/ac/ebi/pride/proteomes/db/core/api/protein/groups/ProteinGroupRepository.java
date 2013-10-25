@@ -1,6 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * User: ntoro
@@ -8,8 +8,8 @@ import org.springframework.data.repository.CrudRepository;
  * Time: 10:06
  */
 
-public interface ProteinGroupRepository extends CrudRepository<ProteinGroup, Long> {
+public interface ProteinGroupRepository extends JpaRepository<ProteinGroup, String> {
 
-   public ProteinGroup findById(Long proteinGroupId);
+   public ProteinGroup findById(String proteinGroupId);
 
 }

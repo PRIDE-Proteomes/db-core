@@ -17,13 +17,11 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "PROT_GROUP", schema = "PRIDEPROT")
-@SequenceGenerator(name="PROT_GROUP_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.PROT_GROUP_PROT_GROUP_PK_SEQ")
 public class ProteinGroup {
 
     @Id
-    @Column(name = "PROT_GROUP_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
-    @GeneratedValue(generator = "PROT_GROUP_SEQ", strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @Column(name = "PROT_GROUP_PK", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
+    private String id;
 
     @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
     @Basic
@@ -48,11 +46,11 @@ public class ProteinGroup {
     private Collection<Gene> genes;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
