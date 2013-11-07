@@ -4,12 +4,12 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -26,15 +26,21 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Transactional(readOnly = true)
     public void testFindByMethods() throws Exception {
 
-        ProteinGroup proteinGroup = proteinGroupRepository.findById(PROT_GROUP_ID);
-
-        Collection<Protein> proteins = proteinGroup.getProteins();
+        EntryGroup entryGroupGroup = (EntryGroup) proteinGroupRepository.findById(ENTRY_GROUP_ID);
+        Collection<Protein> proteins = entryGroupGroup.getProteins();
         assertNotNull(proteins);
         assertThat(proteins.size(), is(PROTS_IN_GROUP));
 
-        Collection<Gene> genes = proteinGroup.getGenes();
-        assertNotNull(genes);
-        assertThat(genes.size(), is(NUM_GENES));
+
+        GeneGroup geneGroup = (GeneGroup) proteinGroupRepository.findById(GENE_GROUP_ID);
+        proteins = geneGroup.getProteins();
+        assertNotNull(proteins);
+        assertThat(proteins.size(), is(PROTS_IN_GENE));
+
+        Collection<ProteinGroup> proteinGroup = proteinGroupRepository.findAll();
+        assertNotNull(proteinGroup);
+        assertThat(proteinGroup.size(), is(NUM_PROT_GROUPS));
+
 
     }
 
@@ -42,26 +48,19 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Transactional
     public void testSaveAndGetProteinGroup() throws Exception {
 
-        ProteinGroup proteinGroup = new ProteinGroup();
-        proteinGroup.setDescription(NO_DESCRIPTION);
-        proteinGroup.setType(ProteinGroupType.ISOFORM);
-
-        Set<Gene> genes = new HashSet<Gene>();
-        genes.add(geneRepository.findByGeneAccession(GENE_GROUP_ID));
-        genes.add(geneRepository.findByGeneAccession(GENE_GROUP_ID));
-
-        proteinGroup.setGenes(genes);
+        EntryGroup entryGroupGroup = new EntryGroup();
+        entryGroupGroup.setDescription(NO_DESCRIPTION);
 
         Set<Protein> proteins = new HashSet<Protein>();
         proteins.add(proteinRepository.findByProteinAccession(PROTEIN_ACCESSION));
         proteins.add(proteinRepository.findByProteinAccession(ISOFORM_ACCESSION));
-        proteinGroup.setProteins(proteins);
-        proteinGroup.setTaxid(TAXID);
-        proteinGroup.setId(PROT_GROUP_ID);
+        entryGroupGroup.setProteins(proteins);
+        entryGroupGroup.setTaxid(TAXID);
+        entryGroupGroup.setId(ENTRY_GROUP_ID);
 
-        proteinGroup = proteinGroupRepository.save(proteinGroup);
+        entryGroupGroup = proteinGroupRepository.save(entryGroupGroup);
 
-        String newId = proteinGroup.getId();
+        String newId = entryGroupGroup.getId();
 
         ProteinGroup other = proteinGroupRepository.findById(newId);
 
@@ -75,8 +74,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
 
         assertThat(other.getTaxid(),is(TAXID));
         assertThat(other.getDescription(), is(NO_DESCRIPTION));
-        assertThat(other.getType(), is(ProteinGroupType.ISOFORM));
-        assertThat(other.getGenes().size(), is(NUM_GENES));
+        assertEquals(other.getClass(), EntryGroup.class);
         assertThat(other.getProteins().size(), is(NUM_PROTS));
 
     }

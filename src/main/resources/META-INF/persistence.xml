@@ -12,13 +12,15 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Disease</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.group.PeptideGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.ReferencedPeptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.QMethod</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Score</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Star</class>

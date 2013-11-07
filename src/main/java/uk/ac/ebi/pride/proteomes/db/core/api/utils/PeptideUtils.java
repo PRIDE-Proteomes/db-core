@@ -53,4 +53,20 @@ public class PeptideUtils {
 
     }
 
+    public void printRepresentation(Iterable<Peptide> peptides) {
+
+        for (Peptide peptide : peptides) {
+            System.out.print("\nINSERT INTO PRIDEPROT.PEPTIDE (PEPTIDE_PK, SEQUENCE, REPRESENTATION, DESCRIPTION, SCORE_FK, SYMBOLIC, TAXID)");
+            System.out.print("\n  VALUES (" + peptide.getPeptideId() + ", N'" + peptide.getSequence() + "', N'" +
+                    PeptideUtils.peptideRepresentationGenerator(peptide) + "', N'', 1.0, N'" +
+                    isSymbolic(peptide) + "', 9606.0);\n");
+        }
+    }
+
+    private String isSymbolic(Peptide peptide) {
+        if (peptide instanceof PeptideVariant) {
+            return "FALSE";
+        }
+        return "TRUE";
+    }
 }

@@ -9,7 +9,6 @@ import java.io.Serializable;
  * Date: 14/08/2013
  * Time: 10:06
  */
-
 @Embeddable
 public class ModificationLocation implements Serializable, Comparable {
 

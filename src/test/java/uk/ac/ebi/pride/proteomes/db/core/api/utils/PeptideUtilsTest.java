@@ -1,10 +1,8 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.utils;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide;
 
@@ -102,29 +100,6 @@ public class PeptideUtilsTest extends RepositoryTest {
         String peptideRepresentation = PeptideUtils.peptideRepresentationGenerator(peptideZ);
 
         assertThat(peptideRepresentation, is(PEP_Z));
-
-    }
-
-    @Test
-    @Ignore
-    public void printRepresentation() {
-
-        Iterable<Peptide> peptides = peptideRepository.findAll();
-
-        for (Peptide peptide : peptides) {
-            System.out.print("\nINSERT INTO PRIDEPROT.PEPTIDE (PEPTIDE_PK, SEQUENCE, REPRESENTATION, DESCRIPTION, SCORE_FK, SYMBOLIC, TAXID)");
-            System.out.print("\n  VALUES (" + peptide.getPeptideId() + ", N'" + peptide.getSequence() + "', N'" + PeptideUtils.peptideRepresentationGenerator(peptide) + "', N'', 1.0, N'" +
-                    isSymbolic(peptide) + "', 9606.0);\n");
-        }
-
-
-    }
-
-    private String isSymbolic(Peptide peptide) {
-        if (peptide instanceof PeptideVariant) {
-            return "FALSE";
-        }
-        return "TRUE";
 
     }
 }

@@ -3,24 +3,26 @@ package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.Gene;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * Created with IntelliJ IDEA.
  * User: ntoro
  * Date: 14/08/2013
  * Time: 10:06
- * To change this template use File | Settings | File Templates.
  */
 @Entity
 @Table(name = "PROT_GROUP", schema = "PRIDEPROT")
-public class ProteinGroup {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "PROT_GROUP_TYPE", discriminatorType = DiscriminatorType.STRING )
+public abstract class ProteinGroup implements Serializable {
 
     @Id
     @Column(name = "PROT_GROUP_PK", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
+    @NotNull
     private String id;
 
     @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 1000, precision = 0)
@@ -29,21 +31,12 @@ public class ProteinGroup {
 
     @Basic
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @NotNull
     private Integer taxid;
-
-    @Basic
-    @Enumerated(EnumType.STRING)
-    @Column(name = "PROT_GROUP_TYPE", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
-    private ProteinGroupType type;
 
     @ManyToMany(mappedBy = "proteinGroups")
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<Protein> proteins;
-
-
-    @ManyToMany(mappedBy = "proteinGroups")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Gene> genes;
 
 
     public String getId() {
@@ -70,28 +63,12 @@ public class ProteinGroup {
         this.taxid = taxid;
     }
 
-    public ProteinGroupType getType() {
-        return type;
-    }
-
-    public void setType(ProteinGroupType type) {
-        this.type = type;
-    }
-
     public Collection<Protein> getProteins() {
         return proteins;
     }
 
     public void setProteins(Collection<Protein> proteins) {
         this.proteins = proteins;
-    }
-
-    public Collection<Gene> getGenes() {
-        return genes;
-    }
-
-    public void setGenes(Collection<Gene> genes) {
-        this.genes = genes;
     }
 
     @Override
@@ -102,15 +79,23 @@ public class ProteinGroup {
         ProteinGroup that = (ProteinGroup) o;
 
         if (proteins != null ? !proteins.equals(that.proteins) : that.proteins != null) return false;
-        if (type != that.type) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = type.hashCode();
-        result = 31 * result + (proteins != null ? proteins.hashCode() : 0);
+        int result =  (proteins != null ? proteins.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ProteinGroup{" +
+                "id='" + id + '\'' +
+                ", description='" + description + '\'' +
+                ", taxid=" + taxid +
+                ", proteins=" + proteins +
+                '}';
     }
 }

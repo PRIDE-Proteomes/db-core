@@ -1,6 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Date: 14/08/2013
  * Time: 10:06
  */
-public interface ScoreRepository extends CrudRepository<Score, Long> {
+public interface ScoreRepository extends JpaRepository<Score, Long> {
 
     public List<Score> findByValueGreaterThan(Double value);
     public List<Score> findByValueLessThan(Double value);

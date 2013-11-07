@@ -1,23 +1,21 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
 /**
- * Created with IntelliJ IDEA.
  * User: ntoro
  * Date: 15/08/2013
  * Time: 13:47
- * To change this template use File | Settings | File Templates.
  */
 public enum ProteinGroupType {
-    ISOFORM("ISOFORM");
+    ENTRY("ENTRY"),
+    GENE("GENE");
 
-    private final String value;
+    private final String groupName;
 
-    private ProteinGroupType(String value) {
-        this.value = value;
+    private ProteinGroupType(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getGroupName() {
-        return value;
+        return groupName;
     }
-
 }

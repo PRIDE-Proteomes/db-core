@@ -8,9 +8,10 @@ import uk.ac.ebi.pride.proteomes.db.core.api.assay.AssayRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.group.PeptideGroupRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProteinRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroupRepository;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.gene.GeneRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.ScoreRepository;
 
 import javax.persistence.EntityManagerFactory;
@@ -73,12 +74,13 @@ public abstract class RepositoryTest {
 
     protected static final long SCORE_ID = 1;
 
-    protected static final String GENE_GROUP_ID = "1";
+    protected static final String ENTRY_GROUP_ID = "X12345";
+    protected static final String GENE_GROUP_ID = "XGENE";
     protected static final int PROTS_IN_GROUP = 2;
-    protected static final int NUM_PRO_GROUPS = 1;
-
-    protected static final String PROT_GROUP_ID = "1";
+    protected static final int PROTS_IN_GENE = 2;
+    protected static final int NUM_ENTRY_GROUPS = 1;
     protected static final int NUM_GENES = 1;
+    protected static final int NUM_PROT_GROUPS = 2;
 
     protected static final String PROTEIN_ACCESSION = "X12345";
     protected static final String ISOFORM_ACCESSION = "X12345-1";
@@ -133,13 +135,16 @@ public abstract class RepositoryTest {
     protected ModificationRepository modificationRepository;
 
     @Autowired
-    protected GeneRepository geneRepository;
-
-    @Autowired
     protected ProteinGroupRepository proteinGroupRepository;
 
     @Autowired
     protected ProteinRepository proteinRepository;
+
+    @Autowired
+    protected PeptideProteinRepository peptideProteinRepository;
+
+    @Autowired
+    protected PeptideGroupRepository peptideGroupRepository;
 
     @Autowired
     protected ScoreRepository scoreRepository;
