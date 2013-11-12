@@ -119,6 +119,10 @@ public abstract class RepositoryTest {
     protected static final int DEAFULT_STAR_COUNT = 0;
     protected static final double DEFAULT_SCORE_VALUE = 0.0;
 
+	protected static final long PEPTIDE_TWO = 2;
+	protected static final long PEPTIDE_SEVEN = 7;
+	protected static final long PEPTIDE_TEN = 10;
+
     @Autowired
     protected EntityManagerFactory entityManagerFactory;
 

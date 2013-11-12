@@ -27,7 +27,6 @@ public class PeptideProteinPK implements Serializable {
     @Basic
     @NotNull
     @Column(name = "START_POSITION", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
-    //TODO: Think carefully about if the position needs to be part of the PK or not
     private Integer startPosition;
 
     public PeptideProteinPK() {
@@ -63,32 +62,25 @@ public class PeptideProteinPK implements Serializable {
         this.startPosition = startPosition;
     }
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof PeptideProteinPK)) return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PeptideProteinPK)) return false;
+		PeptideProteinPK that = (PeptideProteinPK) o;
 
-        PeptideProteinPK that = (PeptideProteinPK) o;
+		if (!peptideId.equals(that.peptideId)) return false;
+		if (!proteinAccession.equals(that.proteinAccession)) return false;
+		if (!startPosition.equals(that.startPosition)) return false;
 
-        if (!peptideId.equals(that.peptideId)) return false;
-        if (!proteinAccession.equals(that.proteinAccession)) return false;
+		return true;
+	}
 
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = peptideId.hashCode();
-        result = 31 * result + proteinAccession.hashCode();
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "PeptideGroupPK{" +
-                "peptideId=" + peptideId +
-                ", proteinAccession='" + proteinAccession + '\'' +
-                '}';
-    }
+	@Override
+	public int hashCode() {
+		int result = peptideId.hashCode();
+		result = 31 * result + proteinAccession.hashCode();
+		result = 31 * result + startPosition.hashCode();
+		return result;
+	}
 }

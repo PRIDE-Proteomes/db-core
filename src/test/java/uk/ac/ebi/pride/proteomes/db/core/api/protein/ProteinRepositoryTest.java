@@ -3,9 +3,6 @@ package uk.ac.ebi.pride.proteomes.db.core.api.protein;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
@@ -27,116 +24,119 @@ import static org.hamcrest.Matchers.is;
 
 public class ProteinRepositoryTest extends RepositoryTest {
 
-    private static final long PEPTIDE_TWO = 2;
-    private static final long PEPTIDE_SEVEN = 7;
-    private static final long PEPTIDE_TEN = 10;
+	@Test
+	@Transactional(readOnly = true)
+	public void testFindByMethods() throws Exception {
 
-    @Test
-    @Transactional(readOnly = true)
-    public void testFindByMethods() throws Exception {
+		Protein protein = proteinRepository.findByProteinAccession(PROTEIN_ACCESSION);
 
-        Protein protein = proteinRepository.findByProteinAccession(PROTEIN_ACCESSION);
+		Collection<PeptideProtein> peptides = protein.getPeptides();
+		assertNotNull(peptides);
+		assertThat(peptides.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
 
-        Collection<PeptideVariant> peptideVariants = protein.getPeptideVariants();
-        assertNotNull(peptideVariants);
-        assertThat(peptideVariants.size(), is(PEP_VAR_IN_PROTEIN));
+//		Collection<String> peptideIds = protein.getPeptideIds();
+//		assertNotNull(peptideIds);
+//		assertThat(peptideIds.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
 
-        Collection<SymbolicPeptide> symbolicPeptides = protein.getSymbolicPeptides();
-        assertNotNull(symbolicPeptides);
-        assertThat(symbolicPeptides.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
+		Collection<GeneGroup> genes = protein.getGeneGroups();
+		assertNotNull(genes);
+		assertThat(genes.size(), is(NUM_GENES));
 
-        Collection<Peptide> peptides = protein.getPeptides();
-        assertNotNull(peptides);
-        assertThat(peptides.size(), is(PEPS_IN_PROTEIN));
+		Collection<EntryGroup> entryGroups = protein.getEntryGroups();
+		assertNotNull(entryGroups);
+		assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS));
 
-        Collection<GeneGroup> genes = protein.getGeneGroups();
-        assertNotNull(genes);
-        assertThat(genes.size(), is(NUM_GENES));
+		Collection<ProteinGroup> proteinGroups = protein.getProteinGroups();
+		assertNotNull(proteinGroups);
+		assertThat(proteinGroups.size(), is(NUM_PROT_GROUPS));
 
-        Collection<EntryGroup> entryGroups = protein.getEntryGroups();
-        assertNotNull(entryGroups);
-        assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS));
+	}
 
-        Collection<ProteinGroup> proteinGroups = protein.getProteinGroups();
-        assertNotNull(proteinGroups);
-        assertThat(proteinGroups.size(), is(NUM_PROT_GROUPS));
+	@Test
+	@Transactional
+	public void testSaveAndGetProtein() throws Exception {
 
-    }
+		Protein protein = new Protein();
+		protein.setTaxid(TAXID);
+		protein.setDescription(NO_DESCRIPTION);
 
-    @Test
-    @Transactional
-    public void testSaveAndGetProtein() throws Exception {
+		protein.setProteinAccession(NEW_PROTEIN_ACCESSION);
+		protein.setScore(scoreRepository.findOne(SCORE_ID));
 
-        Protein protein = new Protein();
-        protein.setTaxid(TAXID);
-        protein.setDescription(NO_DESCRIPTION);
+		protein.setSequence(NEW_PROTEIN_SEQUENCE);
+		protein.setCurationLevel(CurationLevel.PREDICTED);
 
-        protein.setProteinAccession(NEW_PROTEIN_ACCESSION);
-        protein.setScore(scoreRepository.findOne(SCORE_ID));
+		Set<EntryGroup> entryGroups = new HashSet<EntryGroup>();
+		entryGroups.add((EntryGroup) proteinGroupRepository.findOne(ENTRY_GROUP_ID));
 
-        protein.setSequence(NEW_PROTEIN_SEQUENCE);
-        protein.setCurationLevel(CurationLevel.PREDICTED);
+		Set<GeneGroup> geneGroups = new HashSet<GeneGroup>();
+		geneGroups.add((GeneGroup) proteinGroupRepository.findOne(GENE_GROUP_ID));
 
-        Set<SymbolicPeptide> symbolicPeptides = new HashSet<SymbolicPeptide>();
-        symbolicPeptides.add((SymbolicPeptide) peptideRepository.findOne(PEPTIDE_TWO));
-        symbolicPeptides.add((SymbolicPeptide) peptideRepository.findOne(PEPTIDE_SEVEN));
-        symbolicPeptides.add((SymbolicPeptide) peptideRepository.findOne(PEPTIDE_TEN));
-        protein.setSymbolicPeptides(symbolicPeptides);
+		protein.setEntryGroups(entryGroups);
+		protein.setGeneGroups(geneGroups);
 
-        Set<EntryGroup> entryGroups = new HashSet<EntryGroup>();
-        entryGroups.add((EntryGroup) proteinGroupRepository.findOne(ENTRY_GROUP_ID));
+		protein = proteinRepository.save(protein);
 
-        Set<GeneGroup> geneGroups = new HashSet<GeneGroup>();
-        geneGroups.add((GeneGroup) proteinGroupRepository.findOne(GENE_GROUP_ID));
+		//After we store the protein we add the mapping with the peptides
+		PeptideProtein peptideProteinTwo = new PeptideProtein(PEPTIDE_TWO, NEW_PROTEIN_ACCESSION, 43);
+		peptideProteinTwo.setProtein(protein);
+		peptideProteinTwo.setPeptide(peptideRepository.findOne(PEPTIDE_TWO));
+		peptideProteinTwo.setStartPosition(43);
 
-        protein.setEntryGroups(entryGroups);
-        protein.setGeneGroups(geneGroups);
+		PeptideProtein peptideProteinSeven = new PeptideProtein(PEPTIDE_SEVEN, NEW_PROTEIN_ACCESSION, 1);
+		peptideProteinSeven.setProtein(protein);
+		peptideProteinSeven.setPeptide(peptideRepository.findOne(PEPTIDE_SEVEN));
+		peptideProteinSeven.setStartPosition(1);
 
-        protein = proteinRepository.save(protein);
+		PeptideProtein peptideProteinTen = new PeptideProtein(PEPTIDE_TEN, NEW_PROTEIN_ACCESSION, 13);
+		peptideProteinTen.setProtein(protein);
+		peptideProteinTen.setPeptide(peptideRepository.findOne(PEPTIDE_TEN));
+		peptideProteinTen.setStartPosition(13);
 
-        //After we store the protein we add the mapping with the peptides
-        PeptideProtein peptideProteinTwo = new PeptideProtein(PEPTIDE_TWO,NEW_PROTEIN_ACCESSION,43);
-        PeptideProtein peptideProteinSeven = new PeptideProtein(PEPTIDE_SEVEN,NEW_PROTEIN_ACCESSION,1);
-        PeptideProtein peptideProteinTen = new PeptideProtein(PEPTIDE_TEN,NEW_PROTEIN_ACCESSION,13);
+		peptideProteinTwo = peptideProteinRepository.save(peptideProteinTwo);
+		peptideProteinSeven = peptideProteinRepository.save(peptideProteinSeven);
+		peptideProteinTen = peptideProteinRepository.save(peptideProteinTen);
 
-        peptideProteinTwo = peptideProteinRepository.save(peptideProteinTwo);
-        peptideProteinSeven = peptideProteinRepository.save(peptideProteinSeven);
-        peptideProteinTen = peptideProteinRepository.save(peptideProteinTen);
+		Set<PeptideProtein> symbolicPeptides = new HashSet<PeptideProtein>();
+		symbolicPeptides.add(peptideProteinTwo);
+		symbolicPeptides.add(peptideProteinSeven);
+		symbolicPeptides.add(peptideProteinTen);
+		protein.setPeptides(symbolicPeptides);
 
 
-        String newId = protein.getProteinAccession();
+		String newId = protein.getProteinAccession();
 
-        Protein other = proteinRepository.findByProteinAccession(newId);
+		Protein other = proteinRepository.findByProteinAccession(newId);
 
-        checkProteinInDB(other);
+		checkProteinInDB(other);
 
-        proteinRepository.delete(other);
-    }
+		proteinRepository.delete(other);
+	}
 
-    private void checkProteinInDB(Protein other) {
-        assertThat(other.getDescription(), is(NO_DESCRIPTION));
-        assertThat(other.getTaxid(), is(TAXID));
-        assertThat(other.getSequence(), is(NEW_PROTEIN_SEQUENCE));
-        assertThat(other.getCurationLevel(), is(CurationLevel.PREDICTED));
-        checkSymbolicPeptides(other.getSymbolicPeptides());
-        checkEntryGroups(other.getEntryGroups());
-        checkGeneGroups(other.getGeneGroups());
-    }
+	private void checkProteinInDB(Protein other) {
+		assertThat(other.getDescription(), is(NO_DESCRIPTION));
+		assertThat(other.getTaxid(), is(TAXID));
+		assertThat(other.getSequence(), is(NEW_PROTEIN_SEQUENCE));
+		assertThat(other.getCurationLevel(), is(CurationLevel.PREDICTED));
+		checkSymbolicPeptides(other.getPeptides());
+		checkEntryGroups(other.getEntryGroups());
+		checkGeneGroups(other.getGeneGroups());
+	}
 
-    private void checkEntryGroups(Collection<EntryGroup> entryGroups) {
-        assertNotNull(entryGroups);
-        assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS));
-        assertThat(entryGroups.iterator().next().getId(), is(ENTRY_GROUP_ID));
-    }
+	private void checkEntryGroups(Collection<EntryGroup> entryGroups) {
+		assertNotNull(entryGroups);
+		assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS));
+		assertThat(entryGroups.iterator().next().getId(), is(ENTRY_GROUP_ID));
+	}
 
-    private void checkGeneGroups(Collection<GeneGroup> geneGroups) {
-        assertNotNull(geneGroups);
-        assertThat(geneGroups.size(), is(NUM_GENES));
-        assertThat(geneGroups.iterator().next().getId(), is(GENE_GROUP_ID));
-    }
+	private void checkGeneGroups(Collection<GeneGroup> geneGroups) {
+		assertNotNull(geneGroups);
+		assertThat(geneGroups.size(), is(NUM_GENES));
+		assertThat(geneGroups.iterator().next().getId(), is(GENE_GROUP_ID));
+	}
 
-    private void checkSymbolicPeptides(Collection<SymbolicPeptide> symbolicPeptides) {
-        assertNotNull(symbolicPeptides);
-        assertThat(symbolicPeptides.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
-    }
+	private void checkSymbolicPeptides(Collection<PeptideProtein> symbolicPeptides) {
+		assertNotNull(symbolicPeptides);
+		assertThat(symbolicPeptides.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
+	}
 }

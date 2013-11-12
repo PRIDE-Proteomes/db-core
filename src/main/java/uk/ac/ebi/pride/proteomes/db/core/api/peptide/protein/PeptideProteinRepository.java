@@ -10,5 +10,8 @@ import java.util.List;
  * Time: 10:06
  */
 public interface PeptideProteinRepository extends JpaRepository<PeptideProtein, PeptideProteinPK> {
-    List<PeptideProtein> findByProteinProteinAccessionAndPeptidePeptideId(String proteinAccession, Long peptideId);
+
+    public List<PeptideProtein> findByPeptidePeptideIdAndProteinProteinAccession(Long peptideId, String proteinAccession);
+
+
 }

@@ -4,9 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
@@ -14,6 +12,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * User: ntoro
@@ -46,7 +45,6 @@ public class Protein {
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer taxid;
 
-
     @ElementCollection
     @CollectionTable(
             name = "PROTEIN_MOD", schema = "PRIDEPROT",
@@ -55,34 +53,9 @@ public class Protein {
     @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<ModificationLocation> modificationLocations;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinTable(name = "PROT_PEP", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "PROTEIN_FK_PK"),
-            inverseJoinColumns = @JoinColumn(name = "PEPTIDE_FK_PK") ,
-            uniqueConstraints =  @UniqueConstraint(name = "PROT_PEP_UN",
-            columnNames = {"PEPTIDE_FK_PK", "PROTEIN_FK_PK","START_POSITION"}))
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Collection<Peptide> peptides;
-
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "PROT_PEP", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "PROTEIN_FK_PK"),
-            inverseJoinColumns = @JoinColumn(name = "PEPTIDE_FK_PK") ,
-            uniqueConstraints =  @UniqueConstraint(name = "PROT_PEP_UN",
-            columnNames = {"PEPTIDE_FK_PK", "PROTEIN_FK_PK","START_POSITION"}))
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @Where(clause = "SYMBOLIC = 'FALSE'")  //This is necessary :(
-    private Collection<PeptideVariant> peptideVariants;
-
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "PROT_PEP", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "PROTEIN_FK_PK"),
-            inverseJoinColumns = @JoinColumn(name = "PEPTIDE_FK_PK") ,
-            uniqueConstraints =  @UniqueConstraint(name = "PROT_PEP_UN",
-            columnNames = {"PEPTIDE_FK_PK", "PROTEIN_FK_PK","START_POSITION"}))
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @Where(clause = "SYMBOLIC = 'TRUE'")  //This is necessary :(
-    private Collection<SymbolicPeptide> symbolicPeptides;
+	@OneToMany(mappedBy = "protein")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private Collection<PeptideProtein> peptides;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
@@ -160,31 +133,15 @@ public class Protein {
         this.modificationLocations = modificationLocations;
     }
 
-    public Collection<Peptide> getPeptides() {
-        return peptides;
-    }
+	public Collection<PeptideProtein> getPeptides() {
+		return peptides;
+	}
 
-    public void setPeptides(Collection<Peptide> peptides) {
-        this.peptides = peptides;
-    }
+	public void setPeptides(Collection<PeptideProtein> peptideProteins) {
+		this.peptides = peptideProteins;
+	}
 
-    public Collection<PeptideVariant> getPeptideVariants() {
-        return peptideVariants;
-    }
-
-    public void setPeptideVariants(Collection<PeptideVariant> peptideVariants) {
-        this.peptideVariants = peptideVariants;
-    }
-
-    public Collection<SymbolicPeptide> getSymbolicPeptides() {
-        return symbolicPeptides;
-    }
-
-    public void setSymbolicPeptides(Collection<SymbolicPeptide> symbolicPeptides) {
-        this.symbolicPeptides = symbolicPeptides;
-    }
-
-    public Collection<ProteinGroup> getProteinGroups() {
+	public Collection<ProteinGroup> getProteinGroups() {
         return proteinGroups;
     }
 
@@ -245,11 +202,10 @@ public class Protein {
                 ", taxid=" + taxid +
                 ", modificationLocations=" + modificationLocations +
                 ", peptides=" + peptides +
-                ", peptideVariants=" + peptideVariants +
-                ", symbolicPeptides=" + symbolicPeptides +
                 ", isoforms=" + entryGroups +
                 ", geneGroups=" + geneGroups +
                 ", score=" + score +
                 '}';
     }
+
 }
