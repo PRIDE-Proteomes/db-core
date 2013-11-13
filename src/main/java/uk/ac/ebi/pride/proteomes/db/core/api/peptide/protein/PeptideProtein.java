@@ -1,7 +1,5 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 
@@ -36,11 +34,9 @@ public class PeptideProtein implements Serializable {
     @JoinColumn(name = "PROTEIN_FK_PK", referencedColumnName = "PROTEIN_ACCESSION", nullable = false, insertable=false, updatable=false)
     private Protein protein;
 
-	@Column(name = "START_POSITION", nullable = false, insertable = false, updatable = false)
-	private Integer startPosition;
-
 
 	public PeptideProtein() {
+        setId(new PeptideProteinPK());
 	}
 
 	public PeptideProtein(Long peptideId, String proteinAccession, Integer startPosition) {
@@ -71,12 +67,28 @@ public class PeptideProtein implements Serializable {
 		this.protein = proteinByProteinFkPk;
 	}
 
+    public Long getPeptideId() {
+        return id.getPeptideId();
+    }
+
+    public void setPeptideId(Long peptideId) {
+        id.setPeptideId(peptideId);
+    }
+
+    public String getProteinAccession() {
+        return id.getProteinAccession();
+    }
+
+    public void setProteinAccession(String proteinAccession) {
+        id.setProteinAccession(proteinAccession);
+    }
+
 	public Integer getStartPosition() {
-		return startPosition;
+		return id.getStartPosition();
 	}
 
 	public void setStartPosition(Integer startPosition) {
-		this.startPosition = startPosition;
+        id.setStartPosition(startPosition);
 	}
 
 	public Integer getTrypticScore() {

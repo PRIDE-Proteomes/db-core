@@ -12,7 +12,6 @@ import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * User: ntoro
@@ -34,7 +33,7 @@ public class Protein {
 
     @Basic
     @Enumerated(EnumType.STRING)
-    @Column(name = "CURATION_LEVEL", nullable = false, insertable = true, updatable = true, length = 100, precision = 0)
+    @Column(name = "CURATION_LEVEL", nullable = true, insertable = true, updatable = true, length = 100, precision = 0)
     private CurationLevel curationLevel;
 
     @Basic
@@ -202,7 +201,7 @@ public class Protein {
                 ", taxid=" + taxid +
                 ", modificationLocations=" + modificationLocations +
                 ", peptides=" + peptides +
-                ", isoforms=" + entryGroups +
+                ", entryGroups=" + entryGroups +
                 ", geneGroups=" + geneGroups +
                 ", score=" + score +
                 '}';

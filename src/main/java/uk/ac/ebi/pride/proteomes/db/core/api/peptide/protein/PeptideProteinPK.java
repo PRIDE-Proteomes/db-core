@@ -33,9 +33,9 @@ public class PeptideProteinPK implements Serializable {
     }
 
     public PeptideProteinPK(Long peptideId, String proteinAccession, Integer startPosition) {
-        this.peptideId = peptideId;
-        this.proteinAccession = proteinAccession;
-        this.startPosition = startPosition;
+        setPeptideId(peptideId);
+        setProteinAccession(proteinAccession);
+        setStartPosition(startPosition);
     }
 
     public Long getPeptideId() {
