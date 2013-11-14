@@ -200,9 +200,9 @@ public class Protein {
                 ", description='" + description + '\'' +
                 ", taxid=" + taxid +
                 ", modificationLocations=" + modificationLocations +
-                ", peptides=" + peptides +
-                ", entryGroups=" + entryGroups +
-                ", geneGroups=" + geneGroups +
+//                ", peptides=" + peptides +
+//                ", entryGroups=" + entryGroups +
+//                ", geneGroups=" + geneGroups +
                 ", score=" + score +
                 '}';
     }
