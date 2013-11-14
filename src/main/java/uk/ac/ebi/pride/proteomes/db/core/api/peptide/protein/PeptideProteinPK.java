@@ -83,4 +83,13 @@ public class PeptideProteinPK implements Serializable {
 		result = 31 * result + startPosition.hashCode();
 		return result;
 	}
+
+    @Override
+    public String toString() {
+        return "PeptideProteinPK{" +
+                "peptideId=" + peptideId +
+                ", proteinAccession='" + proteinAccession + '\'' +
+                ", startPosition=" + startPosition +
+                '}';
+    }
 }
