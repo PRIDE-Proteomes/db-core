@@ -10,6 +10,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static junit.framework.Assert.assertNotNull;
@@ -50,7 +51,15 @@ public class ProteinRepositoryTest extends RepositoryTest {
 		assertNotNull(proteinGroups);
 		assertThat(proteinGroups.size(), is(NUM_PROT_GROUPS));
 
-	}
+        List<Protein> results = proteinRepository.findByDescriptionContaining("kinase");
+        assertNotNull(results);
+        assertThat(results.size(), is(1));
+
+        List<Protein> results2 = proteinRepository.findBySequenceContaining("DPYSQQPQTPRPS");
+        assertNotNull(results2);
+        assertThat(results2.size(), is(2));
+
+    }
 
 	@Test
 	@Transactional
