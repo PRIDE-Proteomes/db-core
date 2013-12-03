@@ -49,25 +49,25 @@ public class Protein {
             name = "PROTEIN_MOD", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PROTEIN_FK_PK", referencedColumnName = "PROTEIN_ACCESSION")
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Collection<ModificationLocation> modificationLocations;
 
 	@OneToMany(mappedBy = "protein")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private Collection<PeptideProtein> peptides;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PROT_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Collection<ProteinGroup> proteinGroups;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PROT_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "PROT_GROUP_TYPE = 'ENTRY'")  //This is necessary :(
     private Collection<EntryGroup> entryGroups;
 
@@ -75,7 +75,7 @@ public class Protein {
     @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PROT_FK_PK"),
             inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
     private Collection<GeneGroup> geneGroups;
 
