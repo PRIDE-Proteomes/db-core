@@ -18,6 +18,7 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
     //If we need it, we can change the List by or Pages
     public List<Peptide> findPeptideBySequence(String sequence);
     public List<PeptideVariant> findPeptideVariantBySequence(String sequence);
+    public List<PeptideVariant> findPeptideVariantBySequenceAndTaxid(String sequence, int taxid);
 
     //As the symbolic peptide is a artificial representation of the peptide, it has to be only one by species.
     public List<SymbolicPeptide> findSymbolicPeptideBySequence(String sequence);
