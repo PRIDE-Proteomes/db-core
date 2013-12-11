@@ -49,7 +49,7 @@ public class Protein {
             name = "PROTEIN_MOD", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PROTEIN_FK_PK", referencedColumnName = "PROTEIN_ACCESSION")
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Collection<ModificationLocation> modificationLocations;
 
 	@OneToMany(mappedBy = "protein")

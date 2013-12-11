@@ -1,6 +1,7 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  * Date: 14/08/2013
  * Time: 10:06
  */
+@Repository
 public interface ScoreRepository extends JpaRepository<Score, Long> {
 
     public List<Score> findByValueGreaterThan(Double value);

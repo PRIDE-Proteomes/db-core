@@ -102,7 +102,7 @@ public abstract class Peptide implements Serializable {
 	private Collection<Tissue> tissues;
 
 	@OneToMany(mappedBy = "peptide")
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private Collection<PeptideProtein> proteins;
 
 	@OneToOne
