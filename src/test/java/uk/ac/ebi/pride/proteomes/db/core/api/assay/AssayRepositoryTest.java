@@ -42,7 +42,7 @@ public class AssayRepositoryTest extends RepositoryTest {
         Assay assay = new Assay();
         assay.setAssayAccession(ASSAY_ACCESSION);
         assay.setProjectAccession(PROJECT_ACCESSION);
-        assay.setTaxid(TAXID);
+        assay.setTaxid(TAXID_HUMAN);
 
         //CV Params
 
@@ -107,7 +107,7 @@ public class AssayRepositoryTest extends RepositoryTest {
         assertNotNull(assay);
         assertThat(assay.getAssayAccession(), is(ASSAY_ACCESSION));
         assertThat(assay.getProjectAccession(), is(PROJECT_ACCESSION));
-        assertThat(assay.getTaxid(), is(TAXID));
+        assertThat(assay.getTaxid(), is(TAXID_HUMAN));
 
         checkCellType(assay.getCellTypes());
         checkDisease(assay.getDiseases());

@@ -15,5 +15,6 @@ public interface PeptideProteinRepository extends JpaRepository<PeptideProtein, 
 
     public List<PeptideProtein> findByPeptidePeptideIdAndProteinProteinAccession(Long peptideId, String proteinAccession);
 
+    public List<PeptideProtein> findByProteinProteinAccession(String proteinAccession);
 
 }

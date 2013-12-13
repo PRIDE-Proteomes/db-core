@@ -30,7 +30,7 @@ public abstract class RepositoryTest {
 
     protected static final int NUM_ASSAY_PROJECT = 22;
 
-    protected static final Integer TAXID = 9606;
+    protected static final Integer TAXID_HUMAN = 9606;
 
     protected static final String NO_DESCRIPTION = null;
 
@@ -90,8 +90,6 @@ public abstract class RepositoryTest {
             "DIDDNSNGTYEKPTTVDPYSQQPQTPRPSTQTDLFVTPVTNQRPDELKVTVKLKYSQQPQTPRPSTQTDL";
 
     protected static final int SYMBOLIC_PEP_IN_PROTEIN = 3;
-    protected static final int PEP_VAR_IN_PROTEIN = 3;
-    protected static final int PEPS_IN_PROTEIN = 6;
 
     protected static final Double SCORE_VALUE = 2.0;
     protected static final Integer STAR_COUNT = 2;
@@ -108,7 +106,6 @@ public abstract class RepositoryTest {
     protected static final Double MIN = 1.0;
     protected static final Double MAX = 3.0;
 
-    protected static final String SECOND_GENE = "2";
     protected static final int NUM_PROTS = 2;
 
     protected static final long DEFAULT_SCORE_ID = 1;

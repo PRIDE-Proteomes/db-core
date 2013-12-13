@@ -32,55 +32,53 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
 
 		List<Peptide> peptides = peptideRepository.findPeptideBySequence(SEQUENCE);
-
 		assertNotNull(peptides);
 		assertThat(peptides.size(), is(PEPS_WITH_SEQUENCE));
 
 		List<PeptideVariant> peptideVariants = peptideRepository.findPeptideVariantBySequence(SEQUENCE);
-
 		assertNotNull(peptideVariants);
 		assertThat(peptideVariants.size(), is(PEPS_VAR_WITH_SEQUENCE));
 
 		List<SymbolicPeptide> symbolicPeptides = peptideRepository.findSymbolicPeptideBySequence(SEQUENCE);
-
 		assertNotNull(symbolicPeptides);
 		assertThat(symbolicPeptides.size(), is(PEPS_SYM_WITH_SEQUENCE));
 
-		List<String> sequences = peptideRepository.findAllDistinctSequenceByTaxid(TAXID);
-
+		List<String> sequences = peptideRepository.findAllDistinctSequenceByTaxid(TAXID_HUMAN);
 		assertNotNull(sequences);
 		assertThat(sequences.size(), is(NUM_SYMBOLIC));
 
 		List<SymbolicPeptide> symbolicPeptideList = peptideRepository.findAllSymbolicPeptides();
-
 		assertNotNull(symbolicPeptideList);
 		assertThat(symbolicPeptideList.size(), is(NUM_SYMBOLIC));
 
-		SymbolicPeptide symbolicPeptide = peptideRepository.findSymbolicPeptideBySequenceAndTaxid(SEQUENCE, TAXID);
-
+		SymbolicPeptide symbolicPeptide = peptideRepository.findSymbolicPeptideBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
 		assertNotNull(symbolicPeptide);
 		assertThat(symbolicPeptide.getSequence(), is(SEQUENCE));
-		assertThat(symbolicPeptide.getTaxid(), is(TAXID));
+		assertThat(symbolicPeptide.getTaxid(), is(TAXID_HUMAN));
 
 		SymbolicPeptide symbolicPeptideWithProteins = (SymbolicPeptide) peptideRepository.findOne(PEPTIDE_SEVEN);
-
 		assertNotNull(symbolicPeptideWithProteins);
 		assertThat(symbolicPeptideWithProteins.getProteins().size(), is(1));
 		assertThat(symbolicPeptideWithProteins.getProteins().iterator().next().getId().getProteinAccession(), is(PROTEIN_ACCESSION));
 
-
 		List<PeptideVariant> peptideVariantList = peptideRepository.findAllPeptideVariants();
-
 		assertNotNull(peptideVariantList);
 		assertThat(peptideVariantList.size(), is(NUM_VARIANTS));
 
-
-		symbolicPeptideList = peptideRepository.findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(TAXID, 1L, 3L);
+		symbolicPeptideList = peptideRepository.findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(TAXID_HUMAN, 1L, 3L);
 		assertNotNull(symbolicPeptideList);
 		assertThat(symbolicPeptideList.size(), is(3));
 		assertThat(symbolicPeptideList.get(0).getPeptideId(), is(1L));
 		assertThat(symbolicPeptideList.get(1).getPeptideId(), is(2L));
 		assertThat(symbolicPeptideList.get(2).getPeptideId(), is(3L));
+
+        List<SymbolicPeptide> peptideVariantListByTaxid = peptideRepository.findSymbolicPeptideByTaxid(9606);
+        assertNotNull(peptideVariantListByTaxid);
+        assertThat(peptideVariantListByTaxid.size(), is(30));
+
+        List<PeptideVariant> variantList = peptideRepository.findPeptideVariantBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
+        assertNotNull(variantList);
+        assertThat(variantList.size(), is(1));
 
 	}
 
@@ -90,7 +88,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
 		//Peptides
 		PeptideVariant peptideVariant = new PeptideVariant();
-		peptideVariant.setTaxid(TAXID);
+		peptideVariant.setTaxid(TAXID_HUMAN);
 		peptideVariant.setDescription(NO_DESCRIPTION);
 		peptideVariant.setSequence(SEQUENCE);
 
@@ -184,7 +182,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		assertNotNull(peptideVariant);
 		assertThat(peptideVariant.getScore().getId(), is(SCORE_ID));
 		assertThat(peptideVariant.getDescription(), is(NO_DESCRIPTION));
-		assertThat(peptideVariant.getTaxid(), is(TAXID));
+		assertThat(peptideVariant.getTaxid(), is(TAXID_HUMAN));
 
 		checkPeptideModification(peptideVariant.getModificationLocations());
 		checkCellType(peptideVariant.getCellTypes());
@@ -231,7 +229,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
 		//Same Peptide
 		PeptideVariant samePeptideVariant = new PeptideVariant();
-		samePeptideVariant.setTaxid(TAXID);
+		samePeptideVariant.setTaxid(TAXID_HUMAN);
 		samePeptideVariant.setDescription(NO_DESCRIPTION);
 		samePeptideVariant.setSequence(SEQUENCE);
 
@@ -337,7 +335,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
 		//Same Peptide
 		PeptideVariant differentPeptideVariant = new PeptideVariant();
-		differentPeptideVariant.setTaxid(TAXID);
+		differentPeptideVariant.setTaxid(TAXID_HUMAN);
 		differentPeptideVariant.setDescription(NO_DESCRIPTION);
 		differentPeptideVariant.setSequence(SEQUENCE);
 
@@ -442,7 +440,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		//Peptide
 		PeptideVariant peptideVariant = new PeptideVariant();
 
-		peptideVariant.setTaxid(TAXID);
+		peptideVariant.setTaxid(TAXID_HUMAN);
 		peptideVariant.setDescription(NO_DESCRIPTION);
 		peptideVariant.setSequence(SEQUENCE);
 

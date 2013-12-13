@@ -17,7 +17,11 @@ public interface ProteinRepository extends JpaRepository<Protein, String> {
 
     Protein findByProteinAccession(String proteinAccession);
 
+    List<Protein> findByTaxid(int taxid);
+
     List<Protein> findByDescriptionContaining(String searchTerm);
+
+    List<Protein> findByTaxidAndDescriptionContaining(int taxid, String searchTerm);
 
     @Query("SELECT p FROM Protein p WHERE LOWER(p.sequence) LIKE LOWER(CONCAT('%',:searchTerm,'%'))")
     List<Protein> findBySequenceContaining(@Param("searchTerm") String searchTerm);

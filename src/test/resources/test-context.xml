@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/data/jpa
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <import resource="classpath:/META-INF/spring/app-context.xml"/>
+    <!--<import resource="classpath:/META-INF/spring/app-context.xml"/>-->
 
     <tx:annotation-driven/>
 

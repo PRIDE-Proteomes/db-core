@@ -59,6 +59,14 @@ public class ProteinRepositoryTest extends RepositoryTest {
         assertNotNull(results2);
         assertThat(results2.size(), is(2));
 
+        List<Protein> results3 = proteinRepository.findByTaxid(TAXID_HUMAN);
+        assertNotNull(results3);
+        assertThat(results3.size(), is(2));
+
+        List<Protein> results4 = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase");
+        assertNotNull(results4);
+        assertThat(results4.size(), is(1));
+
     }
 
 	@Test
@@ -66,7 +74,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
 	public void testSaveAndGetProtein() throws Exception {
 
 		Protein protein = new Protein();
-		protein.setTaxid(TAXID);
+		protein.setTaxid(TAXID_HUMAN);
 		protein.setDescription(NO_DESCRIPTION);
 
 		protein.setProteinAccession(NEW_PROTEIN_ACCESSION);
@@ -124,7 +132,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
 
 	private void checkProteinInDB(Protein other) {
 		assertThat(other.getDescription(), is(NO_DESCRIPTION));
-		assertThat(other.getTaxid(), is(TAXID));
+		assertThat(other.getTaxid(), is(TAXID_HUMAN));
 		assertThat(other.getSequence(), is(NEW_PROTEIN_SEQUENCE));
 		assertThat(other.getCurationLevel(), is(CurationLevel.PREDICTED));
 		checkSymbolicPeptides(other.getPeptides());

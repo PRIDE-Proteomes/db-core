@@ -55,7 +55,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         proteins.add(proteinRepository.findByProteinAccession(PROTEIN_ACCESSION));
         proteins.add(proteinRepository.findByProteinAccession(ISOFORM_ACCESSION));
         entryGroupGroup.setProteins(proteins);
-        entryGroupGroup.setTaxid(TAXID);
+        entryGroupGroup.setTaxid(TAXID_HUMAN);
         entryGroupGroup.setId(ENTRY_GROUP_ID);
 
         entryGroupGroup = proteinGroupRepository.save(entryGroupGroup);
@@ -72,7 +72,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
 
     private void checkProteinGroupInDB(ProteinGroup other) {
 
-        assertThat(other.getTaxid(),is(TAXID));
+        assertThat(other.getTaxid(),is(TAXID_HUMAN));
         assertThat(other.getDescription(), is(NO_DESCRIPTION));
         assertEquals(other.getClass(), EntryGroup.class);
         assertThat(other.getProteins().size(), is(NUM_PROTS));

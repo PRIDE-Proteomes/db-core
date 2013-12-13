@@ -15,10 +15,10 @@
     </appender>
 
     <logger name="uk.ac.ebi.pride.proteomes.db.core" level="debug" />
-    <logger name="org.springframework.dao" level="debug" />
+    <logger name="org.springframework.dao" level="warn" />
     <logger name="org.springframework.beans" level="error" />
 
-    <root level="debug">
+    <root level="error">
         <appender-ref ref="console" />
     </root>
 </configuration>

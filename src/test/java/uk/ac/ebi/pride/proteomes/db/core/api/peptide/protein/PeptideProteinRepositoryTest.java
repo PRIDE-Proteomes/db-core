@@ -27,6 +27,10 @@ public class PeptideProteinRepositoryTest extends RepositoryTest {
         assertThat(peptideProteins.size(), is(1));
 		assertThat(peptideProteins.iterator().next().getStartPosition(), is(1));
 
+        peptideProteins = peptideProteinRepository.findByProteinProteinAccession(PROTEIN_ACCESSION);
+        assertNotNull(peptideProteins);
+        assertThat(peptideProteins.size(), is(3));
+
 	}
 
 	@Test
