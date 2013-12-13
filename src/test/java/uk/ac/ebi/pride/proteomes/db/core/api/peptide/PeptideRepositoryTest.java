@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.peptide;
 
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.Modification;
@@ -35,46 +36,72 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		assertNotNull(peptides);
 		assertThat(peptides.size(), is(PEPS_WITH_SEQUENCE));
 
+
 		List<PeptideVariant> peptideVariants = peptideRepository.findPeptideVariantBySequence(SEQUENCE);
 		assertNotNull(peptideVariants);
 		assertThat(peptideVariants.size(), is(PEPS_VAR_WITH_SEQUENCE));
+
 
 		List<SymbolicPeptide> symbolicPeptides = peptideRepository.findSymbolicPeptideBySequence(SEQUENCE);
 		assertNotNull(symbolicPeptides);
 		assertThat(symbolicPeptides.size(), is(PEPS_SYM_WITH_SEQUENCE));
 
+
 		List<String> sequences = peptideRepository.findAllDistinctSequenceByTaxid(TAXID_HUMAN);
 		assertNotNull(sequences);
 		assertThat(sequences.size(), is(NUM_SYMBOLIC));
 
+        List<String> sequencesPaged = peptideRepository.findAllDistinctSequenceByTaxid(TAXID_HUMAN, new PageRequest(2,5));
+        assertNotNull(sequencesPaged);
+        assertThat(sequencesPaged.size(), is(5));
+
+
 		List<SymbolicPeptide> symbolicPeptideList = peptideRepository.findAllSymbolicPeptides();
 		assertNotNull(symbolicPeptideList);
 		assertThat(symbolicPeptideList.size(), is(NUM_SYMBOLIC));
+
+        List<SymbolicPeptide> symbolicPeptideListPaged = peptideRepository.findAllSymbolicPeptides(new PageRequest(2,5));
+        assertNotNull(symbolicPeptideListPaged);
+        assertThat(symbolicPeptideListPaged.size(), is(5));
+
 
 		SymbolicPeptide symbolicPeptide = peptideRepository.findSymbolicPeptideBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
 		assertNotNull(symbolicPeptide);
 		assertThat(symbolicPeptide.getSequence(), is(SEQUENCE));
 		assertThat(symbolicPeptide.getTaxid(), is(TAXID_HUMAN));
 
-		SymbolicPeptide symbolicPeptideWithProteins = (SymbolicPeptide) peptideRepository.findOne(PEPTIDE_SEVEN);
+
+        SymbolicPeptide symbolicPeptideWithProteins = (SymbolicPeptide) peptideRepository.findOne(PEPTIDE_SEVEN);
 		assertNotNull(symbolicPeptideWithProteins);
 		assertThat(symbolicPeptideWithProteins.getProteins().size(), is(1));
 		assertThat(symbolicPeptideWithProteins.getProteins().iterator().next().getId().getProteinAccession(), is(PROTEIN_ACCESSION));
 
-		List<PeptideVariant> peptideVariantList = peptideRepository.findAllPeptideVariants();
+
+        List<PeptideVariant> peptideVariantList = peptideRepository.findAllPeptideVariants();
 		assertNotNull(peptideVariantList);
 		assertThat(peptideVariantList.size(), is(NUM_VARIANTS));
 
-		symbolicPeptideList = peptideRepository.findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(TAXID_HUMAN, 1L, 3L);
+        List<PeptideVariant> peptideVariantListPaged = peptideRepository.findAllPeptideVariants(new PageRequest(2,5));
+        assertNotNull(peptideVariantListPaged);
+        assertThat(peptideVariantListPaged.size(), is(5));
+
+
+        symbolicPeptideList = peptideRepository.findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(TAXID_HUMAN, 1L, 3L);
 		assertNotNull(symbolicPeptideList);
 		assertThat(symbolicPeptideList.size(), is(3));
 		assertThat(symbolicPeptideList.get(0).getPeptideId(), is(1L));
 		assertThat(symbolicPeptideList.get(1).getPeptideId(), is(2L));
 		assertThat(symbolicPeptideList.get(2).getPeptideId(), is(3L));
 
+
         List<SymbolicPeptide> peptideVariantListByTaxid = peptideRepository.findSymbolicPeptideByTaxid(9606);
         assertNotNull(peptideVariantListByTaxid);
-        assertThat(peptideVariantListByTaxid.size(), is(30));
+        assertThat(peptideVariantListByTaxid.size(), is(NUM_SYMBOLIC));
+
+        List<SymbolicPeptide> peptideVariantListByTaxidPaged = peptideRepository.findSymbolicPeptideByTaxid(9606, new PageRequest(2,5));
+        assertNotNull(peptideVariantListByTaxidPaged);
+        assertThat(peptideVariantListByTaxidPaged.size(), is(5));
+
 
         List<PeptideVariant> variantList = peptideRepository.findPeptideVariantBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
         assertNotNull(variantList);

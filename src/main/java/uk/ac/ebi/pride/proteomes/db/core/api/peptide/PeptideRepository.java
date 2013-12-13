@@ -1,5 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.peptide;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +20,7 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
 
     @Query("select distinct p.sequence from Peptide p where p.taxid = :taxid")
     public List<String> findAllDistinctSequenceByTaxid(@Param("taxid") Integer taxid);
+    public List<String> findAllDistinctSequenceByTaxid(@Param("taxid") Integer taxid, Pageable pageable);
 
 
 
@@ -35,6 +37,8 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
 
     @Query("select p from PeptideVariant p")
     public List<PeptideVariant> findAllPeptideVariants();
+    @Query("select p from PeptideVariant p")
+    public List<PeptideVariant> findAllPeptideVariants(Pageable pageable);
 
     public List<PeptideVariant> findPeptideVariantBySequence(String sequence);
 
@@ -46,8 +50,11 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
 
     @Query("select p from SymbolicPeptide p")
     public List<SymbolicPeptide> findAllSymbolicPeptides();
+    @Query("select p from SymbolicPeptide p")
+    public List<SymbolicPeptide> findAllSymbolicPeptides(Pageable pageable);
 
     public List<SymbolicPeptide> findSymbolicPeptideByTaxid(int taxid);
+    public List<SymbolicPeptide> findSymbolicPeptideByTaxid(int taxid, Pageable pageable);
 
     //As the symbolic peptide is a artificial representation of the peptide, it has to be only one by species.
     public List<SymbolicPeptide> findSymbolicPeptideBySequence(String sequence);

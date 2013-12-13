@@ -1,6 +1,8 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein;
 
 import org.junit.Test;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
@@ -30,43 +32,76 @@ public class ProteinRepositoryTest extends RepositoryTest {
 	public void testFindByMethods() throws Exception {
 
 		Protein protein = proteinRepository.findByProteinAccession(PROTEIN_ACCESSION);
-
-		Collection<PeptideProtein> peptides = protein.getPeptides();
+        Collection<PeptideProtein> peptides = protein.getPeptides();
 		assertNotNull(peptides);
 		assertThat(peptides.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
+
 
 //		Collection<String> peptideIds = protein.getPeptideIds();
 //		assertNotNull(peptideIds);
 //		assertThat(peptideIds.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
 
-		Collection<GeneGroup> genes = protein.getGeneGroups();
+
+        Collection<GeneGroup> genes = protein.getGeneGroups();
 		assertNotNull(genes);
 		assertThat(genes.size(), is(NUM_GENES));
+
 
 		Collection<EntryGroup> entryGroups = protein.getEntryGroups();
 		assertNotNull(entryGroups);
 		assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS));
 
+
 		Collection<ProteinGroup> proteinGroups = protein.getProteinGroups();
 		assertNotNull(proteinGroups);
 		assertThat(proteinGroups.size(), is(NUM_PROT_GROUPS));
 
-        List<Protein> results = proteinRepository.findByDescriptionContaining("kinase");
-        assertNotNull(results);
-        assertThat(results.size(), is(1));
 
-        List<Protein> results2 = proteinRepository.findBySequenceContaining("DPYSQQPQTPRPS");
-        assertNotNull(results2);
-        assertThat(results2.size(), is(2));
+        List<Protein> resultsSeqContains = proteinRepository.findBySequenceContaining("DPYSQQPQTPRPS");
+        assertNotNull(resultsSeqContains);
+        assertThat(resultsSeqContains.size(), is(5));
 
-        List<Protein> results3 = proteinRepository.findByTaxid(TAXID_HUMAN);
-        assertNotNull(results3);
-        assertThat(results3.size(), is(2));
 
-        List<Protein> results4 = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase");
-        assertNotNull(results4);
-        assertThat(results4.size(), is(1));
+        List<Protein> resultsTaxid = proteinRepository.findByTaxid(TAXID_HUMAN);
+        assertNotNull(resultsTaxid);
+        assertThat(resultsTaxid.size(), is(3));
 
+        // same request with limitation of page size to one
+        Sort sort = new Sort(Sort.Direction.ASC, "proteinAccession");
+        List<Protein> resultsTaxidPaged = proteinRepository.findByTaxid(TAXID_HUMAN, new PageRequest(0,1, sort));
+        assertNotNull(resultsTaxidPaged);
+        assertThat(resultsTaxidPaged.size(), is(1));
+        assertThat(resultsTaxidPaged.get(0).getProteinAccession(), is("X12345"));
+        resultsTaxidPaged = proteinRepository.findByTaxid(TAXID_HUMAN, new PageRequest(2,1, sort));
+        assertNotNull(resultsTaxidPaged);
+        assertThat(resultsTaxidPaged.size(), is(1));
+        assertThat(resultsTaxidPaged.get(0).getProteinAccession(), is("X12345-2"));
+        resultsTaxidPaged = proteinRepository.findByTaxid(TAXID_HUMAN, new PageRequest(1,2, sort));
+        assertNotNull(resultsTaxidPaged);
+        assertThat(resultsTaxidPaged.size(), is(1));
+        assertThat(resultsTaxidPaged.get(0).getProteinAccession(), is("X12345-2"));
+        resultsTaxidPaged = proteinRepository.findByTaxid(TAXID_HUMAN, new PageRequest(1,2, new Sort(Sort.Direction.DESC, "proteinAccession")));
+        assertNotNull(resultsTaxidPaged);
+        assertThat(resultsTaxidPaged.size(), is(1));
+        assertThat(resultsTaxidPaged.get(0).getProteinAccession(), is("X12345"));
+
+
+        List<Protein> resultsDescContains = proteinRepository.findByDescriptionContaining("kinase");
+        assertNotNull(resultsDescContains);
+        assertThat(resultsDescContains.size(), is(3));
+
+        List<Protein> resultsDescContainsPaged = proteinRepository.findByDescriptionContaining("kinase", new PageRequest(0,1));
+        assertNotNull(resultsDescContainsPaged);
+        assertThat(resultsDescContainsPaged.size(), is(1));
+
+
+        List<Protein> resultsTaxidDescContains = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase");
+        assertNotNull(resultsTaxidDescContains);
+        assertThat(resultsTaxidDescContains.size(), is(2));
+
+        List<Protein> resultsTaxidDescContainsPaged = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase", new PageRequest(0,1));
+        assertNotNull(resultsTaxidDescContainsPaged);
+        assertThat(resultsTaxidDescContainsPaged.size(), is(1));
     }
 
 	@Test
