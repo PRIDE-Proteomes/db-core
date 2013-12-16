@@ -51,18 +51,18 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		assertNotNull(sequences);
 		assertThat(sequences.size(), is(NUM_SYMBOLIC));
 
-        List<String> sequencesPaged = peptideRepository.findAllDistinctSequenceByTaxid(TAXID_HUMAN, new PageRequest(2,5));
+        List<String> sequencesPaged = peptideRepository.findAllDistinctSequenceByTaxid(TAXID_HUMAN, new PageRequest(2,12));
         assertNotNull(sequencesPaged);
-        assertThat(sequencesPaged.size(), is(5));
+        assertThat(sequencesPaged.size(), is(6)); // 30 total results that means on the third page with size 12 there have to be 6 results
 
 
 		List<SymbolicPeptide> symbolicPeptideList = peptideRepository.findAllSymbolicPeptides();
 		assertNotNull(symbolicPeptideList);
 		assertThat(symbolicPeptideList.size(), is(NUM_SYMBOLIC));
 
-        List<SymbolicPeptide> symbolicPeptideListPaged = peptideRepository.findAllSymbolicPeptides(new PageRequest(2,5));
+        List<SymbolicPeptide> symbolicPeptideListPaged = peptideRepository.findAllSymbolicPeptides(new PageRequest(2,12));
         assertNotNull(symbolicPeptideListPaged);
-        assertThat(symbolicPeptideListPaged.size(), is(5));
+        assertThat(symbolicPeptideListPaged.size(), is(6));
 
 
 		SymbolicPeptide symbolicPeptide = peptideRepository.findSymbolicPeptideBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
@@ -81,9 +81,9 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		assertNotNull(peptideVariantList);
 		assertThat(peptideVariantList.size(), is(NUM_VARIANTS));
 
-        List<PeptideVariant> peptideVariantListPaged = peptideRepository.findAllPeptideVariants(new PageRequest(2,5));
+        List<PeptideVariant> peptideVariantListPaged = peptideRepository.findAllPeptideVariants(new PageRequest(4,10));
         assertNotNull(peptideVariantListPaged);
-        assertThat(peptideVariantListPaged.size(), is(5));
+        assertThat(peptideVariantListPaged.size(), is(1)); // 40 total, 5th page of 10 has to be 1 result
 
 
         symbolicPeptideList = peptideRepository.findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(TAXID_HUMAN, 1L, 3L);
@@ -98,9 +98,9 @@ public class PeptideRepositoryTest extends RepositoryTest {
         assertNotNull(peptideVariantListByTaxid);
         assertThat(peptideVariantListByTaxid.size(), is(NUM_SYMBOLIC));
 
-        List<SymbolicPeptide> peptideVariantListByTaxidPaged = peptideRepository.findSymbolicPeptideByTaxid(9606, new PageRequest(2,5));
+        List<SymbolicPeptide> peptideVariantListByTaxidPaged = peptideRepository.findSymbolicPeptideByTaxid(9606, new PageRequest(2,12));
         assertNotNull(peptideVariantListByTaxidPaged);
-        assertThat(peptideVariantListByTaxidPaged.size(), is(5));
+        assertThat(peptideVariantListByTaxidPaged.size(), is(6));
 
 
         List<PeptideVariant> variantList = peptideRepository.findPeptideVariantBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);

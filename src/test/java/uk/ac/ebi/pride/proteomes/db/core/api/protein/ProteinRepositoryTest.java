@@ -90,18 +90,18 @@ public class ProteinRepositoryTest extends RepositoryTest {
         assertNotNull(resultsDescContains);
         assertThat(resultsDescContains.size(), is(3));
 
-        List<Protein> resultsDescContainsPaged = proteinRepository.findByDescriptionContaining("kinase", new PageRequest(0,1));
+        List<Protein> resultsDescContainsPaged = proteinRepository.findByDescriptionContaining("kinase", new PageRequest(1,2));
         assertNotNull(resultsDescContainsPaged);
-        assertThat(resultsDescContainsPaged.size(), is(1));
+        assertThat(resultsDescContainsPaged.size(), is(1)); // total 3 proteins, second page has to have 1 result
 
 
         List<Protein> resultsTaxidDescContains = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase");
         assertNotNull(resultsTaxidDescContains);
         assertThat(resultsTaxidDescContains.size(), is(2));
 
-        List<Protein> resultsTaxidDescContainsPaged = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase", new PageRequest(0,1));
+        List<Protein> resultsTaxidDescContainsPaged = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase", new PageRequest(1,1));
         assertNotNull(resultsTaxidDescContainsPaged);
-        assertThat(resultsTaxidDescContainsPaged.size(), is(1));
+        assertThat(resultsTaxidDescContainsPaged.size(), is(1)); // total 2 proteins, second page has to have 1 rsult
     }
 
 	@Test

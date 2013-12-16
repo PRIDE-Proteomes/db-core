@@ -20,6 +20,7 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
 
     @Query("select distinct p.sequence from Peptide p where p.taxid = :taxid")
     public List<String> findAllDistinctSequenceByTaxid(@Param("taxid") Integer taxid);
+    @Query("select distinct p.sequence from Peptide p where p.taxid = :taxid")
     public List<String> findAllDistinctSequenceByTaxid(@Param("taxid") Integer taxid, Pageable pageable);
 
 
