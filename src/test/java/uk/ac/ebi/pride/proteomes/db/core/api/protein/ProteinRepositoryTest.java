@@ -59,7 +59,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
 
         List<Protein> resultsSeqContains = proteinRepository.findBySequenceContaining("DPYSQQPQTPRPS");
         assertNotNull(resultsSeqContains);
-        assertThat(resultsSeqContains.size(), is(5));
+        assertThat(resultsSeqContains.size(), is(3));
 
 
         List<Protein> resultsTaxid = proteinRepository.findByTaxid(TAXID_HUMAN);

@@ -12,5 +12,11 @@ import java.util.List;
  */
 @Repository
 public interface PeptideGroupRepository extends JpaRepository<PeptideGroup, PeptideGroupPK> {
-    List<PeptideGroup> findByPeptidePeptideIdAndProteinGroupId(Long peptideId, String proteinGroupId);
+
+    public List<PeptideGroup> findByPeptidePeptideIdAndProteinGroupId(Long peptideId, String proteinGroupId);
+
+    public List<PeptideGroup> findByProteinGroupId(String proteinGroupId);
+    // Note: the view generating the peptide - group uniqueness has been limited to only take EBTRY groups into account!
+
+
 }
