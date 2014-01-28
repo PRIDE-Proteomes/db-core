@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -102,6 +103,26 @@ public class ProteinRepositoryTest extends RepositoryTest {
         List<Protein> resultsTaxidDescContainsPaged = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase", new PageRequest(1,1));
         assertNotNull(resultsTaxidDescContainsPaged);
         assertThat(resultsTaxidDescContainsPaged.size(), is(1)); // total 2 proteins, second page has to have 1 rsult
+    }
+
+    @Test
+    @Transactional
+    public void testCountMethods() throws Exception {
+        long total = proteinRepository.count();
+        long humanTotal = proteinRepository.countByTaxid(9606);
+        long mouseTotal = proteinRepository.countByTaxid(10090);
+        long searchTerm1Count = proteinRepository.countByDescriptionContaining("kinase");
+        long searchTerm2Count = proteinRepository.countByDescriptionContaining("random");
+        long searchTerm1HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(9606, "kinase");
+        long searchTerm2HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(9606, "random");
+
+        assertEquals(5, total);
+        assertEquals(3, humanTotal);
+        assertEquals(2, mouseTotal);
+        assertEquals(3, searchTerm1Count);
+        assertEquals(2, searchTerm2Count);
+        assertEquals(2, searchTerm1HumanCount);
+        assertEquals(1, searchTerm2HumanCount);
     }
 
 	@Test
