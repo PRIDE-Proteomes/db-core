@@ -1,6 +1,7 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
 import org.junit.Test;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
@@ -41,9 +42,17 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         assertNotNull(proteinGroup);
         assertThat(proteinGroup.size(), is(3));
 
+        Collection<ProteinGroup> proteinGroupPaged = proteinGroupRepository.findAll(new PageRequest(1, 1)).getContent();
+        assertNotNull(proteinGroupPaged);
+        assertThat(proteinGroupPaged.size(), is(1));
+
         Collection<ProteinGroup> humanList = proteinGroupRepository.findByTaxid(9606);
         assertNotNull(humanList);
         assertThat(humanList.size(), is(2));
+
+        Collection<ProteinGroup> humanListPaged = proteinGroupRepository.findByTaxid(9606, new PageRequest(0, 1));
+        assertNotNull(humanListPaged);
+        assertThat(humanListPaged.size(), is(1));
 
         Collection<ProteinGroup> mouseList = proteinGroupRepository.findByTaxid(10090);
         assertNotNull(mouseList);

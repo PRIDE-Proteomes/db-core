@@ -1,9 +1,10 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * User: ntoro
@@ -16,7 +17,8 @@ public interface ProteinGroupRepository extends JpaRepository<ProteinGroup, Stri
 
     ProteinGroup findById(String proteinGroupId);
 
-    Collection<ProteinGroup> findByTaxid(int taxid);
+    List<ProteinGroup> findByTaxid(int taxid);
+    List<ProteinGroup> findByTaxid(int taxid, Pageable pageable);
 
     long countByTaxid(int taxid);
 
