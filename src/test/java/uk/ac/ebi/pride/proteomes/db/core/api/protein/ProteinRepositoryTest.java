@@ -50,12 +50,12 @@ public class ProteinRepositoryTest extends RepositoryTest {
 
 		Collection<EntryGroup> entryGroups = protein.getEntryGroups();
 		assertNotNull(entryGroups);
-		assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS));
+		assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS_FOR_PROTEIN));
 
 
 		Collection<ProteinGroup> proteinGroups = protein.getProteinGroups();
 		assertNotNull(proteinGroups);
-		assertThat(proteinGroups.size(), is(NUM_PROT_GROUPS));
+		assertThat(proteinGroups.size(), is(NUM_PROT_GROUPS_FOR_PROTEIN));
 
 
         List<Protein> resultsSeqContains = proteinRepository.findBySequenceContaining("DPYSQQPQTPRPS");
@@ -198,7 +198,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
 
 	private void checkEntryGroups(Collection<EntryGroup> entryGroups) {
 		assertNotNull(entryGroups);
-		assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS));
+		assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS_FOR_PROTEIN));
 		assertThat(entryGroups.iterator().next().getId(), is(ENTRY_GROUP_ID));
 	}
 

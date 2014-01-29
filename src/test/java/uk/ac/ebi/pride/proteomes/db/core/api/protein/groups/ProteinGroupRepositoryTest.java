@@ -39,10 +39,30 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
 
         Collection<ProteinGroup> proteinGroup = proteinGroupRepository.findAll();
         assertNotNull(proteinGroup);
-        assertThat(proteinGroup.size(), is(NUM_PROT_GROUPS));
+        assertThat(proteinGroup.size(), is(3));
 
+        Collection<ProteinGroup> humanList = proteinGroupRepository.findByTaxid(9606);
+        assertNotNull(humanList);
+        assertThat(humanList.size(), is(2));
+
+        Collection<ProteinGroup> mouseList = proteinGroupRepository.findByTaxid(10090);
+        assertNotNull(mouseList);
+        assertThat(mouseList.size(), is(1));
 
     }
+
+    @Test
+    @Transactional
+    public void testCountMethods() throws Exception {
+        long total = proteinGroupRepository.count();
+        long humanTotal = proteinGroupRepository.countByTaxid(9606);
+        long mouseTotal = proteinGroupRepository.countByTaxid(10090);
+
+        assertEquals(3, total);
+        assertEquals(2, humanTotal);
+        assertEquals(1, mouseTotal);
+    }
+
 
     @Test
     @Transactional

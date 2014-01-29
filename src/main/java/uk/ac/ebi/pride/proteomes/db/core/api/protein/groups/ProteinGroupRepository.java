@@ -3,6 +3,8 @@ package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
 /**
  * User: ntoro
  * Date: 14/08/2013
@@ -12,6 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProteinGroupRepository extends JpaRepository<ProteinGroup, String> {
 
-   public ProteinGroup findById(String proteinGroupId);
+    ProteinGroup findById(String proteinGroupId);
+
+    Collection<ProteinGroup> findByTaxid(int taxid);
+
+    long countByTaxid(int taxid);
+
 
 }
