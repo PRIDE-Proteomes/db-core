@@ -37,9 +37,9 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		assertThat(peptides.size(), is(PEPS_WITH_SEQUENCE));
 
 
-		List<PeptideVariant> peptideVariants = peptideRepository.findPeptideVariantBySequence(SEQUENCE);
-		assertNotNull(peptideVariants);
-		assertThat(peptideVariants.size(), is(PEPS_VAR_WITH_SEQUENCE));
+		List<Peptiform> peptiforms = peptideRepository.findPeptiformBySequence(SEQUENCE);
+		assertNotNull(peptiforms);
+		assertThat(peptiforms.size(), is(PEPS_VAR_WITH_SEQUENCE));
 
 
 		List<SymbolicPeptide> symbolicPeptides = peptideRepository.findSymbolicPeptideBySequence(SEQUENCE);
@@ -49,11 +49,11 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
 		List<String> sequences = peptideRepository.findAllDistinctSequenceByTaxid(TAXID_HUMAN);
 		assertNotNull(sequences);
-		assertThat(sequences.size(), is(NUM_SYMBOLIC));
+		assertThat(sequences.size(), is(DISTINCT_SEQUENCES_9606));
 
         List<String> sequencesPaged = peptideRepository.findAllDistinctSequenceByTaxid(TAXID_HUMAN, new PageRequest(2,12));
         assertNotNull(sequencesPaged);
-        assertThat(sequencesPaged.size(), is(6)); // 30 total results that means on the third page with size 12 there have to be 6 results
+        assertThat(sequencesPaged.size(), is(7)); // 31 total results that means on the third page with size 12 there have to be 6 results
 
 
 		List<SymbolicPeptide> symbolicPeptideList = peptideRepository.findAllSymbolicPeptides();
@@ -62,7 +62,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
         List<SymbolicPeptide> symbolicPeptideListPaged = peptideRepository.findAllSymbolicPeptides(new PageRequest(2,12));
         assertNotNull(symbolicPeptideListPaged);
-        assertThat(symbolicPeptideListPaged.size(), is(6));
+        assertThat(symbolicPeptideListPaged.size(), is(8));
 
 
 		SymbolicPeptide symbolicPeptide = peptideRepository.findSymbolicPeptideBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
@@ -77,33 +77,39 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		assertThat(symbolicPeptideWithProteins.getProteins().iterator().next().getId().getProteinAccession(), is(PROTEIN_ACCESSION));
 
 
-        List<PeptideVariant> peptideVariantList = peptideRepository.findAllPeptideVariants();
-		assertNotNull(peptideVariantList);
-		assertThat(peptideVariantList.size(), is(NUM_VARIANTS));
+        List<Peptiform> peptiformList = peptideRepository.findAllPeptiforms();
+		assertNotNull(peptiformList);
+		assertThat(peptiformList.size(), is(NUM_VARIANTS));
 
-        List<PeptideVariant> peptideVariantListPaged = peptideRepository.findAllPeptideVariants(new PageRequest(4,10));
-        assertNotNull(peptideVariantListPaged);
-        assertThat(peptideVariantListPaged.size(), is(1)); // 40 total, 5th page of 10 has to be 1 result
+        List<Peptiform> peptiformListPaged = peptideRepository.findAllPeptiforms(new PageRequest(4, 10));
+        assertNotNull(peptiformListPaged);
+        assertThat(peptiformListPaged.size(), is(4)); // 40 total, 5th page of 10 has to be 1 result
+
+
+        peptiformList = peptideRepository.findAllPeptiformsByTaxidAndPeptideIdBetween(TAXID_HUMAN, 31L, 45482310L);
+        assertNotNull(symbolicPeptideList);
+        assertThat(peptiformList .size(), is(2));
+        assertThat(peptiformList .get(0).getPeptideId(), is(45482309L));
+        assertThat(peptiformList .get(1).getPeptideId(), is(45482310L));
 
 
         symbolicPeptideList = peptideRepository.findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(TAXID_HUMAN, 1L, 3L);
-		assertNotNull(symbolicPeptideList);
-		assertThat(symbolicPeptideList.size(), is(3));
-		assertThat(symbolicPeptideList.get(0).getPeptideId(), is(1L));
-		assertThat(symbolicPeptideList.get(1).getPeptideId(), is(2L));
-		assertThat(symbolicPeptideList.get(2).getPeptideId(), is(3L));
+        assertNotNull(symbolicPeptideList);
+        assertThat(symbolicPeptideList.size(), is(3));
+        assertThat(symbolicPeptideList.get(0).getPeptideId(), is(1L));
+        assertThat(symbolicPeptideList.get(1).getPeptideId(), is(2L));
+        assertThat(symbolicPeptideList.get(2).getPeptideId(), is(3L));
 
-
-        List<SymbolicPeptide> peptideVariantListByTaxid = peptideRepository.findSymbolicPeptideByTaxid(9606);
+        List<SymbolicPeptide> peptideVariantListByTaxid = peptideRepository.findSymbolicPeptideByTaxid(TAXID_HUMAN);
         assertNotNull(peptideVariantListByTaxid);
-        assertThat(peptideVariantListByTaxid.size(), is(NUM_SYMBOLIC));
+        assertThat(peptideVariantListByTaxid.size(), is(31));
 
-        List<SymbolicPeptide> peptideVariantListByTaxidPaged = peptideRepository.findSymbolicPeptideByTaxid(9606, new PageRequest(2,12));
+        List<SymbolicPeptide> peptideVariantListByTaxidPaged = peptideRepository.findSymbolicPeptideByTaxid(TAXID_HUMAN, new PageRequest(2,12));
         assertNotNull(peptideVariantListByTaxidPaged);
-        assertThat(peptideVariantListByTaxidPaged.size(), is(6));
+        assertThat(peptideVariantListByTaxidPaged.size(), is(7));
 
 
-        List<PeptideVariant> variantList = peptideRepository.findPeptideVariantBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
+        List<Peptiform> variantList = peptideRepository.findPeptiformBySequenceAndTaxid(SEQUENCE, TAXID_HUMAN);
         assertNotNull(variantList);
         assertThat(variantList.size(), is(1));
 
@@ -114,107 +120,110 @@ public class PeptideRepositoryTest extends RepositoryTest {
 	public void testSaveAndGetPeptideVariant() throws Exception {
 
 		//Peptides
-		PeptideVariant peptideVariant = new PeptideVariant();
-		peptideVariant.setTaxid(TAXID_HUMAN);
-		peptideVariant.setDescription(NO_DESCRIPTION);
-		peptideVariant.setSequence(SEQUENCE);
+		Peptiform peptiform = new Peptiform();
+		peptiform.setTaxid(TAXID_HUMAN);
+		peptiform.setDescription(NO_DESCRIPTION);
+		peptiform.setSequence(SEQUENCE);
 
 		//Score
 		//We used the default score one, It should be always in the DB
-		peptideVariant.setScore(scoreRepository.findOne(SCORE_ID));
+		peptiform.setScore(scoreRepository.findOne(SCORE_ID));
 
 //        They are not mandatory so we can postpone the insertion
-//        peptideVariant.setAssays();
-//        peptideVariant.setProteins();
+//        peptiform.setAssays();
+//        peptiform.setProteins();
 
 		//PeptideModifications
 		ModificationLocation pepMod = new ModificationLocation();
 
 		//Modification
-		Modification modification = modificationRepository.findByCvTerm(NEW_MOD_TERM);
+		Modification modification = modificationRepository.findByModId(NEW_MOD_TERM);
 		if (modification == null) {
 			modification = new Modification();
-			modification.setCvTerm(NEW_MOD_TERM);
-			modification.setCvName(NEW_MOD_NAME);
+			modification.setModId(NEW_MOD_TERM);
+			modification.setModName(NEW_MOD_NAME);
 			modification = modificationRepository.save(modification);
 		}
 
 		//We know the real modification was persisted before
-		pepMod.setModCvTerm(NEW_MOD_TERM);
+		pepMod.setModId(NEW_MOD_TERM);
 		pepMod.setPosition(NEW_MOD_POS);
 
 		TreeSet<ModificationLocation> peptideMods = new TreeSet<ModificationLocation>();
 		peptideMods.add(pepMod);
-		peptideVariant.setModificationLocations(peptideMods);
+		peptiform.setModificationLocations(peptideMods);
 
 		//CV Params
 
 		//Tissue
 		//We check first if that not exist in the DB and if not we will persist it
-		Tissue tissue = (Tissue) cvParamRepository.findByCvTerm(TISSUE_TERM);
+		Tissue tissue = (Tissue) cvParamProteomesRepository.findByCvTerm(TISSUE_TERM);
 		if (tissue == null) {
 			tissue = new Tissue();
 			tissue.setCvTerm(TISSUE_TERM);
 			tissue.setCvName(TISSUE_NAME);
 			tissue.setDescription(NO_DESCRIPTION);
-			tissue = cvParamRepository.save(tissue);
+			tissue = cvParamProteomesRepository.save(tissue);
 		}
 
 		Set<Tissue> tissues = new HashSet<Tissue>();
 		tissues.add(tissue);
 
 		//Cell Type
-		CellType cellType = (CellType) cvParamRepository.findByCvTerm(CELL_TYPE_TERM);
+		CellType cellType = (CellType) cvParamProteomesRepository.findByCvTerm(CELL_TYPE_TERM);
 		if (cellType == null) {
 			cellType = new CellType();
 			cellType.setCvTerm(CELL_TYPE_TERM);
 			cellType.setCvName(CELL_TYPE_NAME);
 			cellType.setDescription(NO_DESCRIPTION);
-			cellType = cvParamRepository.save(cellType);
+			cellType = cvParamProteomesRepository.save(cellType);
 		}
 		Set<CellType> cellTypes = new HashSet<CellType>();
 		cellTypes.add(cellType);
 
 		//Disease
-		Disease disease = (Disease) cvParamRepository.findByCvTerm(DISEASE_TERM);
+		Disease disease = (Disease) cvParamProteomesRepository.findByCvTerm(DISEASE_TERM);
 		if (disease == null) {
 			disease = new Disease();
 			disease.setCvTerm(DISEASE_TERM);
 			disease.setCvName(DISEASE_NAME);
 			disease.setDescription(NO_DESCRIPTION);
-			disease = cvParamRepository.save(disease);
+			disease = cvParamProteomesRepository.save(disease);
 
 		}
 		Set<Disease> diseases = new HashSet<Disease>();
 		diseases.add(disease);
 
-		peptideVariant.setTissues(tissues);
-		peptideVariant.setDiseases(diseases);
-		peptideVariant.setCellTypes(cellTypes);
+		peptiform.setTissues(tissues);
+		peptiform.setDiseases(diseases);
+		peptiform.setCellTypes(cellTypes);
 
-		peptideVariant =  peptideRepository.save(peptideVariant);
+		peptiform =  peptideRepository.save(peptiform);
 
 		//id set after save
-		Long newId = peptideVariant.getPeptideId();
+		Long newId = peptiform.getPeptideId();
 
-		PeptideVariant other = (PeptideVariant) peptideRepository.findOne(newId);
+		Peptiform other = (Peptiform) peptideRepository.findOne(newId);
 		checkPeptideInDb(other);
 
 		// delete the assay
 		peptideRepository.delete(other);
 
-	}
+        other = (Peptiform) peptideRepository.findOne(newId);
+        assertNull(other);
 
-	private void checkPeptideInDb(PeptideVariant peptideVariant) {
-		assertNotNull(peptideVariant);
-		assertThat(peptideVariant.getScore().getId(), is(SCORE_ID));
-		assertThat(peptideVariant.getDescription(), is(NO_DESCRIPTION));
-		assertThat(peptideVariant.getTaxid(), is(TAXID_HUMAN));
+    }
 
-		checkPeptideModification(peptideVariant.getModificationLocations());
-		checkCellType(peptideVariant.getCellTypes());
-		checkDisease(peptideVariant.getDiseases());
-		checkTissue(peptideVariant.getTissues());
+	private void checkPeptideInDb(Peptiform peptiform) {
+		assertNotNull(peptiform);
+		assertThat(peptiform.getScore().getId(), is(SCORE_ID));
+		assertThat(peptiform.getDescription(), is(NO_DESCRIPTION));
+		assertThat(peptiform.getTaxid(), is(TAXID_HUMAN));
+
+		checkPeptideModification(peptiform.getModificationLocations());
+		checkCellType(peptiform.getCellTypes());
+		checkDisease(peptiform.getDiseases());
+		checkTissue(peptiform.getTissues());
 	}
 
 	private void checkCellType(Collection<CellType> cellTypes) {
@@ -242,103 +251,103 @@ public class PeptideRepositoryTest extends RepositoryTest {
 	private void checkPeptideModification(Collection<ModificationLocation> pepMods) {
 		assertNotNull(pepMods);
 		assertThat(pepMods.size(), is(1));
-		assertThat(pepMods.iterator().next().getModCvTerm(), is(NEW_MOD_TERM));
+		assertThat(pepMods.iterator().next().getModId(), is(NEW_MOD_TERM));
 		assertThat(pepMods.iterator().next().getPosition(), is(NEW_MOD_POS));
 	}
 
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testEqualPeptides() throws Exception {
 
-		PeptideVariant peptideVariant = (PeptideVariant) savePeptide();
+		Peptiform peptiform = (Peptiform) savePeptide();
 
-		Object id1 = entityManagerFactory.getPersistenceUnitUtil().getIdentifier(peptideVariant);
-		assertEquals(id1, peptideVariant.getPeptideId());
+		Object id1 = entityManagerFactory.getPersistenceUnitUtil().getIdentifier(peptiform);
+		assertEquals(id1, peptiform.getPeptideId());
 
 		//Same Peptide
-		PeptideVariant samePeptideVariant = new PeptideVariant();
-		samePeptideVariant.setTaxid(TAXID_HUMAN);
-		samePeptideVariant.setDescription(NO_DESCRIPTION);
-		samePeptideVariant.setSequence(SEQUENCE);
+		Peptiform samePeptiform = new Peptiform();
+		samePeptiform.setTaxid(TAXID_HUMAN);
+		samePeptiform.setDescription(NO_DESCRIPTION);
+		samePeptiform.setSequence(SEQUENCE);
 
 		//We used the default score one, It should be always in the DB
-		samePeptideVariant.setScore(scoreRepository.findOne(SCORE_ID));
+		samePeptiform.setScore(scoreRepository.findOne(SCORE_ID));
 
 		//PeptideModifications
 		ModificationLocation pepMod = new ModificationLocation();
 
-		pepMod.setModCvTerm(NEW_MOD_TERM);
+		pepMod.setModId(NEW_MOD_TERM);
 		pepMod.setPosition(NEW_MOD_POS);
 
 		TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
 		modificationLocations.add(pepMod);
 
-		samePeptideVariant.setModificationLocations(modificationLocations);
+		samePeptiform.setModificationLocations(modificationLocations);
 
 		//This should be built always after inserting the sequence, taxid and mods;
-		samePeptideVariant.setPeptideRepresentation(PeptideUtils.peptideRepresentationGenerator(samePeptideVariant));
+		samePeptiform.setPeptideRepresentation(PeptideUtils.peptideRepresentationGenerator(samePeptiform));
 
 
 		//CV Params
 		//Tissue
 		//We check first if that not exist in the DB and if not we will persist it
-		Tissue tissue = (Tissue) cvParamRepository.findByCvTerm(TISSUE_TERM);
+		Tissue tissue = (Tissue) cvParamProteomesRepository.findByCvTerm(TISSUE_TERM);
 		if (tissue == null) {
 			tissue = new Tissue();
 			tissue.setCvTerm(TISSUE_TERM);
 			tissue.setCvName(TISSUE_NAME);
 			tissue.setDescription(NO_DESCRIPTION);
-			tissue = (Tissue) cvParamRepository.save(tissue);
+			tissue = (Tissue) cvParamProteomesRepository.save(tissue);
 		}
 		Set<Tissue> tissues = new HashSet<Tissue>();
 		tissues.add(tissue);
 
 
 		//Cell Type
-		CellType cellType = (CellType) cvParamRepository.findByCvTerm(CELL_TYPE_TERM);
+		CellType cellType = (CellType) cvParamProteomesRepository.findByCvTerm(CELL_TYPE_TERM);
 		if (cellType == null) {
 			cellType = new CellType();
 			cellType.setCvTerm(CELL_TYPE_TERM);
 			cellType.setCvName(CELL_TYPE_NAME);
 			cellType.setDescription(NO_DESCRIPTION);
-			cellType = (CellType) cvParamRepository.save(cellType);
+			cellType = (CellType) cvParamProteomesRepository.save(cellType);
 		}
 		Set<CellType> cellTypes = new HashSet<CellType>();
 		cellTypes.add(cellType);
 
 		//Disease
-		Disease disease = (Disease) cvParamRepository.findByCvTerm(DISEASE_TERM);
+		Disease disease = (Disease) cvParamProteomesRepository.findByCvTerm(DISEASE_TERM);
 		if (disease == null) {
 			disease = new Disease();
 			disease.setCvTerm(DISEASE_TERM);
 			disease.setCvName(DISEASE_NAME);
 			disease.setDescription(NO_DESCRIPTION);
-			disease = (Disease) cvParamRepository.save(disease);
+			disease = (Disease) cvParamProteomesRepository.save(disease);
 
 		}
 
 		Set<Disease> diseases = new HashSet<Disease>();
 		diseases.add(disease);
 
-		samePeptideVariant.setTissues(tissues);
-		samePeptideVariant.setCellTypes(cellTypes);
-		samePeptideVariant.setDiseases(diseases);
+		samePeptiform.setTissues(tissues);
+		samePeptiform.setCellTypes(cellTypes);
+		samePeptiform.setDiseases(diseases);
 
-		assertEquals(true, peptideVariant.getModificationLocations().iterator().next().equals(samePeptideVariant.getModificationLocations().iterator().next()));
-		assertEquals(true, samePeptideVariant.getModificationLocations().iterator().next().equals(peptideVariant.getModificationLocations().iterator().next()));
+		assertEquals(true, peptiform.getModificationLocations().iterator().next().equals(samePeptiform.getModificationLocations().iterator().next()));
+		assertEquals(true, samePeptiform.getModificationLocations().iterator().next().equals(peptiform.getModificationLocations().iterator().next()));
 
 		//Now they are a collection, so we can not compare Collection, only List or Set that take into account the equals method
 
-		// assertEquals(true, samePeptideVariant.getModificationLocations().equals(peptideVariant.getModificationLocations()));
-		// assertEquals(true, peptideVariant.getModificationLocations().equals(samePeptideVariant.getModificationLocations()));
+		// assertEquals(true, samePeptiform.getModificationLocations().equals(peptiform.getModificationLocations()));
+		// assertEquals(true, peptiform.getModificationLocations().equals(samePeptiform.getModificationLocations()));
 
-		assertEquals(true, samePeptideVariant.equals(peptideVariant));
-		assertEquals(true, peptideVariant.equals(samePeptideVariant));
+		assertEquals(true, samePeptiform.equals(peptiform));
+		assertEquals(true, peptiform.equals(samePeptiform));
 
-		Peptide auxPep = peptideRepository.findByPeptideRepresentation(samePeptideVariant.getPeptideRepresentation());
+		Peptide auxPep = peptideRepository.findByPeptideRepresentation(samePeptiform.getPeptideRepresentation());
 
 		try {
 			//We shouldn't persisted because it was inserted before
-			Peptide pep = peptideRepository.save(samePeptideVariant);
+			Peptide pep = peptideRepository.save(samePeptiform);
 		} finally {
 			assertNotNull(auxPep);
 			assertEquals(id1, auxPep.getPeptideId());
@@ -346,7 +355,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 			// delete the peptide
 			peptideRepository.delete(auxPep);
 
-			auxPep = peptideRepository.findByPeptideRepresentation(samePeptideVariant.getPeptideRepresentation());
+			auxPep = peptideRepository.findByPeptideRepresentation(samePeptiform.getPeptideRepresentation());
 			assertNull(auxPep);
 		}
 	}
@@ -355,107 +364,107 @@ public class PeptideRepositoryTest extends RepositoryTest {
 	public void testNotEqualPeptides() throws Exception {
 
 		//The second peptide will have two modification instead of one
-		PeptideVariant peptideVariant = (PeptideVariant) savePeptide();
+		Peptiform peptiform = (Peptiform) savePeptide();
 
-		Object id1 = entityManagerFactory.getPersistenceUnitUtil().getIdentifier(peptideVariant);
-		assertEquals(id1, peptideVariant.getPeptideId());
+		Object id1 = entityManagerFactory.getPersistenceUnitUtil().getIdentifier(peptiform);
+		assertEquals(id1, peptiform.getPeptideId());
 
 		//Same Peptide
-		PeptideVariant differentPeptideVariant = new PeptideVariant();
-		differentPeptideVariant.setTaxid(TAXID_HUMAN);
-		differentPeptideVariant.setDescription(NO_DESCRIPTION);
-		differentPeptideVariant.setSequence(SEQUENCE);
+		Peptiform differentPeptiform = new Peptiform();
+		differentPeptiform.setTaxid(TAXID_HUMAN);
+		differentPeptiform.setDescription(NO_DESCRIPTION);
+		differentPeptiform.setSequence(SEQUENCE);
 
 		//We used the default score one, It should be always in the DB
-		differentPeptideVariant.setScore(scoreRepository.findOne(SCORE_ID));
+		differentPeptiform.setScore(scoreRepository.findOne(SCORE_ID));
 
 		//PeptideModifications
 		ModificationLocation pepModA = new ModificationLocation();
-		pepModA.setModCvTerm(NEW_MOD_TERM);
+		pepModA.setModId(NEW_MOD_TERM);
 		pepModA.setPosition(NEW_MOD_POS);
 
 		ModificationLocation pepModB = new ModificationLocation();
-		pepModB.setModCvTerm(NEW_MOD_TERM);
+		pepModB.setModId(NEW_MOD_TERM);
 		pepModB.setPosition(SEC_MOD_POS);
 
 		TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
 		modificationLocations.add(pepModB);
 		modificationLocations.add(pepModA);
 
-		differentPeptideVariant.setModificationLocations(modificationLocations);
+		differentPeptiform.setModificationLocations(modificationLocations);
 
 		//This should be built always after inserting the sequence, taxid and mods;
-		differentPeptideVariant.setPeptideRepresentation(PeptideUtils.peptideRepresentationGenerator(differentPeptideVariant));
+		differentPeptiform.setPeptideRepresentation(PeptideUtils.peptideRepresentationGenerator(differentPeptiform));
 
 		//CV Params
 		//Tissue
 		//We check first if that not exist in the DB and if not we will persist it
-		Tissue tissue = (Tissue) cvParamRepository.findByCvTerm(TISSUE_TERM);
+		Tissue tissue = (Tissue) cvParamProteomesRepository.findByCvTerm(TISSUE_TERM);
 		if (tissue == null) {
 			tissue = new Tissue();
 			tissue.setCvTerm(TISSUE_TERM);
 			tissue.setCvName(TISSUE_NAME);
 			tissue.setDescription(NO_DESCRIPTION);
-			tissue = cvParamRepository.save(tissue);
+//			tissue = cvParamRepository.save(tissue);
 		}
 		Set<Tissue> tissues = new HashSet<Tissue>();
 		tissues.add(tissue);
 
 
 		//Cell Type
-		CellType cellType = (CellType) cvParamRepository.findByCvTerm(CELL_TYPE_TERM);
+		CellType cellType = (CellType) cvParamProteomesRepository.findByCvTerm(CELL_TYPE_TERM);
 		if (cellType == null) {
 			cellType = new CellType();
 			cellType.setCvTerm(CELL_TYPE_TERM);
 			cellType.setCvName(CELL_TYPE_NAME);
 			cellType.setDescription(NO_DESCRIPTION);
-			cellType = cvParamRepository.save(cellType);
+//			cellType = cvParamRepository.save(cellType);
 		}
 		Set<CellType> cellTypes = new HashSet<CellType>();
 		cellTypes.add(cellType);
 
 		//Disease
-		Disease disease = (Disease) cvParamRepository.findByCvTerm(DISEASE_TERM);
+		Disease disease = (Disease) cvParamProteomesRepository.findByCvTerm(DISEASE_TERM);
 		if (disease == null) {
 			disease = new Disease();
 			disease.setCvTerm(DISEASE_TERM);
 			disease.setCvName(DISEASE_NAME);
 			disease.setDescription(NO_DESCRIPTION);
-			disease = cvParamRepository.save(disease);
+//			disease = cvParamRepository.save(disease);
 
 		}
 
 		Set<Disease> diseases = new HashSet<Disease>();
 		diseases.add(disease);
 
-		differentPeptideVariant.setTissues(tissues);
-		differentPeptideVariant.setCellTypes(cellTypes);
-		differentPeptideVariant.setDiseases(diseases);
+		differentPeptiform.setTissues(tissues);
+		differentPeptiform.setCellTypes(cellTypes);
+		differentPeptiform.setDiseases(diseases);
 
-		assertEquals(false, differentPeptideVariant.getModificationLocations().equals(peptideVariant.getModificationLocations()));
-		assertEquals(false, peptideVariant.getModificationLocations().equals(differentPeptideVariant.getModificationLocations()));
+		assertEquals(false, differentPeptiform.getModificationLocations().equals(peptiform.getModificationLocations()));
+		assertEquals(false, peptiform.getModificationLocations().equals(differentPeptiform.getModificationLocations()));
 
-		assertEquals(false, differentPeptideVariant.equals(peptideVariant));
-		assertEquals(false, peptideVariant.equals(differentPeptideVariant));
+		assertEquals(false, differentPeptiform.equals(peptiform));
+		assertEquals(false, peptiform.equals(differentPeptiform));
 
-		Peptide auxPep = peptideRepository.findByPeptideRepresentation(differentPeptideVariant.getPeptideRepresentation());
+		Peptide auxPep = peptideRepository.findByPeptideRepresentation(differentPeptiform.getPeptideRepresentation());
 		assertNull(auxPep);
 
 		Peptide pep = null;
 		try {
 			//We should persist it because it wasn't inserted before
-			pep = peptideRepository.save(differentPeptideVariant);
+			pep = peptideRepository.save(differentPeptiform);
 			assertNotSame(id1, pep.getPeptideId());
 		} finally {
 
 			// delete the peptides
-			peptideRepository.delete(peptideVariant);
+			peptideRepository.delete(peptiform);
 			peptideRepository.delete(pep);
 
-			auxPep = peptideRepository.findByPeptideRepresentation(differentPeptideVariant.getPeptideRepresentation());
+			auxPep = peptideRepository.findByPeptideRepresentation(differentPeptiform.getPeptideRepresentation());
 			assertNull(auxPep);
 
-			auxPep = peptideRepository.findByPeptideRepresentation(peptideVariant.getPeptideRepresentation());
+			auxPep = peptideRepository.findByPeptideRepresentation(peptiform.getPeptideRepresentation());
 			assertNull(auxPep);
 		}
 
@@ -465,68 +474,68 @@ public class PeptideRepositoryTest extends RepositoryTest {
 	private Peptide savePeptide() {
 
 		//Peptide
-		PeptideVariant peptideVariant = new PeptideVariant();
+		Peptiform peptiform = new Peptiform();
 
-		peptideVariant.setTaxid(TAXID_HUMAN);
-		peptideVariant.setDescription(NO_DESCRIPTION);
-		peptideVariant.setSequence(SEQUENCE);
+		peptiform.setTaxid(TAXID_HUMAN);
+		peptiform.setDescription(NO_DESCRIPTION);
+		peptiform.setSequence(SEQUENCE);
 
 		//We used the default score one, It should be always in the DB
-		peptideVariant.setScore(scoreRepository.findOne(SCORE_ID));
+		peptiform.setScore(scoreRepository.findOne(SCORE_ID));
 
 		//They are not mandatory so we can postpone the insertion
-		//peptideVariant.setAssays();
-		//peptideVariant.setProteins();
+		//peptiform.setAssays();
+		//peptiform.setProteins();
 
 		//PeptideModifications
 		ModificationLocation pepMod = new ModificationLocation();
 
-		pepMod.setModCvTerm(NEW_MOD_TERM);
+		pepMod.setModId(NEW_MOD_TERM);
 		pepMod.setPosition(NEW_MOD_POS);
 
 		TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
 		modificationLocations.add(pepMod);
-		peptideVariant.setModificationLocations(modificationLocations);
+		peptiform.setModificationLocations(modificationLocations);
 
 		//This should be built always after inserting the sequence, taxid and mods;
-		peptideVariant.setPeptideRepresentation(PeptideUtils.peptideRepresentationGenerator(peptideVariant));
+		peptiform.setPeptideRepresentation(PeptideUtils.peptideRepresentationGenerator(peptiform));
 
 		//CV Params
 
 		//Tissue
 		//We check first if that not exist in the DB and if not we will persist it
-		Tissue tissue = (Tissue) cvParamRepository.findByCvTerm(TISSUE_TERM);
+		Tissue tissue = (Tissue) cvParamProteomesRepository.findByCvTerm(TISSUE_TERM);
 		if (tissue == null) {
 			tissue = new Tissue();
 			tissue.setCvTerm(TISSUE_TERM);
 			tissue.setCvName(TISSUE_NAME);
 			tissue.setDescription(NO_DESCRIPTION);
-			tissue = cvParamRepository.save(tissue);
+			tissue = cvParamProteomesRepository.save(tissue);
 		}
 		Set<Tissue> tissues = new HashSet<Tissue>();
 		tissues.add(tissue);
 
 
 		//Cell Type
-		CellType cellType = (CellType) cvParamRepository.findByCvTerm(CELL_TYPE_TERM);
+		CellType cellType = (CellType) cvParamProteomesRepository.findByCvTerm(CELL_TYPE_TERM);
 		if (cellType == null) {
 			cellType = new CellType();
 			cellType.setCvTerm(CELL_TYPE_TERM);
 			cellType.setCvName(CELL_TYPE_NAME);
 			cellType.setDescription(NO_DESCRIPTION);
-			cellType = cvParamRepository.save(cellType);
+			cellType = cvParamProteomesRepository.save(cellType);
 		}
 		Set<CellType> cellTypes = new HashSet<CellType>();
 		cellTypes.add(cellType);
 
 		//Disease
-		Disease disease = (Disease) cvParamRepository.findByCvTerm(DISEASE_TERM);
+		Disease disease = (Disease) cvParamProteomesRepository.findByCvTerm(DISEASE_TERM);
 		if (disease == null) {
 			disease = new Disease();
 			disease.setCvTerm(DISEASE_TERM);
 			disease.setCvName(DISEASE_NAME);
 			disease.setDescription(NO_DESCRIPTION);
-			disease = cvParamRepository.save(disease);
+			disease = cvParamProteomesRepository.save(disease);
 
 		}
 
@@ -534,12 +543,12 @@ public class PeptideRepositoryTest extends RepositoryTest {
 		diseases.add(disease);
 
 
-		peptideVariant.setTissues(tissues);
-		peptideVariant.setCellTypes(cellTypes);
-		peptideVariant.setDiseases(diseases);
-		peptideVariant = (PeptideVariant) peptideRepository.saveAndFlush(peptideVariant);
+		peptiform.setTissues(tissues);
+		peptiform.setCellTypes(cellTypes);
+		peptiform.setDiseases(diseases);
+		peptiform = (Peptiform) peptideRepository.saveAndFlush(peptiform);
 
-		return peptideVariant;
+		return peptiform;
 	}
 
 

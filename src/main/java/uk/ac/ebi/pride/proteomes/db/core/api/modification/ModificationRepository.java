@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface ModificationRepository extends JpaRepository<Modification, String> {
 
-    public Modification findByCvTerm(String term);
-    public Modification findByCvName(String name);
+    public Modification findByModId(String id);
+    public Modification findByModName(String name);
     public List<Modification> findByBiologicalSignificant(Boolean biologicalSignificant);
     public List<Modification> findByMonoDeltaBetween(Double min, Double max);
 }

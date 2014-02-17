@@ -9,11 +9,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "STAR", schema = "PRIDEPROT")
-@SequenceGenerator(name="STAR_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.STAR_STAR_PK_SEQ")
+@SequenceGenerator(name="STAR_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.STAR_STAR_ID_SEQ")
 public class Star {
 
     @Id
-    @Column(name = "STAR_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "STAR_ID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     @GeneratedValue(generator = "STAR_SEQ", strategy = GenerationType.SEQUENCE)
     private Integer id;
 

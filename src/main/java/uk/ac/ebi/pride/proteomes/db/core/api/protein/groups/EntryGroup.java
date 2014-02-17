@@ -1,7 +1,11 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
+
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * User: ntoro
@@ -12,4 +16,19 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue(value = "ENTRY")
 public class EntryGroup extends ProteinGroup {
+
+    @ManyToMany
+    @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
+            inverseJoinColumns = @JoinColumn(name = "PROTEIN_ID"),
+            joinColumns = @JoinColumn(name = "PROT_GROUP_ID"))
+    @LazyCollection(LazyCollectionOption.TRUE)
+    private Collection<Protein> entryProteins;
+
+    public Collection<Protein> getEntryProteins() {
+        return entryProteins;
+    }
+
+    public void setEntryProteins(Collection<Protein> proteins) {
+        this.entryProteins = proteins;
+    }
 }

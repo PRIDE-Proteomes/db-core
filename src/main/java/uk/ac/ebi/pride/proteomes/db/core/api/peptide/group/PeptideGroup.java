@@ -23,11 +23,11 @@ public class PeptideGroup implements Serializable {
     private Integer uniqueness;
 
     @ManyToOne
-    @JoinColumn(name = "PEPTIDE_FK_PK", referencedColumnName = "PEPTIDE_PK", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "PEPTIDE_ID", referencedColumnName = "PEPTIDE_ID", nullable = false, insertable=false, updatable=false)
     private Peptide peptide;
 
     @ManyToOne
-    @JoinColumn(name = "P_GROUP_FK_PK", referencedColumnName = "PROT_GROUP_PK", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
     private ProteinGroup proteinGroup;
 
     public PeptideGroupPK getId() {

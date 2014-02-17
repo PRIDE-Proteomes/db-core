@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein;
 
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
+import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,30 +13,37 @@ import java.io.Serializable;
  * Time: 10:06
  */
 @Entity
-@Table(name = "PROT_PEP", schema = "PRIDEPROT")
+@Table(name = "PEP_PROT", schema = "PRIDEPROT")
 public class PeptideProtein implements Serializable {
 
 	@EmbeddedId
 	private PeptideProteinPK id;
 
+    @Basic
+    @Column(name = "NTERM_DEGRADATION", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+    private Integer nTermDegradation;
+
 	@Basic
-	@Column(name = "TRYPTIC_SCORE", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
-	private Integer trypticScore;
+	@Column(name = "CTERM_DEGRADATION", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+	private Integer cTermDegradation;
 
 	@Basic
 	@Column(name = "UNIQUENESS", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
 	private Integer uniqueness;
 
     @ManyToOne
-    @JoinColumn(name = "PEPTIDE_FK_PK", referencedColumnName = "PEPTIDE_PK", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "PEPTIDE_ID", referencedColumnName = "PEPTIDE_ID", nullable = false, insertable=false, updatable=false)
     private Peptide peptide;
 
     @ManyToOne
-    @JoinColumn(name = "PROTEIN_FK_PK", referencedColumnName = "PROTEIN_ACCESSION", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "PROTEIN_ID", referencedColumnName = "PROTEIN_ID", nullable = false, insertable=false, updatable=false)
     private Protein protein;
 
+    @OneToOne
+    @JoinColumn(name = "SCORE_ID", referencedColumnName = "SCORE_ID")
+    private Score score;
 
-	public PeptideProtein() {
+    public PeptideProtein() {
         setId(new PeptideProteinPK());
 	}
 
@@ -91,15 +99,23 @@ public class PeptideProtein implements Serializable {
         id.setStartPosition(startPosition);
 	}
 
-	public Integer getTrypticScore() {
-		return trypticScore;
-	}
+    public Integer getnTermDegradation() {
+        return nTermDegradation;
+    }
 
-	public void setTrypticScore(Integer trypticScore) {
-		this.trypticScore = trypticScore;
-	}
+    public void setnTermDegradation(Integer nTermDegradation) {
+        this.nTermDegradation = nTermDegradation;
+    }
 
-	public Integer getUniqueness() {
+    public Integer getcTermDegradation() {
+        return cTermDegradation;
+    }
+
+    public void setcTermDegradation(Integer cTermDegradation) {
+        this.cTermDegradation = cTermDegradation;
+    }
+
+    public Integer getUniqueness() {
 		return uniqueness;
 	}
 
@@ -107,7 +123,16 @@ public class PeptideProtein implements Serializable {
 		this.uniqueness = uniqueness;
 	}
 
-	@Override
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+
+    @Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof PeptideProtein)) return false;
@@ -124,12 +149,13 @@ public class PeptideProtein implements Serializable {
 		return id.hashCode();
 	}
 
-	@Override
-	public String toString() {
-		return "PeptideProtein{" +
-				"id=" + id +
-				", uniqueness=" + uniqueness +
-				", trypticScore=" + trypticScore +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "PeptideProtein{" +
+                "id=" + id +
+                ", nTermDegradation=" + nTermDegradation +
+                ", cTermDegradation=" + cTermDegradation +
+                ", uniqueness=" + uniqueness +
+                '}';
+    }
 }

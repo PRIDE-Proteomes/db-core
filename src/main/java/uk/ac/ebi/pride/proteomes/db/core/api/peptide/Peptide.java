@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay;
+import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
@@ -16,7 +17,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
+import java.util.SortedSet;
 
 /**
  * User: ntoro
@@ -31,11 +32,11 @@ import java.util.List;
 @Table(name = "PEPTIDE", schema = "PRIDEPROT", uniqueConstraints = @UniqueConstraint(columnNames = {"REPRESENTATION"}))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "SYMBOLIC", discriminatorType = DiscriminatorType.STRING)
-@SequenceGenerator(name = "PEPTIDE_SEQ", schema = "PRIDEPROT", sequenceName = "PRIDEPROT.PEPTIDE_PEPTIDE_PK_SEQ")
+@SequenceGenerator(name = "PEPTIDE_SEQ", schema = "PRIDEPROT", sequenceName = "PRIDEPROT.PEPTIDE_PEPTIDE_ID_SEQ")
 public abstract class Peptide implements Serializable {
 
 	@Id
-	@Column(name = "PEPTIDE_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+	@Column(name = "PEPTIDE_ID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
 	@GeneratedValue(generator = "PEPTIDE_SEQ", strategy = GenerationType.SEQUENCE)
 	private Long peptideId;
 
@@ -45,6 +46,10 @@ public abstract class Peptide implements Serializable {
 	@Size(min = 6, max = 100)   // validation constrain
 	@Pattern(regexp = "[GPAVLIMCFYWHKRQNEDST]{6,100}")  // validation constrain only valid amino acids
 	private String sequence;
+
+    @Basic
+    @Column(name = "MISSED_CLEAVAGES", nullable = true, insertable = true, updatable = true, length = 22 ,precision = 0)
+    private Integer missedCleavages;
 
 	@Basic
 	@Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 90, precision = 0)
@@ -56,48 +61,58 @@ public abstract class Peptide implements Serializable {
 
 	@NotNull     // validation constrain
 	@Basic
-	@Column(name = "REPRESENTATION", nullable = false, insertable = true, updatable = true, length = 1000, precision = 0)
+	@Column(name = "REPRESENTATION", nullable = false, insertable = true, updatable = true, length = 1000, precision = 0, unique = true)
 	private String peptideRepresentation;
 
+    @OrderColumn
+    @ElementCollection(targetClass=ModificationLocation.class)
+    @CollectionTable(
+            name = "PEP_MOD", schema = "PRIDEPROT",
+            joinColumns = @JoinColumn(name = "PEPTIDE_ID", referencedColumnName = "PEPTIDE_ID")
+    )
+    @OrderBy("position ASC" )
+    //The lazy loading in the modifications is necessary for the pipeline
+    @LazyCollection(LazyCollectionOption.TRUE)
+    private Collection<ModificationLocation> modificationLocations;
 
-	//Unidirectional relationship
-	@ManyToMany
-	@JoinTable(
+    //Unidirectional relationship
+    @ManyToMany(targetEntity = Assay.class)
+    @JoinTable(
 			name = "PEP_ASSAY", schema = "PRIDEPROT",
-			joinColumns = {@JoinColumn(name = "PEPTIDE_FK_PK")},
-			inverseJoinColumns = {@JoinColumn(name = "ASSAY_FK_PK")}
+			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
+			inverseJoinColumns = {@JoinColumn(name = "ASSAY_ACCESSION")}
 	)
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	private Collection<Assay> assays;
 
-	@ManyToMany(targetEntity = CellType.class, cascade = CascadeType.MERGE)
-	@JoinTable(
+	@ManyToMany(targetEntity = CellType.class)
+    @JoinTable(
 			name = "PEP_CV", schema = "PRIDEPROT",
-			joinColumns = {@JoinColumn(name = "PEPTIDE_FK_PK")},
-			inverseJoinColumns = {@JoinColumn(name = "CV_PARAM_FK_PK")}
+			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
+			inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
 	)
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
 	private Collection<CellType> cellTypes;
 
-	@ManyToMany(targetEntity = Disease.class, cascade = CascadeType.MERGE)
-	@JoinTable(
+	@ManyToMany(targetEntity = Disease.class)
+    @JoinTable(
 			name = "PEP_CV", schema = "PRIDEPROT",
-			joinColumns = {@JoinColumn(name = "PEPTIDE_FK_PK")},
-			inverseJoinColumns = {@JoinColumn(name = "CV_PARAM_FK_PK")}
+			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
+			inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
 	)
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
 	private Collection<Disease> diseases;
 
-	@ManyToMany(targetEntity = Tissue.class, cascade = CascadeType.MERGE)
-	@JoinTable(
+	@ManyToMany(targetEntity = Tissue.class)
+    @JoinTable(
 
 			name = "PEP_CV", schema = "PRIDEPROT",
-			joinColumns = {@JoinColumn(name = "PEPTIDE_FK_PK")},
-			inverseJoinColumns = {@JoinColumn(name = "CV_PARAM_FK_PK")}
+			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
+			inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
 	)
-	@LazyCollection(LazyCollectionOption.FALSE)
+	@LazyCollection(LazyCollectionOption.TRUE)
 	@Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
 	private Collection<Tissue> tissues;
 
@@ -105,9 +120,9 @@ public abstract class Peptide implements Serializable {
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private Collection<PeptideProtein> proteins;
 
-	@OneToOne
-	@JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK")
-	private Score score;
+    @OneToOne
+    @JoinColumn(name = "SCORE_ID", referencedColumnName = "SCORE_ID")
+    private Score score;
 
 
 	public Long getPeptideId() {
@@ -126,7 +141,15 @@ public abstract class Peptide implements Serializable {
 		this.sequence = sequence;
 	}
 
-	public String getDescription() {
+    public Integer getMissedCleavages() {
+        return missedCleavages;
+    }
+
+    public void setMissedCleavages(Integer missedCleavages) {
+        this.missedCleavages = missedCleavages;
+    }
+
+    public String getDescription() {
 		return description;
 	}
 
@@ -150,7 +173,15 @@ public abstract class Peptide implements Serializable {
 		this.peptideRepresentation = peptideRepresentation;
 	}
 
-	public Collection<Assay> getAssays() {
+    public Collection<ModificationLocation> getModificationLocations() {
+        return modificationLocations;
+    }
+
+    public void setModificationLocations(SortedSet<ModificationLocation> modificationLocations) {
+        this.modificationLocations = modificationLocations;
+    }
+
+    public Collection<Assay> getAssays() {
 		return assays;
 	}
 
@@ -219,10 +250,11 @@ public abstract class Peptide implements Serializable {
 	public String toString() {
 		return "Peptide{" +
 				"peptideId=" + peptideId +
-				", sequence='" + sequence + '\'' +
-				", description='" + description + '\'' +
-				", taxid=" + taxid +
-				", assays=" + assays +
+                ", representation" + peptideRepresentation +
+                ", description='" + description + '\'' +
+                ", missedCleavages" + missedCleavages +
+                ", modificationLocations=" + modificationLocations +
+                ", assays=" + assays +
 				", cellTypes=" + cellTypes +
 				", diseases=" + diseases +
 				", tissues=" + tissues +

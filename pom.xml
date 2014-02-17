@@ -7,12 +7,12 @@
     <parent> <!-- parent POM -->
         <groupId>uk.ac.ebi.pride.maven</groupId>
         <artifactId>pride-base-master</artifactId>
-        <version>1.0</version>
+        <version>1.0.2</version>
     </parent>
 
     <groupId>uk.ac.ebi.pride.proteomes.db</groupId>
     <artifactId>pride-proteomes-db-core</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.4.5-SNAPSHOT</version>
 
     <name>PRIDE Proteomes API</name>
     <description>This package define the API for access to the PRIDE Proteomes database.</description>
@@ -36,6 +36,8 @@
         <!-- UTF-8 encoding to generate the build-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <hibernate.version>4.1.7.Final</hibernate.version>
+        <spring.data.version>1.4.3.RELEASE</spring.data.version>
     </properties>
     <!-- How to build -->
     <!-- Here should be an example command that will build the project for a common use case. -->
@@ -114,7 +116,6 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>1.4.2.RELEASE</version>
         </dependency>
 
         <!--other spring framework-->
@@ -152,6 +153,11 @@
         </dependency>
 
         <!--hibernate-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>

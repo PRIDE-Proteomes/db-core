@@ -21,7 +21,7 @@ import java.util.Collection;
 public abstract class ProteinGroup implements Serializable {
 
     @Id
-    @Column(name = "PROT_GROUP_PK", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
+    @Column(name = "PROT_GROUP_ID", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     @NotNull
     private String id;
 
@@ -34,8 +34,11 @@ public abstract class ProteinGroup implements Serializable {
     @NotNull
     private Integer taxid;
 
-    @ManyToMany(mappedBy = "proteinGroups")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany
+    @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
+            inverseJoinColumns = @JoinColumn(name = "PROTEIN_ID"),
+            joinColumns = @JoinColumn(name = "PROT_GROUP_ID"))
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Collection<Protein> proteins;
 
 

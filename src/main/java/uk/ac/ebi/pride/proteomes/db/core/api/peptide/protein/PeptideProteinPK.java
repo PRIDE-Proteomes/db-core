@@ -16,12 +16,12 @@ public class PeptideProteinPK implements Serializable {
 
     @Basic
     @NotNull
-    @Column(name = "PEPTIDE_FK_PK", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
+    @Column(name = "PEPTIDE_ID", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private Long peptideId;
 
     @Basic
     @NotNull
-    @Column(name = "PROTEIN_FK_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "PROTEIN_ID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private String proteinAccession;
 
     @Basic

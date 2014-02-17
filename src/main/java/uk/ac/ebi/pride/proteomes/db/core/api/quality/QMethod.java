@@ -10,11 +10,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Q_METHOD", schema = "PRIDEPROT")
-@SequenceGenerator(name="Q_METHOD_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.Q_METHOD_QUALITY_METHOD_PK_SEQ")
+@SequenceGenerator(name="Q_METHOD_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.Q_METHOD_QUALITY_METHOD_ID_SEQ")
 public class QMethod {
 
     @Id
-    @Column(name = "QUALITY_METHOD_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "Q_METHOD_ID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     @GeneratedValue(generator = "Q_METHOD_SEQ", strategy = GenerationType.SEQUENCE)
     private Integer id;
 

@@ -28,13 +28,13 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     public void testFindByMethods() throws Exception {
 
         EntryGroup entryGroupGroup = (EntryGroup) proteinGroupRepository.findById(ENTRY_GROUP_ID);
-        Collection<Protein> proteins = entryGroupGroup.getProteins();
+        Collection<Protein> proteins = entryGroupGroup.getEntryProteins();
         assertNotNull(proteins);
         assertThat(proteins.size(), is(PROTS_IN_GROUP));
 
 
         GeneGroup geneGroup = (GeneGroup) proteinGroupRepository.findById(GENE_GROUP_ID);
-        proteins = geneGroup.getProteins();
+        proteins = geneGroup.getGeneProteins();
         assertNotNull(proteins);
         assertThat(proteins.size(), is(PROTS_IN_GENE));
 
@@ -46,15 +46,15 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         assertNotNull(proteinGroupPaged);
         assertThat(proteinGroupPaged.size(), is(1));
 
-        Collection<ProteinGroup> humanList = proteinGroupRepository.findByTaxid(9606);
+        Collection<ProteinGroup> humanList = proteinGroupRepository.findByTaxid(TAXID_HUMAN);
         assertNotNull(humanList);
         assertThat(humanList.size(), is(2));
 
-        Collection<ProteinGroup> humanListPaged = proteinGroupRepository.findByTaxid(9606, new PageRequest(0, 1));
+        Collection<ProteinGroup> humanListPaged = proteinGroupRepository.findByTaxid(TAXID_HUMAN, new PageRequest(0, 1));
         assertNotNull(humanListPaged);
         assertThat(humanListPaged.size(), is(1));
 
-        Collection<ProteinGroup> mouseList = proteinGroupRepository.findByTaxid(10090);
+        Collection<ProteinGroup> mouseList = proteinGroupRepository.findByTaxid(TAXID_MOUSE);
         assertNotNull(mouseList);
         assertThat(mouseList.size(), is(1));
 
@@ -64,8 +64,8 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Transactional
     public void testCountMethods() throws Exception {
         long total = proteinGroupRepository.count();
-        long humanTotal = proteinGroupRepository.countByTaxid(9606);
-        long mouseTotal = proteinGroupRepository.countByTaxid(10090);
+        long humanTotal = proteinGroupRepository.countByTaxid(TAXID_HUMAN);
+        long mouseTotal = proteinGroupRepository.countByTaxid(TAXID_MOUSE);
 
         assertEquals(3, total);
         assertEquals(2, humanTotal);
@@ -77,19 +77,20 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Transactional
     public void testSaveAndGetProteinGroup() throws Exception {
 
-        EntryGroup entryGroupGroup = new EntryGroup();
-        entryGroupGroup.setDescription(NO_DESCRIPTION);
+        EntryGroup entryGroup = new EntryGroup();
+        entryGroup.setDescription(NO_DESCRIPTION);
 
         Set<Protein> proteins = new HashSet<Protein>();
         proteins.add(proteinRepository.findByProteinAccession(PROTEIN_ACCESSION));
         proteins.add(proteinRepository.findByProteinAccession(ISOFORM_ACCESSION));
-        entryGroupGroup.setProteins(proteins);
-        entryGroupGroup.setTaxid(TAXID_HUMAN);
-        entryGroupGroup.setId(ENTRY_GROUP_ID);
+        entryGroup.setEntryProteins(proteins);
+        entryGroup.setProteins(proteins);
+        entryGroup.setTaxid(TAXID_HUMAN);
+        entryGroup.setId(ENTRY_GROUP_ID);
 
-        entryGroupGroup = proteinGroupRepository.save(entryGroupGroup);
+        entryGroup = proteinGroupRepository.save(entryGroup);
 
-        String newId = entryGroupGroup.getId();
+        String newId = entryGroup.getId();
 
         ProteinGroup other = proteinGroupRepository.findById(newId);
 

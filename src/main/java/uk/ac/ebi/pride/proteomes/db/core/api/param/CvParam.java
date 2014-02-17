@@ -1,6 +1,7 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.param;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * User: ntoro
@@ -15,6 +16,7 @@ import javax.persistence.*;
 public abstract class CvParam {
 
     @Id
+    @NotNull
     @Column(name = "CV_TERM", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private String cvTerm;
 
@@ -56,8 +58,6 @@ public abstract class CvParam {
         if (!(o instanceof CvParam)) return false;
 
         CvParam cvParam = (CvParam) o;
-
-        if (!cvName.equals(cvParam.cvName)) return false;
         if (!cvTerm.equals(cvParam.cvTerm)) return false;
 
         return true;
@@ -66,7 +66,6 @@ public abstract class CvParam {
     @Override
     public int hashCode() {
         int result = cvTerm.hashCode();
-        result = 31 * result + cvName.hashCode();
         return result;
     }
 

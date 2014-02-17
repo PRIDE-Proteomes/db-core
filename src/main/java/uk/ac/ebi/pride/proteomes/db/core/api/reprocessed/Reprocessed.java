@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Reprocessed {
 
-    @Column(name = "REPROCESSED_ACCESSION")
+    @Column(name = "REPRO_ACCESSION")
     private String reprocessedAccession;
 
     public String getReprocessedAccession() {

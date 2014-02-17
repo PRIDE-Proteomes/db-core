@@ -36,14 +36,16 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
 
     /***** FIND PEPTIDE VARIANTS *****/
 
-    @Query("select p from PeptideVariant p")
-    public List<PeptideVariant> findAllPeptideVariants();
-    @Query("select p from PeptideVariant p")
-    public List<PeptideVariant> findAllPeptideVariants(Pageable pageable);
+    @Query("select p from Peptiform p")
+    public List<Peptiform> findAllPeptiforms();
+    @Query("select p from Peptiform p")
+    public List<Peptiform> findAllPeptiforms(Pageable pageable);
 
-    public List<PeptideVariant> findPeptideVariantBySequence(String sequence);
+    public List<Peptiform> findPeptiformBySequence(String sequence);
 
-    public List<PeptideVariant> findPeptideVariantBySequenceAndTaxid(String sequence, int taxid);
+    public List<Peptiform> findPeptiformBySequenceAndTaxid(String sequence, int taxid);
+
+    public List<Peptiform> findAllPeptiformsByTaxidAndPeptideIdBetween(Integer taxId, Long minValue, Long maxValue);
 
 
 

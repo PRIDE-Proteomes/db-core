@@ -35,42 +35,40 @@ public class Assay {
     @ManyToMany(targetEntity = CellType.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn( name = "ASSAY_FK_PK" ),
-            inverseJoinColumns = @JoinColumn( name = "CV_PARAM_FK_PK" )
+            joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
+            inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Collection<CellType> cellTypes;
 
     @ManyToMany(targetEntity = Disease.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn( name = "ASSAY_FK_PK" ),
-            inverseJoinColumns = @JoinColumn( name = "CV_PARAM_FK_PK" )
+            joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
+            inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Collection<Disease> diseases;
 
     @ManyToMany(targetEntity = Tissue.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn( name = "ASSAY_FK_PK" ),
-            inverseJoinColumns = @JoinColumn( name = "CV_PARAM_FK_PK" )
+            joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
+            inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
     private Collection<Tissue> tissues;
-
 
     @ElementCollection
     @CollectionTable(
             name = "REPRO", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "ASSAY_FK_PK", referencedColumnName = "ASSAY_ACCESSION")
+            joinColumns = @JoinColumn(name = "ASSAY_ACCESSION", referencedColumnName = "ASSAY_ACCESSION")
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Collection<Reprocessed> reprocessed;
-
 
     public String getAssayAccession() {
         return assayAccession;
@@ -120,14 +118,6 @@ public class Assay {
         this.tissues = tissues;
     }
 
-//    public Collection<Peptide> getPeptides() {
-//        return peptides;
-//    }
-//
-//    public void setPeptides(Collection<Peptide> pepAssaysByAssayAccession) {
-//        this.peptides = pepAssaysByAssayAccession;
-//    }
-
     public Collection<Reprocessed> getReprocessed() {
         return reprocessed;
     }
@@ -144,7 +134,6 @@ public class Assay {
         Assay assay = (Assay) o;
 
         if (!assayAccession.equals(assay.assayAccession)) return false;
-        if (!projectAccession.equals(assay.projectAccession)) return false;
 
         return true;
     }
@@ -152,7 +141,6 @@ public class Assay {
     @Override
     public int hashCode() {
         int result = assayAccession.hashCode();
-        result = 31 * result + projectAccession.hashCode();
         return result;
     }
 

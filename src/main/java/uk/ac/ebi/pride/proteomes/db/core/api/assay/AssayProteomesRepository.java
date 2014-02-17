@@ -11,7 +11,7 @@ import java.util.List;
  * Time: 10:06
  */
 @Repository
-public interface AssayRepository extends JpaRepository<Assay, String> {
+public interface AssayProteomesRepository extends JpaRepository<Assay, String> {
 
 //  public  List<Assay> findAllAssays();
     public List<Assay> findByProjectAccession(String projectAccession);

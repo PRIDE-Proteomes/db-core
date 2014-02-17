@@ -4,6 +4,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
@@ -23,7 +26,7 @@ import java.util.Collection;
 public class Protein {
 
     @Id
-    @Column(name = "PROTEIN_ACCESSION", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
+    @Column(name = "PROTEIN_ID", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private String proteinAccession;
 
     @Basic
@@ -44,45 +47,68 @@ public class Protein {
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer taxid;
 
-    @ElementCollection
+    @OrderColumn
+    @ElementCollection(targetClass=ModificationLocation.class)
     @CollectionTable(
-            name = "PROTEIN_MOD", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "PROTEIN_FK_PK", referencedColumnName = "PROTEIN_ACCESSION")
+            name = "PROT_MOD", schema = "PRIDEPROT",
+            joinColumns = @JoinColumn(name = "PROTEIN_ID", referencedColumnName = "PROTEIN_ID")
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    //The lazy loading in the modifications is necessary for the pipeline
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Collection<ModificationLocation> modificationLocations;
+
+    @ManyToMany(targetEntity = CellType.class)
+    @JoinTable(
+            name = "PROT_CV", schema = "PRIDEPROT",
+            joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
+    )
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
+    private Collection<CellType> cellTypes;
+
+    @ManyToMany(targetEntity = Disease.class)
+    @JoinTable(
+            name = "PROT_CV", schema = "PRIDEPROT",
+            joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
+    )
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
+    private Collection<Disease> diseases;
+
+    @ManyToMany(targetEntity = Tissue.class)
+    @JoinTable(
+
+            name = "PROT_CV", schema = "PRIDEPROT",
+            joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
+    )
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
+    private Collection<Tissue> tissues;
 
 	@OneToMany(mappedBy = "protein")
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private Collection<PeptideProtein> peptides;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "PROT_FK_PK"),
-            inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
+    @ManyToMany(mappedBy = "proteins")
     @LazyCollection(LazyCollectionOption.TRUE)
     private Collection<ProteinGroup> proteinGroups;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "PROT_FK_PK"),
-            inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
+    @ManyToMany(mappedBy = "entryProteins")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "PROT_GROUP_TYPE = 'ENTRY'")  //This is necessary :(
     private Collection<EntryGroup> entryGroups;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "PROT_PGRP", schema = "PRIDEPROT",
-            joinColumns = @JoinColumn(name = "PROT_FK_PK"),
-            inverseJoinColumns = @JoinColumn(name = "P_GROUP_FK_PK"))
+    @ManyToMany(mappedBy = "geneProteins")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
     private Collection<GeneGroup> geneGroups;
 
     @OneToOne
-    @JoinColumn(name = "SCORE_FK", referencedColumnName = "SCORE_PK")
+    @JoinColumn(name = "SCORE_ID", referencedColumnName = "SCORE_ID")
     private Score score;
-
 
     public String getProteinAccession() {
         return proteinAccession;
@@ -132,7 +158,31 @@ public class Protein {
         this.modificationLocations = modificationLocations;
     }
 
-	public Collection<PeptideProtein> getPeptides() {
+    public Collection<CellType> getCellTypes() {
+        return cellTypes;
+    }
+
+    public void setCellTypes(Collection<CellType> cellTypes) {
+        this.cellTypes = cellTypes;
+    }
+
+    public Collection<Disease> getDiseases() {
+        return diseases;
+    }
+
+    public void setDiseases(Collection<Disease> diseases) {
+        this.diseases = diseases;
+    }
+
+    public Collection<Tissue> getTissues() {
+        return tissues;
+    }
+
+    public void setTissues(Collection<Tissue> tissues) {
+        this.tissues = tissues;
+    }
+
+    public Collection<PeptideProtein> getPeptides() {
 		return peptides;
 	}
 

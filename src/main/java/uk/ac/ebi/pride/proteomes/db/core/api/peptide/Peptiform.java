@@ -5,12 +5,12 @@ import javax.persistence.Entity;
 
 /**
  * User: ntoro
- * Date: 13/09/2013
- * Time: 09:53
+ * Date: 15/08/2013
+ * Time: 14:06
  */
 @Entity
-@DiscriminatorValue("TRUE")
-public class SymbolicPeptide extends Peptide {
+@DiscriminatorValue(value = "FALSE")
+public class Peptiform extends Peptide {
 
     @Override
     public boolean equals(Object o) {
@@ -28,9 +28,8 @@ public class SymbolicPeptide extends Peptide {
 
     @Override
     public String toString() {
-        return "SymbolicPeptide{ " +
+        return "Peptiform{ " +
                 super.toString() +
                 '}';
     }
-
 }

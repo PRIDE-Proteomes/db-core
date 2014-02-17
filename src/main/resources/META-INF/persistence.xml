@@ -16,7 +16,7 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.group.PeptideGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptiform</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup</class>

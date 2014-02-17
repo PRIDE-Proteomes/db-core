@@ -10,10 +10,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -28,7 +25,7 @@ import static org.hamcrest.Matchers.is;
 
 public class ProteinRepositoryTest extends RepositoryTest {
 
-	@Test
+    @Test
 	@Transactional(readOnly = true)
 	public void testFindByMethods() throws Exception {
 
@@ -109,12 +106,12 @@ public class ProteinRepositoryTest extends RepositoryTest {
     @Transactional
     public void testCountMethods() throws Exception {
         long total = proteinRepository.count();
-        long humanTotal = proteinRepository.countByTaxid(9606);
-        long mouseTotal = proteinRepository.countByTaxid(10090);
+        long humanTotal = proteinRepository.countByTaxid(TAXID_HUMAN);
+        long mouseTotal = proteinRepository.countByTaxid(TAXID_MOUSE);
         long searchTerm1Count = proteinRepository.countByDescriptionContaining("kinase");
         long searchTerm2Count = proteinRepository.countByDescriptionContaining("random");
-        long searchTerm1HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(9606, "kinase");
-        long searchTerm2HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(9606, "random");
+        long searchTerm1HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase");
+        long searchTerm2HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(TAXID_HUMAN, "random");
 
         assertEquals(5, total);
         assertEquals(3, humanTotal);
@@ -139,34 +136,41 @@ public class ProteinRepositoryTest extends RepositoryTest {
 		protein.setSequence(NEW_PROTEIN_SEQUENCE);
 		protein.setCurationLevel(CurationLevel.PREDICTED);
 
-		Set<EntryGroup> entryGroups = new HashSet<EntryGroup>();
-		entryGroups.add((EntryGroup) proteinGroupRepository.findOne(ENTRY_GROUP_ID));
+        Collection<EntryGroup> entryGroups = new HashSet<EntryGroup>();
+        EntryGroup entryGroup = (EntryGroup) proteinGroupRepository.findOne(ENTRY_GROUP_ID);
+        entryGroup.getEntryProteins().addAll(Collections.singletonList(protein));
+        entryGroups.add(entryGroup);
 
-		Set<GeneGroup> geneGroups = new HashSet<GeneGroup>();
-		geneGroups.add((GeneGroup) proteinGroupRepository.findOne(GENE_GROUP_ID));
+        Collection<GeneGroup> geneGroups = new HashSet<GeneGroup>();
+        GeneGroup geneGroup = (GeneGroup) proteinGroupRepository.findOne(GENE_GROUP_ID);
+        geneGroup.getGeneProteins().addAll(Collections.singletonList(protein));
+		geneGroups.add(geneGroup);
 
 		protein.setEntryGroups(entryGroups);
 		protein.setGeneGroups(geneGroups);
 
-		protein = proteinRepository.save(protein);
+        protein = proteinRepository.save(protein);
 
 		//After we store the protein we add the mapping with the peptides
 		PeptideProtein peptideProteinTwo = new PeptideProtein(PEPTIDE_TWO, NEW_PROTEIN_ACCESSION, 43);
 		peptideProteinTwo.setProtein(protein);
 		peptideProteinTwo.setPeptide(peptideRepository.findOne(PEPTIDE_TWO));
 		peptideProteinTwo.setStartPosition(43);
+        peptideProteinTwo.setScore(scoreRepository.findOne(SCORE_ID));
 
 		PeptideProtein peptideProteinSeven = new PeptideProtein(PEPTIDE_SEVEN, NEW_PROTEIN_ACCESSION, 1);
 		peptideProteinSeven.setProtein(protein);
 		peptideProteinSeven.setPeptide(peptideRepository.findOne(PEPTIDE_SEVEN));
 		peptideProteinSeven.setStartPosition(1);
+        peptideProteinSeven.setScore(scoreRepository.findOne(SCORE_ID));
 
-		PeptideProtein peptideProteinTen = new PeptideProtein(PEPTIDE_TEN, NEW_PROTEIN_ACCESSION, 13);
+        PeptideProtein peptideProteinTen = new PeptideProtein(PEPTIDE_TEN, NEW_PROTEIN_ACCESSION, 13);
 		peptideProteinTen.setProtein(protein);
 		peptideProteinTen.setPeptide(peptideRepository.findOne(PEPTIDE_TEN));
 		peptideProteinTen.setStartPosition(13);
+        peptideProteinTen.setScore(scoreRepository.findOne(SCORE_ID));
 
-		peptideProteinTwo = peptideProteinRepository.save(peptideProteinTwo);
+        peptideProteinTwo = peptideProteinRepository.save(peptideProteinTwo);
 		peptideProteinSeven = peptideProteinRepository.save(peptideProteinSeven);
 		peptideProteinTen = peptideProteinRepository.save(peptideProteinTen);
 

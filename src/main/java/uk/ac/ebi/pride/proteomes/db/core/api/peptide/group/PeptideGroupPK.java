@@ -14,11 +14,11 @@ import java.io.Serializable;
 public class PeptideGroupPK implements Serializable {
 
     @NotNull
-    @Column(name = "PEPTIDE_FK_PK", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
+    @Column(name = "PEPTIDE_ID", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private Long peptideId;
 
     @NotNull
-    @Column(name = "P_GROUP_FK_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "PROT_GROUP_ID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private String proteinGroupId;
 
     public Long getPeptideId() {

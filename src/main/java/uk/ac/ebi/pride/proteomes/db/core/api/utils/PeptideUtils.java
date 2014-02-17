@@ -2,9 +2,11 @@ package uk.ac.ebi.pride.proteomes.db.core.api.utils;
 
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptiform;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * User: ntoro
@@ -12,6 +14,8 @@ import java.util.Collection;
  * Time: 10:18
  */
 public class PeptideUtils {
+
+    private static final String MISSED_CLEAVAGES_REGEXP = "[KR][^P]";
 
     public static String peptideRepresentationGenerator(Peptide peptide) {
 
@@ -22,9 +26,9 @@ public class PeptideUtils {
         stringBuilder.append("|");
         stringBuilder.append(peptide.getTaxid());
 
-        if (peptide instanceof PeptideVariant) {
+        if (peptide instanceof Peptiform) {
             stringBuilder.append("|");
-            stringBuilder.append(serializeModifications(((PeptideVariant) peptide).getModificationLocations()));
+            stringBuilder.append(serializeModifications(((Peptiform) peptide).getModificationLocations()));
         }
         stringBuilder.append("]");
 
@@ -43,7 +47,7 @@ public class PeptideUtils {
                 stringBuilder.append("(");
                 stringBuilder.append(modificationLocation.getPosition());
                 stringBuilder.append(",");
-                stringBuilder.append(modificationLocation.getModCvTerm());
+                stringBuilder.append(modificationLocation.getModId());
                 stringBuilder.append(")");
 
             }
@@ -53,18 +57,42 @@ public class PeptideUtils {
 
     }
 
+    public static int numMissedCleavageSites(String peptideSequence) {
+
+        Pattern pattern = Pattern.compile(MISSED_CLEAVAGES_REGEXP);
+
+        //We don't take into account the last AA because if it is a tryptic peptide without degradation in going to be always K or R
+//        String peptideSequenceWithoutLastAA = peptideSequence.substring(0,peptideSequence.length()-1);
+
+
+        Matcher peptideMatcher = pattern.matcher(peptideSequence);
+
+        int missedCleavages = 0;
+
+        //Start looking in the next amino acid
+        boolean hasNext = peptideMatcher.find();
+        while (hasNext) {
+            //The index of start is staring on zero, we need to shift it to 1
+            missedCleavages++;
+            hasNext = peptideMatcher.find();
+        }
+
+        return missedCleavages;
+    }
+
+
     public void printRepresentation(Iterable<Peptide> peptides) {
 
         for (Peptide peptide : peptides) {
             System.out.print("\nINSERT INTO PRIDEPROT.PEPTIDE (PEPTIDE_PK, SEQUENCE, REPRESENTATION, DESCRIPTION, SCORE_FK, SYMBOLIC, TAXID)");
             System.out.print("\n  VALUES (" + peptide.getPeptideId() + ", N'" + peptide.getSequence() + "', N'" +
                     PeptideUtils.peptideRepresentationGenerator(peptide) + "', N'', 1.0, N'" +
-                    isSymbolic(peptide) + "', 9606.0);\n");
+                    isSymbolic(peptide) + "', " + peptide.getTaxid() + ");\n");
         }
     }
 
     private String isSymbolic(Peptide peptide) {
-        if (peptide instanceof PeptideVariant) {
+        if (peptide instanceof Peptiform) {
             return "FALSE";
         }
         return "TRUE";

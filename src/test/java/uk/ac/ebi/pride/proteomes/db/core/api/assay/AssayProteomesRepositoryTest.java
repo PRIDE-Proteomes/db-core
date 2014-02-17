@@ -21,12 +21,12 @@ import static org.hamcrest.Matchers.is;
  * Time: 13:34
  */
 
-public class AssayRepositoryTest extends RepositoryTest {
+public class AssayProteomesRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional(readOnly = true)
     public void testFindMethods() throws Exception {
-        List<Assay> assays = assayRepository.findByProjectAccession(PROJECT_ACCESSION);
+        List<Assay> assays = assayProteomesRepository.findByProjectAccession(PROJECT_ACCESSION);
 
         assertNotNull(assays);
         assertThat(assays.size(), is(NUM_ASSAY_PROJECT));
@@ -48,13 +48,13 @@ public class AssayRepositoryTest extends RepositoryTest {
 
         //Tissue
         //We check first if that not exist in the DB and if not we will persist it
-        Tissue tissue = (Tissue) cvParamRepository.findByCvTerm(TISSUE_TERM);
+        Tissue tissue = (Tissue) cvParamProteomesRepository.findByCvTerm(TISSUE_TERM);
         if (tissue == null) {
             tissue = new Tissue();
             tissue.setCvTerm(TISSUE_TERM);
             tissue.setCvName(TISSUE_NAME);
             tissue.setDescription(NO_DESCRIPTION);
-            tissue = (Tissue) cvParamRepository.save(tissue);
+            tissue = (Tissue) cvParamProteomesRepository.save(tissue);  //Should be persisted before we persist the parent
         }
 
         Collection<Tissue> tissues = new HashSet<Tissue>();
@@ -62,13 +62,13 @@ public class AssayRepositoryTest extends RepositoryTest {
         assay.setTissues(tissues);
 
         //Cell Type
-        CellType cellType = (CellType) cvParamRepository.findByCvTerm(CELL_TYPE_TERM);
+        CellType cellType = (CellType) cvParamProteomesRepository.findByCvTerm(CELL_TYPE_TERM);
         if (cellType == null) {
             cellType = new CellType();
             cellType.setCvTerm(CELL_TYPE_TERM);
             cellType.setCvName(CELL_TYPE_NAME);
             cellType.setDescription(NO_DESCRIPTION);
-            cellType = (CellType) cvParamRepository.save(cellType);
+            cellType = (CellType) cvParamProteomesRepository.save(cellType);   //Should be persisted before we persist the parent
         }
 
         Collection<CellType> cellTypes = new HashSet<CellType>();
@@ -76,29 +76,29 @@ public class AssayRepositoryTest extends RepositoryTest {
         assay.setCellTypes(cellTypes);
 
         //Disease
-        Disease disease = (Disease) cvParamRepository.findByCvTerm(DISEASE_TERM);
+        Disease disease = (Disease) cvParamProteomesRepository.findByCvTerm(DISEASE_TERM);
         if (disease == null) {
             disease = new Disease();
             disease.setCvTerm(DISEASE_TERM);
             disease.setCvName(DISEASE_NAME);
             disease.setDescription(NO_DESCRIPTION);
-            disease = (Disease) cvParamRepository.save(disease);
+            disease = (Disease) cvParamProteomesRepository.save(disease);  //Should be persisted before we persist the parent
 
         }
         Collection<Disease> diseases = new HashSet<Disease>();
         diseases.add(disease);
         assay.setDiseases(diseases);
 
-        assay = assayRepository.save(assay);
+        assay = assayProteomesRepository.save(assay);
 
         //id set after save
         String newId = assay.getAssayAccession();
 
-        Assay other = assayRepository.findOne(newId);
+        Assay other = assayProteomesRepository.findOne(newId);
         checkAssayInDb(other);
 
         // delete the assay
-        assayRepository.delete(other);
+        assayProteomesRepository.delete(other);
 
 
     }

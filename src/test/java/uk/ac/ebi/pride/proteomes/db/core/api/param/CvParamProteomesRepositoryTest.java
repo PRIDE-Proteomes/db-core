@@ -15,19 +15,19 @@ import static org.hamcrest.Matchers.is;
  * Time: 11:35
  */
 
-public class CvParamRepositoryTest extends RepositoryTest {
+public class CvParamProteomesRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional(readOnly = true)
     public void testFindMethods() throws Exception {
 
 
-        CvParam cvParam = cvParamRepository.findByCvName(CV_NAME);
+        CvParam cvParam = cvParamProteomesRepository.findByCvName(CV_NAME);
 
         assertNotNull(cvParam);
         assertThat(cvParam.getCvName(), is(CV_NAME));
 
-        cvParam = cvParamRepository.findByCvTerm(CV_TERM);
+        cvParam = cvParamProteomesRepository.findByCvTerm(CV_TERM);
 
         assertNotNull(cvParam);
         assertTrue(cvParam instanceof Tissue);

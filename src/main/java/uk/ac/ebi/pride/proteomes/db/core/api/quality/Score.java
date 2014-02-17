@@ -9,11 +9,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SCORE", schema = "PRIDEPROT")
-@SequenceGenerator(name="SCORE_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.SCORE_SCORE_PK_SEQ")
+@SequenceGenerator(name="SCORE_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.SCORE_SCORE_ID_SEQ")
 public class Score {
 
     @Id
-    @Column(name = "SCORE_PK", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "SCORE_ID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     @GeneratedValue(generator = "SCORE_SEQ", strategy = GenerationType.SEQUENCE)
     private Long id;
 
@@ -21,12 +21,12 @@ public class Score {
     @Column(name = "VALUE", nullable = false, insertable = true, updatable = true)
     private Double value;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
-    @JoinColumn(name = "QUALITY_METHOD_FK", referencedColumnName = "QUALITY_METHOD_PK", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "Q_METHOD_ID", referencedColumnName = "Q_METHOD_ID", nullable = false)
     private QMethod qualityMethod;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
-    @JoinColumn(name = "STAR_FK", referencedColumnName = "STAR_PK", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "STAR_ID", referencedColumnName = "STAR_ID", nullable = false)
     private Star star;
 
     public Long getId() {
@@ -49,16 +49,16 @@ public class Score {
         return qualityMethod;
     }
 
-    public void setQualityMethod(QMethod qMethodByQualityMethodFk) {
-        this.qualityMethod = qMethodByQualityMethodFk;
+    public void setQualityMethod(QMethod qualityMethod) {
+        this.qualityMethod = qualityMethod;
     }
 
     public Star getStar() {
         return star;
     }
 
-    public void setStar(Star starByStarFk) {
-        this.star = starByStarFk;
+    public void setStar(Star star) {
+        this.star = star;
     }
 
     @Override

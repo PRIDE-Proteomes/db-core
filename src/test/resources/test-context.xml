@@ -20,7 +20,7 @@
 
     <jdbc:embedded-database id="proteomesDataSource">
         <jdbc:script location="db/hsqldb-config.sql"/>
-        <jdbc:script location="db/schema.sql"/>
+        <jdbc:script location="db/hsql_schema.sql"/>
         <jdbc:script location="db/test-data.sql"/>
     </jdbc:embedded-database>
 
@@ -28,8 +28,9 @@
         <property name="dataSource" ref="proteomesDataSource"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="generateDdl" value="true"/>
+                <property name="generateDdl" value="false"/>
                 <property name="database" value="HSQL"/>
+                <property name="showSql" value="true"/>
             </bean>
         </property>
     </bean>

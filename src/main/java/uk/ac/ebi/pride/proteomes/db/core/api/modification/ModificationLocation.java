@@ -15,8 +15,8 @@ public class ModificationLocation implements Serializable, Comparable {
     @Column(name = "POSITION")
     private Integer position;
 
-    @Column(name = "MOD_FK_PK")
-    private String modCvTerm;
+    @Column(name = "MOD_ID")
+    private String modId;
 
     public Integer getPosition() {
         return position;
@@ -26,12 +26,12 @@ public class ModificationLocation implements Serializable, Comparable {
         this.position = position;
     }
 
-    public String getModCvTerm() {
-        return modCvTerm;
+    public String getModId() {
+        return modId;
     }
 
-    public void setModCvTerm(String cvTerm) {
-        this.modCvTerm = cvTerm;
+    public void setModId(String cvTerm) {
+        this.modId = cvTerm;
     }
 
 
@@ -42,7 +42,7 @@ public class ModificationLocation implements Serializable, Comparable {
 
         ModificationLocation that = (ModificationLocation) o;
 
-        if (!modCvTerm.equals(that.modCvTerm)) return false;
+        if (!modId.equals(that.modId)) return false;
         if (!position.equals(that.position)) return false;
 
         return true;
@@ -51,7 +51,7 @@ public class ModificationLocation implements Serializable, Comparable {
     @Override
     public int hashCode() {
         int result = position.hashCode();
-        result = 31 * result + modCvTerm.hashCode();
+        result = 31 * result + modId.hashCode();
         return result;
     }
 
@@ -59,7 +59,7 @@ public class ModificationLocation implements Serializable, Comparable {
     public String toString() {
         return "ModificationLocation{" +
                 "position=" + position +
-                ", modification=" + modCvTerm +
+                ", modification=" + modId +
                 '}';
     }
 
@@ -75,7 +75,7 @@ public class ModificationLocation implements Serializable, Comparable {
 
         int comparison = position.compareTo(that.getPosition());
         if(comparison == 0){
-            return modCvTerm.compareTo(that.getModCvTerm());
+            return modId.compareTo(that.getModId());
         }
         return comparison;
     }

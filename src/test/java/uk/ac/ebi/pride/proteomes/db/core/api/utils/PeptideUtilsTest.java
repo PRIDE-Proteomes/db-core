@@ -3,11 +3,12 @@ package uk.ac.ebi.pride.proteomes.db.core.api.utils;
 import org.junit.Test;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
-import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideVariant;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptiform;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.SymbolicPeptide;
 
 import java.util.TreeSet;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -32,11 +33,22 @@ public class PeptideUtilsTest extends RepositoryTest {
     private static String PEP_Y = "[HCGATSAGLR|9606]";
     private static String PEP_Z = "[HCGATSAGLR|9606|]";
 
+
+    private static final String TRYPTIC = "MEMEQHGMVGSEISSSR";
+    private static final String TRYPTIC_WITH_RP = "RPHTLNSTSTSK";
+    private static final String NO_TRYPTIC_ONE = "LMQEVDRQR";
+    private static final String NO_TRYPTIC_TWO = "LMQEVDRQRALQQR";
+    private static final String NO_TRYPTIC_THREE = "LMQEVDRQRALQQRMEMEQHGMVGSEISSSR";
+    private static final String NO_TRYPTIC_FOUR = "LMQEVDRQRALQQRMEMEQHGMVGSEISSSRTSVS" +
+            "QIPFYSSDLPCDFMQPLGPLQQSPQHQQQMGQVLQ" +
+            "QQNIQQGSINSPSTQTFMQTNER";
+
+
     @Test
     public void testPeptideVariantRepresentationGenerator() throws Exception {
 
         //Peptides
-        PeptideVariant peptideX = new PeptideVariant();
+        Peptiform peptideX = new Peptiform();
 
         peptideX.setTaxid(TAXID);
         peptideX.setSequence(SEQUENCE);
@@ -46,22 +58,22 @@ public class PeptideUtilsTest extends RepositoryTest {
         TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
 
         ModificationLocation pepModC = new ModificationLocation();
-        pepModC.setModCvTerm(C_MOD_TERM);
+        pepModC.setModId(C_MOD_TERM);
         pepModC.setPosition(C_MOD_POS);
         modificationLocations.add(pepModC);
 
         ModificationLocation pepModB = new ModificationLocation();
-        pepModB.setModCvTerm(B_MOD_TERM);
+        pepModB.setModId(B_MOD_TERM);
         pepModB.setPosition(B_MOD_POS);
         modificationLocations.add(pepModB);
 
         ModificationLocation pepModD = new ModificationLocation();
-        pepModD.setModCvTerm(D_MOD_TERM);
+        pepModD.setModId(D_MOD_TERM);
         pepModD.setPosition(D_MOD_POS);
         modificationLocations.add(pepModD);
 
         ModificationLocation pepModA = new ModificationLocation();
-        pepModA.setModCvTerm(A_MOD_TERM);
+        pepModA.setModId(A_MOD_TERM);
         pepModA.setPosition(A_MOD_POS);
         modificationLocations.add(pepModA);
 
@@ -92,7 +104,7 @@ public class PeptideUtilsTest extends RepositoryTest {
     public void testPeptideVariantNoModsRepresentationGenerator() throws Exception {
 
         //Peptides
-        PeptideVariant peptideZ = new PeptideVariant();
+        Peptiform peptideZ = new Peptiform();
 
         peptideZ.setTaxid(TAXID);
         peptideZ.setSequence(SEQUENCE);
@@ -101,5 +113,35 @@ public class PeptideUtilsTest extends RepositoryTest {
 
         assertThat(peptideRepresentation, is(PEP_Z));
 
+    }
+
+    @Test
+    public void testTrypticNumMissedCleavageSites() throws Exception {
+        assertEquals(0, PeptideUtils.numMissedCleavageSites(TRYPTIC));
+    }
+
+    @Test
+    public void testTrypticWithRPNumMissedCleavageSites() throws Exception {
+        assertEquals(0, PeptideUtils.numMissedCleavageSites(TRYPTIC_WITH_RP));
+    }
+
+    @Test
+    public void testNoTrypticOneNumMissedCleavageSites() throws Exception {
+        assertEquals(1, PeptideUtils.numMissedCleavageSites(NO_TRYPTIC_ONE));
+    }
+
+    @Test
+    public void testNoTrypticTwoNumMissedCleavageSites() throws Exception {
+        assertEquals(2, PeptideUtils.numMissedCleavageSites(NO_TRYPTIC_TWO));
+    }
+
+    @Test
+    public void testNoTrypticThreeNumMissedCleavageSites() throws Exception {
+        assertEquals(3, PeptideUtils.numMissedCleavageSites(NO_TRYPTIC_THREE));
+    }
+
+    @Test
+    public void testNoTrypticFourNumMissedCleavageSites() throws Exception {
+        assertEquals(4, PeptideUtils.numMissedCleavageSites(NO_TRYPTIC_FOUR));
     }
 }

@@ -22,15 +22,15 @@ public class ModificationRepositoryTest extends RepositoryTest {
     @Transactional(readOnly = true)
     public void testFindMethods() throws Exception {
 
-        Modification modification = modificationRepository.findByCvTerm(MOD_TERM_RO);
+        Modification modification = modificationRepository.findByModId(MOD_TERM_RO);
 
         assertNotNull(modification);
-        assertThat(modification.getCvTerm(), is(MOD_TERM_RO));
+        assertThat(modification.getModId(), is(MOD_TERM_RO));
 
-        modification = modificationRepository.findByCvName(MOD_NAME_RO);
+        modification = modificationRepository.findByModName(MOD_NAME_RO);
 
         assertNotNull(modification);
-        assertThat(modification.getCvName(), is(MOD_NAME_RO));
+        assertThat(modification.getModName(), is(MOD_NAME_RO));
 
         List<Modification> modifications = modificationRepository.findByBiologicalSignificant(BIO_SIGN);
 
@@ -56,13 +56,13 @@ public class ModificationRepositoryTest extends RepositoryTest {
 
 
         //Modification
-        Modification modification = modificationRepository.findByCvTerm(MOD_TERM);
+        Modification modification = modificationRepository.findByModId(MOD_TERM);
 
         assertNull(modification);
 
         modification = new Modification();
-        modification.setCvTerm(MOD_TERM);
-        modification.setCvName(MOD_NAME);
+        modification.setModId(MOD_TERM);
+        modification.setModName(MOD_NAME);
         modification.setBiologicalSignificant(BIO_SIGN);
         modification.setMonoDelta(MONO_DELTA);
         modification.setDescription(NO_DESCRIPTION);
@@ -70,7 +70,7 @@ public class ModificationRepositoryTest extends RepositoryTest {
 
 
         //id set after save
-        String newId = modification.getCvTerm();
+        String newId = modification.getModId();
 
         Modification other = modificationRepository.findOne(newId);
         checkModInDb(other);
@@ -82,8 +82,8 @@ public class ModificationRepositoryTest extends RepositoryTest {
 
     private void checkModInDb(Modification other) {
 
-        assertThat(other.getCvTerm(), is(MOD_TERM));
-        assertThat(other.getCvName(), is(MOD_NAME));
+        assertThat(other.getModId(), is(MOD_TERM));
+        assertThat(other.getModName(), is(MOD_NAME));
         assertThat(other.getMonoDelta(), is(MONO_DELTA));
         assertThat(other.getBiologicalSignificant(), is(BIO_SIGN));
         assertThat(other.getDescription(), is(NO_DESCRIPTION));
@@ -97,16 +97,16 @@ public class ModificationRepositoryTest extends RepositoryTest {
 
         //This modification exists in the test dataset.
         Modification modification = new Modification();
-        modification.setCvTerm(NEW_MOD_TERM);
-        modification.setCvName(NEW_MOD_NAME);
+        modification.setModId(NEW_MOD_TERM);
+        modification.setModName(NEW_MOD_NAME);
 
         String cvTerm = (String) entityManagerFactory.getPersistenceUnitUtil().getIdentifier(modification);
 
         assertNotNull(cvTerm);
 
         Modification sameModification = new Modification();
-        sameModification.setCvTerm(NEW_MOD_TERM);
-        sameModification.setCvName(NEW_MOD_NAME);
+        sameModification.setModId(NEW_MOD_TERM);
+        sameModification.setModName(NEW_MOD_NAME);
 
         String sameCvTerm = (String) entityManagerFactory.getPersistenceUnitUtil().getIdentifier(sameModification);
 

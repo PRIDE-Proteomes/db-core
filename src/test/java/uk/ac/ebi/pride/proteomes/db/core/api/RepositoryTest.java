@@ -4,9 +4,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.ac.ebi.pride.proteomes.db.core.api.assay.AssayRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.assay.AssayProteomesRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationRepository;
-import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamProteomesRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.group.PeptideGroupRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProteinRepository;
@@ -31,6 +31,7 @@ public abstract class RepositoryTest {
     protected static final int NUM_ASSAY_PROJECT = 22;
 
     protected static final Integer TAXID_HUMAN = 9606;
+    protected static final Integer TAXID_MOUSE = 10090;
 
     protected static final String NO_DESCRIPTION = null;
 
@@ -63,8 +64,9 @@ public abstract class RepositoryTest {
     protected static final Integer PEPS_WITH_SEQUENCE = 2;
     protected static final Integer PEPS_VAR_WITH_SEQUENCE = 1;
     protected static final Integer PEPS_SYM_WITH_SEQUENCE = 1;
-    protected static final Integer NUM_SYMBOLIC = 30;
-    protected static final Integer NUM_VARIANTS = 41;
+    protected static final Integer DISTINCT_SEQUENCES_9606 = 31;
+    protected static final Integer NUM_SYMBOLIC = 32;
+    protected static final Integer NUM_VARIANTS = 44;
 
 
     protected static final String NEW_MOD_TERM = "MOD:00696";
@@ -124,13 +126,13 @@ public abstract class RepositoryTest {
     protected EntityManagerFactory entityManagerFactory;
 
     @Autowired
-    protected AssayRepository assayRepository;
+    protected AssayProteomesRepository assayProteomesRepository;
 
     @Autowired
     protected PeptideRepository peptideRepository;
 
     @Autowired
-    protected CvParamRepository cvParamRepository;
+    protected CvParamProteomesRepository cvParamProteomesRepository;
 
     @Autowired
     protected ModificationRepository modificationRepository;
