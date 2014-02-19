@@ -115,6 +115,39 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
 	}
 
+    @Test
+   	@Transactional(readOnly = true)
+    public void testCountMethods() throws Exception {
+
+        long allPeptideCnt = peptideRepository.count();
+        assertThat(allPeptideCnt, is((long)NUM_VARIANTS+NUM_SYMBOLIC));
+
+        long allSymPeptideCnt = peptideRepository.countSymbolicPeptide();
+        assertThat(allSymPeptideCnt, is((long)NUM_SYMBOLIC));
+
+        long allPeptiformsCnt = peptideRepository.countPeptiforms();
+        assertThat(allPeptiformsCnt, is((long)NUM_VARIANTS));
+
+        long humanPeptideCnt = peptideRepository.countByTaxid(9606);
+        assertThat(humanPeptideCnt, is(74L));
+
+        long mousePeptideCnt = peptideRepository.countByTaxid(10090);
+        assertThat(mousePeptideCnt, is(2L));
+
+        long humanSymPepCnt = peptideRepository.countSymbolicPeptideByTaxid(9606);
+        assertThat(humanSymPepCnt, is((long)DISTINCT_SEQUENCES_9606));
+
+        long mouseSymPepCnt = peptideRepository.countSymbolicPeptideByTaxid(10090);
+        assertThat(mouseSymPepCnt, is(1L));
+
+        long humanPeptiformCnt = peptideRepository.countPeptiformsByTaxid(9606);
+        assertThat(humanPeptiformCnt, is((long) 43));
+
+        long mousePeptiformCnt = peptideRepository.countPeptiformsByTaxid(10090);
+        assertThat(mousePeptiformCnt, is((long)1));
+
+    }
+
 	@Test
 	@Transactional
 	public void testSaveAndGetPeptideVariant() throws Exception {

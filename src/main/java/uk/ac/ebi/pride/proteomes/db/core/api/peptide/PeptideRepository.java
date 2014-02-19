@@ -67,4 +67,23 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long> {
 
 //    @Query("select p from SymbolicPeptide p where p.taxid = :taxid and p.id")
 	public List<SymbolicPeptide> findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(Integer taxId, Long minValue, Long maxValue);
+
+
+    /***** COUNT METHODS *****/
+
+    // count all peptides (peptiforms + symbolic)
+    long countByTaxid(int taxid);
+
+    // count symbolic peptides
+    @Query("select count(p) from SymbolicPeptide p")
+    long countSymbolicPeptide();
+    @Query("select count(p) from SymbolicPeptide p where taxid = :taxid")
+    long countSymbolicPeptideByTaxid(@Param("taxid") int taxid);
+
+    // count peptiforms
+    @Query("select count(p) from Peptiform p")
+    long countPeptiforms();
+    @Query("select count(p) from Peptiform p where taxid = :taxid")
+    long countPeptiformsByTaxid(@Param("taxid") int taxid);
+
 }
