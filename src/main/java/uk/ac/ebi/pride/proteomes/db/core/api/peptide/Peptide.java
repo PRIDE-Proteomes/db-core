@@ -85,7 +85,8 @@ public abstract class Peptide implements Serializable {
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private Collection<Assay> assays;
 
-	@ManyToMany(targetEntity = CellType.class)
+    //Unidirectional relationship
+    @ManyToMany(targetEntity = CellType.class)
     @JoinTable(
 			name = "PEP_CV", schema = "PRIDEPROT",
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
@@ -95,7 +96,8 @@ public abstract class Peptide implements Serializable {
 	@Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
 	private Collection<CellType> cellTypes;
 
-	@ManyToMany(targetEntity = Disease.class)
+    //Unidirectional relationship
+    @ManyToMany(targetEntity = Disease.class)
     @JoinTable(
 			name = "PEP_CV", schema = "PRIDEPROT",
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
@@ -105,7 +107,8 @@ public abstract class Peptide implements Serializable {
 	@Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
 	private Collection<Disease> diseases;
 
-	@ManyToMany(targetEntity = Tissue.class)
+    //Unidirectional relationship
+    @ManyToMany(targetEntity = Tissue.class)
     @JoinTable(
 
 			name = "PEP_CV", schema = "PRIDEPROT",

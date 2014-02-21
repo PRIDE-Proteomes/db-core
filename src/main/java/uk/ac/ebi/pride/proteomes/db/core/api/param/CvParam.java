@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "CV_PARAM", schema = "PRIDEPROT")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@org.hibernate.annotations.DiscriminatorOptions(force = true)
 @DiscriminatorColumn(name = "CV_TYPE", discriminatorType = DiscriminatorType.STRING, length = 90)
 public abstract class CvParam {
 

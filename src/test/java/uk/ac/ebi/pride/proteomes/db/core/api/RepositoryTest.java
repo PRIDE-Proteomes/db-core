@@ -35,6 +35,9 @@ public abstract class RepositoryTest {
 
     protected static final String NO_DESCRIPTION = null;
 
+    protected static final String CV_NAME = "aorta thoracica";
+    protected static final String CV_TERM = "BTO:0000157";
+
     protected static final String TISSUE_TERM = "BTO:0000157";
     protected static final String TISSUE_NAME = "aorta thoracica";
     protected static final String CELL_TYPE_TERM = "CL:0000182";
@@ -48,6 +51,8 @@ public abstract class RepositoryTest {
     protected static final String MOD_TERM = "MOD:00902";
     protected static final String MOD_NAME = "modified L-arginine residue";
 
+    protected static final String MOD_ID = "MOD:01214";
+
     protected static final Integer MODS_BIO_SIGNIFICANT = 1;
     protected static final Integer MODS_NO_BIO_SIGNIFICANT = 0;
     protected static final Double MIN_DELTA = 100.5;
@@ -55,9 +60,6 @@ public abstract class RepositoryTest {
     protected static final Integer MODS_BETWEEN_DELTA = 1;
     protected static final Double MONO_DELTA = 103.050752;
     protected static final boolean BIO_SIGN = Boolean.TRUE;
-
-    protected static final String CV_NAME = "aorta thoracica";
-    protected static final String CV_TERM = "BTO:0000157";
 
     protected static final String SEQUENCE = "HCGATSAGLR";
 

@@ -12,7 +12,7 @@
 
     <groupId>uk.ac.ebi.pride.proteomes.db</groupId>
     <artifactId>pride-proteomes-db-core</artifactId>
-    <version>0.4.5-SNAPSHOT</version>
+    <version>0.4.6-SNAPSHOT</version>
 
     <name>PRIDE Proteomes API</name>
     <description>This package define the API for access to the PRIDE Proteomes database.</description>
@@ -27,7 +27,8 @@
 
     <scm>
         <connection>scm:svn:https://svn.ebi.ac.uk/pride-repo/pride-proteomes/db-core/trunk</connection>
-        <developerConnection>scm:svn:https://svn.ebi.ac.uk/pride-repo/pride-proteomes/db-core/trunk</developerConnection>
+        <developerConnection>scm:svn:https://svn.ebi.ac.uk/pride-repo/pride-proteomes/db-core/trunk
+        </developerConnection>
         <url>https://svn.ebi.ac.uk/pride-repo/pride-proteomes/pride-proteomes/db-core</url>
     </scm>
 
@@ -37,6 +38,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <hibernate.version>4.1.7.Final</hibernate.version>
         <spring.data.version>1.4.3.RELEASE</spring.data.version>
+        <querydsl.version>3.3.1</querydsl.version>
     </properties>
     <!-- How to build -->
     <!-- Here should be an example command that will build the project for a common use case. -->
@@ -107,6 +109,24 @@
                     <goals>deploy</goals>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.0.9</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Specifies the directory in which the query types are generated -->
+                            <outputDirectory>target/generated-sources/java</outputDirectory>
+                            <!-- States that the APT code generator should look for JPA annotations -->
+                            <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -171,6 +191,21 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
+
+        <!--querydsl-->
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${querydsl.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
 
         <!-- HSQLDB for integration testing -->
         <dependency>

@@ -32,6 +32,7 @@ public class Assay {
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer taxid;
 
+    //Unidirectional relationship
     @ManyToMany(targetEntity = CellType.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
@@ -42,6 +43,7 @@ public class Assay {
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Collection<CellType> cellTypes;
 
+    //Unidirectional relationship
     @ManyToMany(targetEntity = Disease.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
@@ -52,6 +54,7 @@ public class Assay {
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Collection<Disease> diseases;
 
+    //Unidirectional relationship
     @ManyToMany(targetEntity = Tissue.class)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",

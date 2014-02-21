@@ -1,0 +1,142 @@
+package uk.ac.ebi.pride.proteomes.db.core.api.protein;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.JpaEntityInformation;
+import org.springframework.data.jpa.repository.support.JpaMetamodelEntityInformation;
+import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
+import org.springframework.stereotype.Repository;
+import uk.ac.ebi.pride.proteomes.db.core.api.ProteomesRepository;
+
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+
+import static uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinPredicates.*;
+
+/**
+ * User: ntoro
+ * Date: 21/02/2014
+ * Time: 11:08
+ */
+@Repository
+public class ProteinRepositoryImpl implements ProteomesRepository<Protein> {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    private QueryDslJpaRepository<Protein, String> proteinRepository;
+
+    public ProteinRepositoryImpl() {
+
+    }
+
+    @Override
+    public List<Protein> findAllByTaxid(Integer taxid) {
+        return proteinRepository.findAll(hasTaxid(taxid));
+    }
+
+    @Override
+    public List<Protein> findAllByTissue(String cvTerm) {
+        return proteinRepository.findAll(hasTissue(cvTerm));
+    }
+
+    @Override
+    public List<Protein> findAllByModification(String modId) {
+        return proteinRepository.findAll(hasModification(modId));
+    }
+
+    @Override
+    public List<Protein> findAllByTaxidAndTissue(Integer taxid, String cvTerm) {
+        return proteinRepository.findAll(hasTaxidAndTissue(taxid, cvTerm));
+    }
+
+    @Override
+    public List<Protein> findAllByTaxidAndModification(Integer taxid, String modId) {
+        return proteinRepository.findAll(hasTaxidAndTissue(taxid, modId));
+    }
+
+    @Override
+    public List<Protein> findAllByTissueAndModification(String cvTerm, String modId) {
+        return proteinRepository.findAll(hasTissueAndModification(cvTerm, modId));
+    }
+
+    @Override
+    public List<Protein> findAllByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
+        return proteinRepository.findAll(hasTaxidAndTissueAndModification(taxid, cvTerm, modId));
+    }
+
+    @Override
+    public List<Protein> findAllByTaxid(Integer taxid, Pageable pageable) {
+        return proteinRepository.findAll(hasTaxid(taxid), pageable).getContent();
+    }
+
+    @Override
+    public List<Protein> findAllByTissue(String cvTerm, Pageable pageable) {
+        return proteinRepository.findAll(hasTissue(cvTerm), pageable).getContent();
+    }
+
+    @Override
+    public List<Protein> findAllByModification(String modId, Pageable pageable) {
+        return proteinRepository.findAll(hasModification(modId), pageable).getContent();
+    }
+
+    @Override
+    public List<Protein> findAllByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable) {
+        return proteinRepository.findAll(hasTaxidAndTissue(taxid, cvTerm), pageable).getContent();
+    }
+
+    @Override
+    public List<Protein> findAllByTaxidAndModification(Integer taxid, String modId, Pageable pageable) {
+        return proteinRepository.findAll(hasTaxidAndModification(taxid, modId), pageable).getContent();
+    }
+
+    @Override
+    public List<Protein> findAllByTissueAndModification(String cvTerm, String modId, Pageable pageable) {
+        return proteinRepository.findAll(hasTissueAndModification(cvTerm, modId), pageable).getContent();
+    }
+
+    @Override
+    public List<Protein> findAllByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable) {
+        return proteinRepository.findAll(hasTaxidAndTissueAndModification(taxid, cvTerm, modId), pageable).getContent();
+    }
+
+    @Override
+    public long countByTaxid(Integer taxid) {
+        return proteinRepository.count(hasTaxid(taxid));
+    }
+
+    @Override
+    public long countByTaxidAndTissue(Integer taxid, String cvTerm) {
+        return proteinRepository.count(hasTaxidAndTissue(taxid,cvTerm));
+    }
+
+    @Override
+    public long countByTaxidAndModification(Integer taxid, String modId) {
+        return proteinRepository.count(hasTaxidAndModification(taxid,modId));
+    }
+
+    @Override
+    public long countByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
+        return proteinRepository.count(hasTaxidAndTissueAndModification(taxid,cvTerm,modId));
+    }
+
+    /**
+     * An initialization method which is run after the bean has been constructed.
+     * This ensures that the entity manager is injected before we try to use it.
+     */
+    @PostConstruct
+    public void init() {
+        JpaEntityInformation<Protein, String> proteinEntityInfo = new JpaMetamodelEntityInformation<Protein, String>(Protein.class, entityManager.getMetamodel());
+        proteinRepository = new QueryDslJpaRepository<Protein, String>(proteinEntityInfo, entityManager);
+    }
+
+    /**
+     * This setter method should be used only by unit tests
+     *
+     * @param proteinRepository
+     */
+    protected void setProteinRepository(QueryDslJpaRepository<Protein, String> proteinRepository) {
+        this.proteinRepository = proteinRepository;
+    }
+}

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * Time: 10:06
  */
 @Repository
+@Transactional(readOnly = true)
 public interface CvParamProteomesRepository extends JpaRepository<CvParam, String> {
 
     public CvParam findByCvTerm(String term);

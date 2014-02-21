@@ -57,6 +57,7 @@ public class Protein {
     @LazyCollection(LazyCollectionOption.TRUE)
     private Collection<ModificationLocation> modificationLocations;
 
+    //Unidirectional relationship
     @ManyToMany(targetEntity = CellType.class)
     @JoinTable(
             name = "PROT_CV", schema = "PRIDEPROT",
@@ -67,6 +68,7 @@ public class Protein {
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Collection<CellType> cellTypes;
 
+    //Unidirectional relationship
     @ManyToMany(targetEntity = Disease.class)
     @JoinTable(
             name = "PROT_CV", schema = "PRIDEPROT",
@@ -77,9 +79,9 @@ public class Protein {
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Collection<Disease> diseases;
 
+    //Unidirectional relationship
     @ManyToMany(targetEntity = Tissue.class)
     @JoinTable(
-
             name = "PROT_CV", schema = "PRIDEPROT",
             joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
