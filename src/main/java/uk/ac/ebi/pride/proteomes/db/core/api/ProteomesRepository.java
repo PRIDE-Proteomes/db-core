@@ -10,6 +10,12 @@ import java.util.List;
  * Date: 21/02/2014
  * Time: 10:25
  */
+
+/**
+ * General methods that need to be implemented for the repositories od entities that contains taxonomy identifier,
+ * tissue and modification information (e.g. Protein, Peptide, SymbolicPeptide, Peptiform)
+ * @param <T>
+ */
 @NoRepositoryBean
 public interface ProteomesRepository<T> {
 

@@ -61,10 +61,6 @@ public class PeptideUtils {
 
         Pattern pattern = Pattern.compile(MISSED_CLEAVAGES_REGEXP);
 
-        //We don't take into account the last AA because if it is a tryptic peptide without degradation in going to be always K or R
-//        String peptideSequenceWithoutLastAA = peptideSequence.substring(0,peptideSequence.length()-1);
-
-
         Matcher peptideMatcher = pattern.matcher(peptideSequence);
 
         int missedCleavages = 0;
@@ -72,7 +68,6 @@ public class PeptideUtils {
         //Start looking in the next amino acid
         boolean hasNext = peptideMatcher.find();
         while (hasNext) {
-            //The index of start is staring on zero, we need to shift it to 1
             missedCleavages++;
             hasNext = peptideMatcher.find();
         }
@@ -81,7 +76,7 @@ public class PeptideUtils {
     }
 
 
-    public void printRepresentation(Iterable<Peptide> peptides) {
+    public static void printRepresentation(Iterable<Peptide> peptides) {
 
         for (Peptide peptide : peptides) {
             System.out.print("\nINSERT INTO PRIDEPROT.PEPTIDE (PEPTIDE_PK, SEQUENCE, REPRESENTATION, DESCRIPTION, SCORE_FK, SYMBOLIC, TAXID)");
@@ -91,7 +86,7 @@ public class PeptideUtils {
         }
     }
 
-    private String isSymbolic(Peptide peptide) {
+    private static String isSymbolic(Peptide peptide) {
         if (peptide instanceof Peptiform) {
             return "FALSE";
         }

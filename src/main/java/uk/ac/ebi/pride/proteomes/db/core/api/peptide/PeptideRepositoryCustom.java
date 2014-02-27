@@ -11,6 +11,11 @@ import java.util.List;
  * Date: 21/02/2014
  * Time: 14:20
  */
+
+/**
+ * Specific methods for SymbolicPeptides and Peptiforms in the PeptideRepository
+ */
+//TODO: Try to optimized and reduce the number of methods
 @NoRepositoryBean
 public interface PeptideRepositoryCustom extends ProteomesRepository<Peptide> {
 

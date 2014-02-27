@@ -9,6 +9,11 @@ import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
  */
 public class PeptideProteinUtils {
 
+    /**
+     * Count the number of n-terminal amino acids degraded
+     * @param peptideProtein peptide protein matching
+     * @return number of n-terminal amino acids degraded
+     */
     public static int countNTermDegradation(PeptideProtein peptideProtein) {
 
         int counter = 0;
@@ -23,6 +28,11 @@ public class PeptideProteinUtils {
         return counter;
     }
 
+    /**
+     * Count the number of c-terminal amino acids degraded
+     * @param peptideProtein peptide protein matching
+     * @return number of c-terminal amino acids degraded
+     */
     public static int countCTermDegradation(PeptideProtein peptideProtein) {
 
         int counter = 0;

@@ -5,13 +5,13 @@ package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
  * Date: 15/08/2013
  * Time: 13:47
  */
-public enum GroupType {
+public enum ProteinGroupType {
     ENTRY("ENTRY"),
     GENE("GENE");
 
     private final String groupName;
 
-    private GroupType(String groupName) {
+    private ProteinGroupType(String groupName) {
         this.groupName = groupName;
     }
 

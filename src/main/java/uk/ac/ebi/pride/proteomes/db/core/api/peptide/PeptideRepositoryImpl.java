@@ -20,13 +20,15 @@ import static uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptidePredicates.*;
  * Time: 11:08
  */
 @Repository
-
+@SuppressWarnings("unchecked")
 public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, PeptideRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     private QueryDslJpaRepository<? extends Peptide, Long> peptideRepository;
+
+    //TODO: Remove the unchecked warnings for the lists using a better approach instead of down casting;
 
     public PeptideRepositoryImpl() {
 
@@ -69,37 +71,37 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public List<Peptide> findAllByTaxid(Integer taxid, Pageable pageable) {
-        return (List<Peptide>) peptideRepository.findAll(hasTaxid(taxid), pageable);
+        return (List<Peptide>) peptideRepository.findAll(hasTaxid(taxid), pageable).getContent();
     }
 
     @Override
     public List<Peptide> findAllByTissue(String cvTerm, Pageable pageable) {
-        return (List<Peptide>) peptideRepository.findAll(hasTissue(cvTerm), pageable);
+        return (List<Peptide>) peptideRepository.findAll(hasTissue(cvTerm), pageable).getContent();
     }
 
     @Override
     public List<Peptide> findAllByModification(String modId, Pageable pageable) {
-        return (List<Peptide>) peptideRepository.findAll(hasModification(modId), pageable);
+        return (List<Peptide>) peptideRepository.findAll(hasModification(modId), pageable).getContent();
     }
 
     @Override
     public List<Peptide> findAllByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable) {
-        return (List<Peptide>) peptideRepository.findAll(hasTaxidAndTissue(taxid, cvTerm), pageable);
+        return (List<Peptide>) peptideRepository.findAll(hasTaxidAndTissue(taxid, cvTerm), pageable).getContent();
     }
 
     @Override
     public List<Peptide> findAllByTaxidAndModification(Integer taxid, String modId, Pageable pageable) {
-        return (List<Peptide>) peptideRepository.findAll(hasTaxidAndTissue(taxid, modId), pageable);
+        return (List<Peptide>) peptideRepository.findAll(hasTaxidAndTissue(taxid, modId), pageable).getContent();
     }
 
     @Override
     public List<Peptide> findAllByTissueAndModification(String cvTerm, String modId, Pageable pageable) {
-        return (List<Peptide>) peptideRepository.findAll(hasTissueAndModification(cvTerm, modId), pageable);
+        return (List<Peptide>) peptideRepository.findAll(hasTissueAndModification(cvTerm, modId), pageable).getContent();
     }
 
     @Override
     public List<Peptide> findAllByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable) {
-        return (List<Peptide>) peptideRepository.findAll(hasTaxidAndTissueAndModification(taxid, cvTerm, modId), pageable);
+        return (List<Peptide>) peptideRepository.findAll(hasTaxidAndTissueAndModification(taxid, cvTerm, modId), pageable).getContent();
     }
 
     @Override
