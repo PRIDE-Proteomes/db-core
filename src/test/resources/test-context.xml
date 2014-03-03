@@ -29,7 +29,7 @@
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="generateDdl" value="false"/>
                 <property name="database" value="HSQL"/>
-                <property name="showSql" value="true"/>
+                <property name="showSql" value="false"/>
             </bean>
         </property>
     </bean>
