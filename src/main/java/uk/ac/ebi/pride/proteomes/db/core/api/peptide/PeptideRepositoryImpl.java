@@ -286,8 +286,6 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     /**
      * This setter method should be used only by unit tests
-     *
-     * @param peptideRepository
      */
     protected void setPeptideRepository(QueryDslJpaRepository<Peptide, Long> peptideRepository) {
         this.peptideRepository = peptideRepository;

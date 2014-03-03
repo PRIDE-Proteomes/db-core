@@ -77,18 +77,20 @@ public abstract class ProteinGroup implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ProteinGroup)) return false;
 
         ProteinGroup that = (ProteinGroup) o;
 
-        if (proteins != null ? !proteins.equals(that.proteins) : that.proteins != null) return false;
+        if (!id.equals(that.id)) return false;
+        if (!taxid.equals(that.taxid)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result =  (proteins != null ? proteins.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + taxid.hashCode();
         return result;
     }
 
