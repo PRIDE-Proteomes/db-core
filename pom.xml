@@ -10,7 +10,7 @@
 
     <groupId>uk.ac.ebi.pride.proteomes.db</groupId>
     <artifactId>pride-proteomes-db-core</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>PRIDE Proteomes API</name>
     <description>This package define the API for access to the PRIDE Proteomes database.</description>
@@ -24,10 +24,10 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:https://svn.ebi.ac.uk/pride-repo/pride-proteomes/db-core/tags/pride-proteomes-db-core-1.0.0</connection>
-        <developerConnection>scm:svn:https://svn.ebi.ac.uk/pride-repo/pride-proteomes/db-core/tags/pride-proteomes-db-core-1.0.0
+        <connection>scm:svn:https://svn.ebi.ac.uk/pride-repo/pride-proteomes/db-core/trunk</connection>
+        <developerConnection>scm:svn:https://svn.ebi.ac.uk/pride-repo/pride-proteomes/db-core/trunk
         </developerConnection>
-        <url>https://svn.ebi.ac.uk/pride-repo/pride-proteomes/pride-proteomes/db-core/tags/pride-proteomes-db-core-1.0.0</url>
+        <url>https://svn.ebi.ac.uk/pride-repo/pride-proteomes/pride-proteomes/db-core</url>
     </scm>
 
     <properties>
