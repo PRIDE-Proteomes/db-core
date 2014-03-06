@@ -9,7 +9,8 @@ import uk.ac.ebi.pride.proteomes.db.core.api.ProteomesRepository;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 import static uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptidePredicates.*;
@@ -23,7 +24,8 @@ import static uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptidePredicates.*;
 @SuppressWarnings("unchecked")
 public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, PeptideRepositoryCustom {
 
-    @PersistenceContext
+    private EntityManagerFactory entityManagerFactory;
+
     private EntityManager entityManager;
 
     private QueryDslJpaRepository<? extends Peptide, Long> peptideRepository;
@@ -211,17 +213,17 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public long countByTaxidAndTissue(Integer taxid, String cvTerm) {
-        return peptideRepository.count(hasTaxidAndTissue(taxid,cvTerm));
+        return peptideRepository.count(hasTaxidAndTissue(taxid, cvTerm));
     }
 
     @Override
     public long countByTaxidAndModification(Integer taxid, String modId) {
-        return peptideRepository.count(hasTaxidAndModification(taxid,modId));
+        return peptideRepository.count(hasTaxidAndModification(taxid, modId));
     }
 
     @Override
     public long countByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
-        return peptideRepository.count(hasTaxidAndTissueAndModification(taxid,cvTerm,modId));
+        return peptideRepository.count(hasTaxidAndTissueAndModification(taxid, cvTerm, modId));
     }
 
     @Override
@@ -236,17 +238,17 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public long countSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxidAndTissue(taxid,cvTerm));
+        return peptideRepository.count(isSymbolicPeptideHasTaxidAndTissue(taxid, cvTerm));
     }
 
     @Override
     public long countSymbolicPeptideByTaxidAndModification(Integer taxid, String modId) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxidAndModification(taxid,modId));
+        return peptideRepository.count(isSymbolicPeptideHasTaxidAndModification(taxid, modId));
     }
 
     @Override
     public long countSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxidAndTissueAndModification(taxid,cvTerm,modId));
+        return peptideRepository.count(isSymbolicPeptideHasTaxidAndTissueAndModification(taxid, cvTerm, modId));
     }
 
     @Override
@@ -261,12 +263,12 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public long countPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm) {
-        return peptideRepository.count(isPeptiformHasTaxidAndTissue(taxid,cvTerm));
+        return peptideRepository.count(isPeptiformHasTaxidAndTissue(taxid, cvTerm));
     }
 
     @Override
     public long countPeptiformsByTaxidAndModification(Integer taxid, String modId) {
-        return peptideRepository.count(isPeptiformHasTaxidAndModification(taxid,modId));
+        return peptideRepository.count(isPeptiformHasTaxidAndModification(taxid, modId));
     }
 
     @Override
@@ -283,6 +285,13 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
         JpaEntityInformation<Peptide, Long> peptideEntityInfo = new JpaMetamodelEntityInformation<Peptide, Long>(Peptide.class, entityManager.getMetamodel());
         peptideRepository = new QueryDslJpaRepository<Peptide, Long>(peptideEntityInfo, entityManager);
     }
+
+    @PersistenceUnit(unitName = "pride-proteomes-db-core")
+    public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+        this.entityManager = entityManagerFactory.createEntityManager();
+    }
+
 
     /**
      * This setter method should be used only by unit tests

@@ -9,7 +9,8 @@ import uk.ac.ebi.pride.proteomes.db.core.api.ProteomesRepository;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import java.util.List;
 
 import static uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinPredicates.*;
@@ -22,7 +23,8 @@ import static uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinPredicates.*;
 @Repository
 public class ProteinRepositoryImpl implements ProteomesRepository<Protein> {
 
-    @PersistenceContext
+    private EntityManagerFactory entityManagerFactory;
+
     private EntityManager entityManager;
 
     private QueryDslJpaRepository<Protein, String> proteinRepository;
@@ -129,6 +131,12 @@ public class ProteinRepositoryImpl implements ProteomesRepository<Protein> {
     public void init() {
         JpaEntityInformation<Protein, String> proteinEntityInfo = new JpaMetamodelEntityInformation<Protein, String>(Protein.class, entityManager.getMetamodel());
         proteinRepository = new QueryDslJpaRepository<Protein, String>(proteinEntityInfo, entityManager);
+    }
+
+    @PersistenceUnit(unitName = "pride-proteomes-db-core")
+    public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+        this.entityManager = entityManagerFactory.createEntityManager();
     }
 
     /**
