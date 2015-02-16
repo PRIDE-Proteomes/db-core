@@ -28,7 +28,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     public void testFindByMethods() throws Exception {
 
         EntryGroup entryGroupGroup = (EntryGroup) proteinGroupRepository.findById(ENTRY_GROUP_ID);
-        Collection<Protein> proteins = entryGroupGroup.getEntryProteins();
+        Set<Protein> proteins = entryGroupGroup.getEntryProteins();
         assertNotNull(proteins);
         assertThat(proteins.size(), is(PROTS_IN_GROUP));
 

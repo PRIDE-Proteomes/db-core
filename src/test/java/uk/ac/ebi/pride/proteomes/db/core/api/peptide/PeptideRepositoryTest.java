@@ -277,21 +277,21 @@ public class PeptideRepositoryTest extends RepositoryTest {
         checkTissue(peptiform.getTissues());
     }
 
-    private void checkCellType(Collection<CellType> cellTypes) {
+    private void checkCellType(Set<CellType> cellTypes) {
         assertNotNull(cellTypes);
         assertThat(cellTypes.size(), is(1));
         assertThat(cellTypes.iterator().next().getCvTerm(), is(CELL_TYPE_TERM));
         assertThat(cellTypes.iterator().next().getCvName(), is(CELL_TYPE_NAME));
     }
 
-    private void checkDisease(Collection<Disease> diseases) {
+    private void checkDisease(Set<Disease> diseases) {
         assertNotNull(diseases);
         assertThat(diseases.size(), is(1));
         assertThat(diseases.iterator().next().getCvTerm(), is(DISEASE_TERM));
         assertThat(diseases.iterator().next().getCvName(), is(DISEASE_NAME));
     }
 
-    private void checkTissue(Collection<Tissue> tissues) {
+    private void checkTissue(Set<Tissue> tissues) {
         assertNotNull(tissues);
         assertThat(tissues.size(), is(1));
         assertThat(tissues.iterator().next().getCvTerm(), is(TISSUE_TERM));
@@ -299,7 +299,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
     }
 
-    private void checkPeptideModification(Collection<ModificationLocation> pepMods) {
+    private void checkPeptideModification(Set<ModificationLocation> pepMods) {
         assertNotNull(pepMods);
         assertThat(pepMods.size(), is(1));
         assertThat(pepMods.iterator().next().getModId(), is(NEW_MOD_TERM));
@@ -386,7 +386,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         assertEquals(true, peptiform.getModificationLocations().iterator().next().equals(samePeptiform.getModificationLocations().iterator().next()));
         assertEquals(true, samePeptiform.getModificationLocations().iterator().next().equals(peptiform.getModificationLocations().iterator().next()));
 
-        //Now they are a collection, so we can not compare Collection, only List or Set that take into account the equals method
+        //Now they are a collection, so we can not compare Set, only List or Set that take into account the equals method
 
         // assertEquals(true, samePeptiform.getModificationLocations().equals(peptiform.getModificationLocations()));
         // assertEquals(true, peptiform.getModificationLocations().equals(samePeptiform.getModificationLocations()));

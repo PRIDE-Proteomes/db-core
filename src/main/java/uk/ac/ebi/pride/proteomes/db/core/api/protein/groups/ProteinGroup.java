@@ -7,7 +7,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * User: ntoro
@@ -39,7 +39,7 @@ public abstract class ProteinGroup implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "PROTEIN_ID"),
             joinColumns = @JoinColumn(name = "PROT_GROUP_ID"))
     @LazyCollection(LazyCollectionOption.TRUE)
-    private Collection<Protein> proteins;
+    private Set<Protein> proteins;
 
 
     public String getId() {
@@ -66,11 +66,11 @@ public abstract class ProteinGroup implements Serializable {
         this.taxid = taxid;
     }
 
-    public Collection<Protein> getProteins() {
+    public Set<Protein> getProteins() {
         return proteins;
     }
 
-    public void setProteins(Collection<Protein> proteins) {
+    public void setProteins(Set<Protein> proteins) {
         this.proteins = proteins;
     }
 

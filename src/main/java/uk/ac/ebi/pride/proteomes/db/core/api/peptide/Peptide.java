@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay;
+import uk.ac.ebi.pride.proteomes.db.core.api.cluster.Cluster;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import java.util.SortedSet;
 
 /**
@@ -73,17 +74,27 @@ public abstract class Peptide implements Serializable {
     @OrderBy("position ASC" )
     //The lazy loading in the modifications is necessary for the pipeline
     @LazyCollection(LazyCollectionOption.TRUE)
-    private Collection<ModificationLocation> modificationLocations;
+    private Set<ModificationLocation> modificationLocations;
 
     //Unidirectional relationship
-    @ManyToMany(targetEntity = Assay.class)
+    @ManyToMany(targetEntity = Assay.class, cascade = CascadeType.ALL)
     @JoinTable(
 			name = "PEP_ASSAY", schema = "PRIDEPROT",
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
 			inverseJoinColumns = {@JoinColumn(name = "ASSAY_ACCESSION")}
 	)
 	@LazyCollection(LazyCollectionOption.TRUE)
-	private Collection<Assay> assays;
+	private Set<Assay> assays;
+
+    //Unidirectional relationship
+	@ManyToMany(targetEntity = Cluster.class, cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "PEP_CLUSTER", schema = "PRIDEPROT",
+			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
+			inverseJoinColumns = {@JoinColumn(name = "CLUSTER_ID")}
+	)
+	@LazyCollection(LazyCollectionOption.TRUE)
+	private Set<Cluster> clusters;
 
     //Unidirectional relationship
     @ManyToMany(targetEntity = CellType.class)
@@ -94,7 +105,7 @@ public abstract class Peptide implements Serializable {
 	)
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
-	private Collection<CellType> cellTypes;
+	private Set<CellType> cellTypes;
 
     //Unidirectional relationship
     @ManyToMany(targetEntity = Disease.class)
@@ -105,7 +116,7 @@ public abstract class Peptide implements Serializable {
 	)
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
-	private Collection<Disease> diseases;
+	private Set<Disease> diseases;
 
     //Unidirectional relationship
     @ManyToMany(targetEntity = Tissue.class)
@@ -117,11 +128,11 @@ public abstract class Peptide implements Serializable {
 	)
 	@LazyCollection(LazyCollectionOption.TRUE)
 	@Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
-	private Collection<Tissue> tissues;
+	private Set<Tissue> tissues;
 
 	@OneToMany(mappedBy = "peptide")
 	@LazyCollection(LazyCollectionOption.TRUE)
-	private Collection<PeptideProtein> proteins;
+	private Set<PeptideProtein> proteins;
 
     @OneToOne
     @JoinColumn(name = "SCORE_ID", referencedColumnName = "SCORE_ID")
@@ -176,7 +187,7 @@ public abstract class Peptide implements Serializable {
 		this.peptideRepresentation = peptideRepresentation;
 	}
 
-    public Collection<ModificationLocation> getModificationLocations() {
+    public Set<ModificationLocation> getModificationLocations() {
         return modificationLocations;
     }
 
@@ -184,43 +195,51 @@ public abstract class Peptide implements Serializable {
         this.modificationLocations = modificationLocations;
     }
 
-    public Collection<Assay> getAssays() {
+    public Set<Assay> getAssays() {
 		return assays;
 	}
 
-	public void setAssays(Collection<Assay> assays) {
+	public void setAssays(Set<Assay> assays) {
 		this.assays = assays;
 	}
 
-	public Collection<CellType> getCellTypes() {
+	public Set<Cluster> getClusters() {
+		return clusters;
+	}
+
+	public void setClusters(Set<Cluster> clusters) {
+		this.clusters = clusters;
+	}
+
+	public Set<CellType> getCellTypes() {
 		return cellTypes;
 	}
 
-	public void setCellTypes(Collection<CellType> cellType) {
+	public void setCellTypes(Set<CellType> cellType) {
 		this.cellTypes = cellType;
 	}
 
-	public Collection<Tissue> getTissues() {
+	public Set<Tissue> getTissues() {
 		return tissues;
 	}
 
-	public void setTissues(Collection<Tissue> tissues) {
+	public void setTissues(Set<Tissue> tissues) {
 		this.tissues = tissues;
 	}
 
-	public Collection<Disease> getDiseases() {
+	public Set<Disease> getDiseases() {
 		return diseases;
 	}
 
-	public void setDiseases(Collection<Disease> disease) {
+	public void setDiseases(Set<Disease> disease) {
 		this.diseases = disease;
 	}
 
-	public Collection<PeptideProtein> getProteins() {
+	public Set<PeptideProtein> getProteins() {
 		return proteins;
 	}
 
-	public void setProteins(Collection<PeptideProtein> proteins) {
+	public void setProteins(Set<PeptideProtein> proteins) {
 		this.proteins = proteins;
 	}
 
@@ -253,11 +272,12 @@ public abstract class Peptide implements Serializable {
 	public String toString() {
 		return "Peptide{" +
 				"peptideId=" + peptideId +
-                ", representation" + peptideRepresentation +
-                ", description='" + description + '\'' +
-                ", missedCleavages" + missedCleavages +
-                ", modificationLocations=" + modificationLocations +
-                ", assays=" + assays +
+				", representation='" + peptideRepresentation + '\'' +
+				", description='" + description + '\'' +
+				", missedCleavages=" + missedCleavages +
+				", modificationLocations=" + modificationLocations +
+				", assays=" + assays +
+				", clusters=" + clusters +
 				", cellTypes=" + cellTypes +
 				", diseases=" + diseases +
 				", tissues=" + tissues +

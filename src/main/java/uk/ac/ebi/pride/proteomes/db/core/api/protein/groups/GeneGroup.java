@@ -5,7 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * User: ntoro
@@ -21,13 +21,13 @@ public class GeneGroup extends ProteinGroup {
             inverseJoinColumns = @JoinColumn(name = "PROTEIN_ID"),
             joinColumns = @JoinColumn(name = "PROT_GROUP_ID"))
     @LazyCollection(LazyCollectionOption.TRUE)
-    private Collection<Protein> geneProteins;
+    private Set<Protein> geneProteins;
 
-    public Collection<Protein> getGeneProteins() {
+    public Set<Protein> getGeneProteins() {
         return geneProteins;
     }
 
-    public void setGeneProteins(Collection<Protein> proteins) {
+    public void setGeneProteins(Set<Protein> proteins) {
         this.geneProteins = proteins;
     }
 }

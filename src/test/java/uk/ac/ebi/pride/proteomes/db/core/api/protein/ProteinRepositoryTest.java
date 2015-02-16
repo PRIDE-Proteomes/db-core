@@ -30,23 +30,23 @@ public class ProteinRepositoryTest extends RepositoryTest {
     public void testFindByMethods() throws Exception {
 
         Protein protein = proteinRepository.findByProteinAccession(PROTEIN_ACCESSION);
-        Collection<PeptideProtein> peptides = protein.getPeptides();
+        Set<PeptideProtein> peptides = protein.getPeptides();
         assertNotNull(peptides);
         assertThat(peptides.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
 
-//		Collection<String> peptideIds = protein.getPeptideIds();
+//		Set<String> peptideIds = protein.getPeptideIds();
 //		assertNotNull(peptideIds);
 //		assertThat(peptideIds.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
 
-        Collection<GeneGroup> genes = protein.getGeneGroups();
+        Set<GeneGroup> genes = protein.getGeneGroups();
         assertNotNull(genes);
         assertThat(genes.size(), is(NUM_GENES));
 
-        Collection<EntryGroup> entryGroups = protein.getEntryGroups();
+        Set<EntryGroup> entryGroups = protein.getEntryGroups();
         assertNotNull(entryGroups);
         assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS_FOR_PROTEIN));
 
-        Collection<ProteinGroup> proteinGroups = protein.getProteinGroups();
+        Set<ProteinGroup> proteinGroups = protein.getProteinGroups();
         assertNotNull(proteinGroups);
         assertThat(proteinGroups.size(), is(NUM_PROT_GROUPS_FOR_PROTEIN));
 
@@ -143,12 +143,12 @@ public class ProteinRepositoryTest extends RepositoryTest {
         protein.setSequence(NEW_PROTEIN_SEQUENCE);
         protein.setCurationLevel(CurationLevel.PREDICTED);
 
-        Collection<EntryGroup> entryGroups = new HashSet<EntryGroup>();
+        Set<EntryGroup> entryGroups = new HashSet<EntryGroup>();
         EntryGroup entryGroup = (EntryGroup) proteinGroupRepository.findOne(ENTRY_GROUP_ID);
         entryGroup.getEntryProteins().addAll(Collections.singletonList(protein));
         entryGroups.add(entryGroup);
 
-        Collection<GeneGroup> geneGroups = new HashSet<GeneGroup>();
+        Set<GeneGroup> geneGroups = new HashSet<GeneGroup>();
         GeneGroup geneGroup = (GeneGroup) proteinGroupRepository.findOne(GENE_GROUP_ID);
         geneGroup.getGeneProteins().addAll(Collections.singletonList(protein));
         geneGroups.add(geneGroup);
@@ -207,19 +207,19 @@ public class ProteinRepositoryTest extends RepositoryTest {
         checkGeneGroups(other.getGeneGroups());
     }
 
-    private void checkEntryGroups(Collection<EntryGroup> entryGroups) {
+    private void checkEntryGroups(Set<EntryGroup> entryGroups) {
         assertNotNull(entryGroups);
         assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS_FOR_PROTEIN));
         assertThat(entryGroups.iterator().next().getId(), is(ENTRY_GROUP_ID));
     }
 
-    private void checkGeneGroups(Collection<GeneGroup> geneGroups) {
+    private void checkGeneGroups(Set<GeneGroup> geneGroups) {
         assertNotNull(geneGroups);
         assertThat(geneGroups.size(), is(NUM_GENES));
         assertThat(geneGroups.iterator().next().getId(), is(GENE_GROUP_ID));
     }
 
-    private void checkSymbolicPeptides(Collection<PeptideProtein> symbolicPeptides) {
+    private void checkSymbolicPeptides(Set<PeptideProtein> symbolicPeptides) {
         assertNotNull(symbolicPeptides);
         assertThat(symbolicPeptides.size(), is(SYMBOLIC_PEP_IN_PROTEIN));
     }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.pride.proteomes.db.core.api.assay.AssayProteomesRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.cluster.ClusterProteomesRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamProteomesRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideRepository;
@@ -129,6 +130,9 @@ public abstract class RepositoryTest {
 
     @Autowired
     protected AssayProteomesRepository assayProteomesRepository;
+
+    @Autowired
+    protected ClusterProteomesRepository clusterProteomesRepository;
 
     @Autowired
     protected PeptideRepository peptideRepository;

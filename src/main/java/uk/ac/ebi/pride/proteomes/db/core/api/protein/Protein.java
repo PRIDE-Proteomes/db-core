@@ -14,7 +14,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * User: ntoro
@@ -55,7 +55,7 @@ public class Protein {
     )
     //The lazy loading in the modifications is necessary for the pipeline
     @LazyCollection(LazyCollectionOption.TRUE)
-    private Collection<ModificationLocation> modificationLocations;
+    private Set<ModificationLocation> modificationLocations;
 
     //Unidirectional relationship
     @ManyToMany(targetEntity = CellType.class)
@@ -66,7 +66,7 @@ public class Protein {
     )
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
-    private Collection<CellType> cellTypes;
+    private Set<CellType> cellTypes;
 
     //Unidirectional relationship
     @ManyToMany(targetEntity = Disease.class)
@@ -77,7 +77,7 @@ public class Protein {
     )
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
-    private Collection<Disease> diseases;
+    private Set<Disease> diseases;
 
     //Unidirectional relationship
     @ManyToMany(targetEntity = Tissue.class)
@@ -88,25 +88,25 @@ public class Protein {
     )
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
-    private Collection<Tissue> tissues;
+    private Set<Tissue> tissues;
 
 	@OneToMany(mappedBy = "protein")
 	@LazyCollection(LazyCollectionOption.TRUE)
-	private Collection<PeptideProtein> peptides;
+	private Set<PeptideProtein> peptides;
 
     @ManyToMany(mappedBy = "proteins")
     @LazyCollection(LazyCollectionOption.TRUE)
-    private Collection<ProteinGroup> proteinGroups;
+    private Set<ProteinGroup> proteinGroups;
 
     @ManyToMany(mappedBy = "entryProteins")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "PROT_GROUP_TYPE = 'ENTRY'")  //This is necessary :(
-    private Collection<EntryGroup> entryGroups;
+    private Set<EntryGroup> entryGroups;
 
     @ManyToMany(mappedBy = "geneProteins")
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
-    private Collection<GeneGroup> geneGroups;
+    private Set<GeneGroup> geneGroups;
 
     @OneToOne
     @JoinColumn(name = "SCORE_ID", referencedColumnName = "SCORE_ID")
@@ -152,67 +152,67 @@ public class Protein {
         this.taxid = taxid;
     }
 
-    public Collection<ModificationLocation> getModificationLocations() {
+    public Set<ModificationLocation> getModificationLocations() {
         return modificationLocations;
     }
 
-    public void setModificationLocations(Collection<ModificationLocation> modificationLocations) {
+    public void setModificationLocations(Set<ModificationLocation> modificationLocations) {
         this.modificationLocations = modificationLocations;
     }
 
-    public Collection<CellType> getCellTypes() {
+    public Set<CellType> getCellTypes() {
         return cellTypes;
     }
 
-    public void setCellTypes(Collection<CellType> cellTypes) {
+    public void setCellTypes(Set<CellType> cellTypes) {
         this.cellTypes = cellTypes;
     }
 
-    public Collection<Disease> getDiseases() {
+    public Set<Disease> getDiseases() {
         return diseases;
     }
 
-    public void setDiseases(Collection<Disease> diseases) {
+    public void setDiseases(Set<Disease> diseases) {
         this.diseases = diseases;
     }
 
-    public Collection<Tissue> getTissues() {
+    public Set<Tissue> getTissues() {
         return tissues;
     }
 
-    public void setTissues(Collection<Tissue> tissues) {
+    public void setTissues(Set<Tissue> tissues) {
         this.tissues = tissues;
     }
 
-    public Collection<PeptideProtein> getPeptides() {
+    public Set<PeptideProtein> getPeptides() {
 		return peptides;
 	}
 
-	public void setPeptides(Collection<PeptideProtein> peptideProteins) {
+	public void setPeptides(Set<PeptideProtein> peptideProteins) {
 		this.peptides = peptideProteins;
 	}
 
-	public Collection<ProteinGroup> getProteinGroups() {
+	public Set<ProteinGroup> getProteinGroups() {
         return proteinGroups;
     }
 
-    public void setProteinGroups(Collection<ProteinGroup> proteinGroups) {
+    public void setProteinGroups(Set<ProteinGroup> proteinGroups) {
         this.proteinGroups = proteinGroups;
     }
 
-    public Collection<EntryGroup> getEntryGroups() {
+    public Set<EntryGroup> getEntryGroups() {
         return entryGroups;
     }
 
-    public void setEntryGroups(Collection<EntryGroup> entryGroups) {
+    public void setEntryGroups(Set<EntryGroup> entryGroups) {
         this.entryGroups = entryGroups;
     }
 
-    public Collection<GeneGroup> getGeneGroups() {
+    public Set<GeneGroup> getGeneGroups() {
         return geneGroups;
     }
 
-    public void setGeneGroups(Collection<GeneGroup> geneGroups) {
+    public void setGeneGroups(Set<GeneGroup> geneGroups) {
         this.geneGroups = geneGroups;
     }
 

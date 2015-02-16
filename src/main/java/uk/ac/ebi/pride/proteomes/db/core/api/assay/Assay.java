@@ -9,7 +9,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
 import uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * User: ntoro
@@ -33,7 +33,7 @@ public class Assay {
     private Integer taxid;
 
     //Unidirectional relationship
-    @ManyToMany(targetEntity = CellType.class)
+    @ManyToMany(targetEntity = CellType.class, cascade = CascadeType.ALL)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
@@ -41,10 +41,10 @@ public class Assay {
     )
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
-    private Collection<CellType> cellTypes;
+    private Set<CellType> cellTypes;
 
     //Unidirectional relationship
-    @ManyToMany(targetEntity = Disease.class)
+    @ManyToMany(targetEntity = Disease.class, cascade = CascadeType.ALL)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
@@ -52,10 +52,10 @@ public class Assay {
     )
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
-    private Collection<Disease> diseases;
+    private Set<Disease> diseases;
 
     //Unidirectional relationship
-    @ManyToMany(targetEntity = Tissue.class)
+    @ManyToMany(targetEntity = Tissue.class, cascade = CascadeType.ALL)
     @JoinTable(
             name = "ASSAY_CV", schema = "PRIDEPROT",
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
@@ -63,7 +63,7 @@ public class Assay {
     )
     @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
-    private Collection<Tissue> tissues;
+    private Set<Tissue> tissues;
 
     @ElementCollection
     @CollectionTable(
@@ -71,7 +71,7 @@ public class Assay {
             joinColumns = @JoinColumn(name = "ASSAY_ACCESSION", referencedColumnName = "ASSAY_ACCESSION")
     )
     @LazyCollection(LazyCollectionOption.TRUE)
-    private Collection<Reprocessed> reprocessed;
+    private Set<Reprocessed> reprocessed;
 
     public String getAssayAccession() {
         return assayAccession;
@@ -97,35 +97,35 @@ public class Assay {
         this.taxid = taxid;
     }
 
-    public Collection<CellType> getCellTypes() {
+    public Set<CellType> getCellTypes() {
         return cellTypes;
     }
 
-    public void setCellTypes(Collection<CellType> cvParamSamples) {
+    public void setCellTypes(Set<CellType> cvParamSamples) {
         this.cellTypes = cvParamSamples;
     }
 
-    public Collection<Disease> getDiseases() {
+    public Set<Disease> getDiseases() {
         return diseases;
     }
 
-    public void setDiseases(Collection<Disease> diseases) {
+    public void setDiseases(Set<Disease> diseases) {
         this.diseases = diseases;
     }
 
-    public Collection<Tissue> getTissues() {
+    public Set<Tissue> getTissues() {
         return tissues;
     }
 
-    public void setTissues(Collection<Tissue> tissues) {
+    public void setTissues(Set<Tissue> tissues) {
         this.tissues = tissues;
     }
 
-    public Collection<Reprocessed> getReprocessed() {
+    public Set<Reprocessed> getReprocessed() {
         return reprocessed;
     }
 
-    public void setReprocessed(Collection<Reprocessed> reprocessed) {
+    public void setReprocessed(Set<Reprocessed> reprocessed) {
         this.reprocessed = reprocessed;
     }
 

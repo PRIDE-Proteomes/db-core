@@ -4,7 +4,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptiform;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +36,7 @@ public class PeptideUtils {
 
     }
 
-    private static String serializeModifications(Collection<ModificationLocation> modificationLocations) {
+    private static String serializeModifications(Set<ModificationLocation> modificationLocations) {
 
         StringBuilder stringBuilder = new StringBuilder();
 
