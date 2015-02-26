@@ -15,9 +15,11 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface PeptideGroupRepository extends JpaRepository<PeptideGroup, PeptideGroupPK> {
 
-    public List<PeptideGroup> findByPeptidePeptideIdAndProteinGroupId(Long peptideId, String proteinGroupId);
+    public PeptideGroup findByPeptidePeptideIdAndProteinGroupId(Long peptideId, String proteinGroupId);
 
     public List<PeptideGroup> findByProteinGroupId(String proteinGroupId);
+
+    public List<PeptideGroup> findByPeptidePeptideId(Long peptideId);
 
     public List<PeptideGroup> findByProteinGroupIdAndUniqueness(String proteinGroupId, Integer uniqueness);
 
