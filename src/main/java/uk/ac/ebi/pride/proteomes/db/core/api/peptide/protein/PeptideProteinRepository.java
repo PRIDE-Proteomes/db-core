@@ -15,7 +15,12 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface PeptideProteinRepository extends JpaRepository<PeptideProtein, PeptideProteinPK> {
 
-    public List<PeptideProtein> findByPeptidePeptideIdAndProteinProteinAccession(Long peptideId, String proteinAccession);
+    // the combination Peptide id + protein accession has to be unique in the peptide-protein table
+    // so we can expect a single result at max
+    public PeptideProtein findByPeptidePeptideIdAndProteinProteinAccession(Long peptideId, String proteinAccession);
+
+    // to find all peptide-protein mappings for a give peptide
+    public List<PeptideProtein> findByPeptidePeptideId(Long peptideId);
 
     public List<PeptideProtein> findByProteinProteinAccession(String proteinAccession);
 
