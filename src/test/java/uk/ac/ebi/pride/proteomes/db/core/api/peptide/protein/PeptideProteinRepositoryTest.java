@@ -22,12 +22,11 @@ public class PeptideProteinRepositoryTest extends RepositoryTest {
 	@Transactional(readOnly = true)
 	public void testFindMethods() throws Exception {
 
-		Collection<PeptideProtein> peptideProteins = peptideProteinRepository.findByPeptidePeptideIdAndProteinProteinAccession(PEPTIDE_TWO, PROTEIN_ACCESSION);
-		assertNotNull(peptideProteins);
-        assertThat(peptideProteins.size(), is(1));
-		assertThat(peptideProteins.iterator().next().getStartPosition(), is(1));
+		PeptideProtein peptideProtein = peptideProteinRepository.findByPeptidePeptideIdAndProteinProteinAccession(PEPTIDE_TWO, PROTEIN_ACCESSION);
+		assertNotNull(peptideProtein);
+		assertThat(peptideProtein.getStartPosition(), is(1));
 
-        peptideProteins = peptideProteinRepository.findByProteinProteinAccession(PROTEIN_ACCESSION);
+        Collection<PeptideProtein> peptideProteins = peptideProteinRepository.findByProteinProteinAccession(PROTEIN_ACCESSION);
         assertNotNull(peptideProteins);
         assertThat(peptideProteins.size(), is(3));
 
