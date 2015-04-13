@@ -21,18 +21,19 @@ import java.util.List;
 public interface ProteinRepository extends JpaRepository<Protein, String>, QueryDslPredicateExecutor<Protein>, ProteomesRepository<Protein> {
 
     Protein findByProteinAccession(String proteinAccession);
+    Long countByProteinAccession(String proteinAccession);
 
     List<Protein> findByDescriptionContaining(String searchTerm);
     List<Protein> findByDescriptionContaining(String searchTerm, Pageable pageable);
+    long countByDescriptionContaining(String searchTerm);
 
     List<Protein> findByTaxidAndDescriptionContaining(Integer taxid, String searchTerm);
     List<Protein> findByTaxidAndDescriptionContaining(Integer taxid, String searchTerm, Pageable pageable);
+    long countByTaxidAndDescriptionContaining(int taxid, String searchTerm);
 
     @Query("SELECT p FROM Protein p WHERE LOWER(p.sequence) LIKE LOWER(CONCAT('%',:searchTerm,'%'))")
     List<Protein> findBySequenceContaining(@Param("searchTerm") String searchTerm);
 
-    long countByDescriptionContaining(String searchTerm);
-    long countByTaxidAndDescriptionContaining(int taxid, String searchTerm);
 
 
 }
