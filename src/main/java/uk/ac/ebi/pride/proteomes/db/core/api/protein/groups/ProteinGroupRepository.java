@@ -15,7 +15,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public interface ProteinGroupRepository extends JpaRepository<ProteinGroup, String> {
+public interface ProteinGroupRepository extends JpaRepository<ProteinGroup, String>, ProteinGroupRepositoryCustom {
 
     ProteinGroup findById(String proteinGroupId);
 
