@@ -9,6 +9,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
 import uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -39,7 +40,7 @@ public class Assay {
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
             inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Set<CellType> cellTypes;
 
@@ -50,7 +51,7 @@ public class Assay {
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
             inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Set<Disease> diseases;
 
@@ -61,7 +62,7 @@ public class Assay {
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
             inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
     private Set<Tissue> tissues;
 
@@ -70,7 +71,7 @@ public class Assay {
             name = "REPRO", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "ASSAY_ACCESSION", referencedColumnName = "ASSAY_ACCESSION")
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Reprocessed> reprocessed;
 
     public String getAssayAccession() {
@@ -129,22 +130,36 @@ public class Assay {
         this.reprocessed = reprocessed;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Assay assay = (Assay) o;
+//
+//        if (!assayAccession.equals(assay.assayAccession)) return false;
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = assayAccession.hashCode();
+//        return result;
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Assay)) return false;
         Assay assay = (Assay) o;
-
-        if (!assayAccession.equals(assay.assayAccession)) return false;
-
-        return true;
+        return Objects.equals(assayAccession, assay.assayAccession);
     }
 
     @Override
     public int hashCode() {
-        int result = assayAccession.hashCode();
-        return result;
+        return Objects.hash(assayAccession);
     }
 
     @Override

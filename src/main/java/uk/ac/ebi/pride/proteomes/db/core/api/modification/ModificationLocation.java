@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.modification;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 /**
@@ -16,6 +17,7 @@ public class ModificationLocation implements Serializable, Comparable {
     private Integer position;
 
     @Column(name = "MOD_ID")
+    @Pattern(regexp = "(MOD|UNIMOD|CHEMMOD|SUBST|PRDMOD):([^\\|]+)(\\|\\[([^,]+)?,([^,]+)?,([^,]+),([^,]*)\\])?")
     private String modId;
 
     public Integer getPosition() {

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -26,22 +27,36 @@ public class Cluster {
         this.clusterId = clusterId;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Cluster cluster = (Cluster) o;
+//
+//        if (!clusterId.equals(cluster.clusterId)) return false;
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = clusterId.hashCode();
+//        return result;
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Cluster)) return false;
         Cluster cluster = (Cluster) o;
-
-        if (!clusterId.equals(cluster.clusterId)) return false;
-
-        return true;
+        return Objects.equals(clusterId, cluster.clusterId);
     }
 
     @Override
     public int hashCode() {
-        int result = clusterId.hashCode();
-        return result;
+        return Objects.hash(clusterId);
     }
 
     @Override

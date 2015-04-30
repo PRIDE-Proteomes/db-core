@@ -7,6 +7,7 @@
     <persistence-unit name="pride-proteomes-db-core" transaction-type="RESOURCE_LOCAL">
         <class>uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.cluster.Cluster</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.cluster.ClusterPsm</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.modification.Modification</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParam</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CellType</class>

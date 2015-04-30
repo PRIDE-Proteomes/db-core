@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -83,7 +84,7 @@ public abstract class Peptide implements Serializable {
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
 			inverseJoinColumns = {@JoinColumn(name = "ASSAY_ACCESSION")}
 	)
-	@LazyCollection(LazyCollectionOption.TRUE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Set<Assay> assays;
 
     //Unidirectional relationship
@@ -93,7 +94,7 @@ public abstract class Peptide implements Serializable {
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
 			inverseJoinColumns = {@JoinColumn(name = "CLUSTER_ID")}
 	)
-	@LazyCollection(LazyCollectionOption.TRUE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Set<Cluster> clusters;
 
     //Unidirectional relationship
@@ -103,7 +104,7 @@ public abstract class Peptide implements Serializable {
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
 			inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
 	)
-	@LazyCollection(LazyCollectionOption.TRUE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
 	private Set<CellType> cellTypes;
 
@@ -114,7 +115,7 @@ public abstract class Peptide implements Serializable {
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
 			inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
 	)
-	@LazyCollection(LazyCollectionOption.TRUE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
 	private Set<Disease> diseases;
 
@@ -126,7 +127,7 @@ public abstract class Peptide implements Serializable {
 			joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
 			inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
 	)
-	@LazyCollection(LazyCollectionOption.TRUE)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
 	private Set<Tissue> tissues;
 
@@ -251,21 +252,35 @@ public abstract class Peptide implements Serializable {
 		this.score = score;
 	}
 
+//	@Override
+//	public boolean equals(Object o) {
+//		if (this == o) return true;
+//		if (o == null || getClass() != o.getClass()) return false;
+//
+//		Peptide peptide = (Peptide) o;
+//
+//		if (!peptideRepresentation.equals(peptide.peptideRepresentation)) return false;
+//
+//		return true;
+//	}
+//
+//	@Override
+//	public int hashCode() {
+//		return peptideRepresentation.hashCode();
+//	}
+
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
+		if (!(o instanceof Peptide)) return false;
 		Peptide peptide = (Peptide) o;
-
-		if (!peptideRepresentation.equals(peptide.peptideRepresentation)) return false;
-
-		return true;
+		return Objects.equals(peptideRepresentation, peptide.peptideRepresentation);
 	}
 
 	@Override
 	public int hashCode() {
-		return peptideRepresentation.hashCode();
+		return Objects.hash(peptideRepresentation);
 	}
 
 	@Override

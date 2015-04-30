@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.param;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -51,21 +52,35 @@ public abstract class CvParam {
         this.description = description;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof CvParam)) return false;
+//
+//        CvParam cvParam = (CvParam) o;
+//        if (!cvTerm.equals(cvParam.cvTerm)) return false;
+//
+//        return true;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = cvTerm.hashCode();
+//        return result;
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CvParam)) return false;
-
         CvParam cvParam = (CvParam) o;
-        if (!cvTerm.equals(cvParam.cvTerm)) return false;
-
-        return true;
+        return Objects.equals(cvTerm, cvParam.cvTerm);
     }
 
     @Override
     public int hashCode() {
-        int result = cvTerm.hashCode();
-        return result;
+        return Objects.hash(cvTerm);
     }
 
     @Override

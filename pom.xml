@@ -10,7 +10,7 @@
 
     <groupId>uk.ac.ebi.pride.proteomes.db</groupId>
     <artifactId>pride-proteomes-db-core</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>PRIDE Proteomes API</name>
     <description>This package define the API for access to the PRIDE Proteomes database.</description>
@@ -34,7 +34,11 @@
         <!-- UTF-8 encoding to generate the build-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <querydsl.version>3.3.1</querydsl.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
+        <hibernate.validator>4.3.0.Final</hibernate.validator>
+        <querydsl.version>3.6.2</querydsl.version>
+        <spring.version>4.0.9.RELEASE</spring.version>
+        <spring.data.jpa.version>1.6.5.RELEASE</spring.data.jpa.version>
     </properties>
 
     <!-- How to build -->
@@ -184,10 +188,10 @@
         </dependency>
 
         <!--apache commons-->
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>commons-lang</groupId>-->
+            <!--<artifactId>commons-lang</artifactId>-->
+        <!--</dependency>-->
 
         <!--Test-->
         <dependency>
