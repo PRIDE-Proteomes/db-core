@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>uk.ac.ebi.pride.proteomes.db</groupId>
-    <artifactId>pride-proteomes-db-core</artifactId>
+    <artifactId>db-core</artifactId>
     <version>1.0.2-SNAPSHOT</version>
 
     <name>PRIDE Proteomes API</name>
