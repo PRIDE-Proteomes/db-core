@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.is;
 public class PeptideGroupRepositoryTest extends RepositoryTest {
 
     @Test
-   	@Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public void testFindMethods() throws Exception {
 
         Collection<PeptideGroup> proteinPeptideGroups = peptideGroupRepository.findByProteinGroupId(ENTRY_GROUP_ID);
@@ -27,6 +27,11 @@ public class PeptideGroupRepositoryTest extends RepositoryTest {
         PeptideGroup group = proteinPeptideGroups.iterator().next();
         assertThat(group.getProteinGroup().getId(), is(ENTRY_GROUP_ID));
         assertThat(group.getUniqueness(), is(1));
+
+        long mappedUPEntries = peptideGroupRepository.countByMappedUPEntriesByTaxId(TAXID_HUMAN);
+        assertThat(mappedUPEntries, is(1L));
+        long mappedGeneEntries = peptideGroupRepository.countByMappedGenesByTaxId(TAXID_HUMAN);
+        assertThat(mappedGeneEntries, is(1L));
 
     }
 

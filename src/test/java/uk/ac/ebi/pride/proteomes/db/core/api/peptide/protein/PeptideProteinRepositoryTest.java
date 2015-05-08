@@ -18,43 +18,54 @@ import static org.hamcrest.Matchers.is;
  */
 public class PeptideProteinRepositoryTest extends RepositoryTest {
 
-	@Test
-	@Transactional(readOnly = true)
-	public void testFindMethods() throws Exception {
+    @Test
+    @Transactional(readOnly = true)
+    public void testFindMethods() throws Exception {
 
-		PeptideProtein peptideProtein = peptideProteinRepository.findByPeptidePeptideIdAndProteinProteinAccession(PEPTIDE_TWO, PROTEIN_ACCESSION);
-		assertNotNull(peptideProtein);
-		assertThat(peptideProtein.getStartPosition(), is(1));
+        PeptideProtein peptideProtein = peptideProteinRepository.findByPeptidePeptideIdAndProteinProteinAccession(PEPTIDE_TWO, PROTEIN_ACCESSION);
+        assertNotNull(peptideProtein);
+        assertThat(peptideProtein.getStartPosition(), is(1));
 
         Collection<PeptideProtein> peptideProteins = peptideProteinRepository.findByProteinProteinAccession(PROTEIN_ACCESSION);
         assertNotNull(peptideProteins);
         assertThat(peptideProteins.size(), is(3));
 
-	}
+    }
 
-	@Test
-	@Transactional
-	public void testSaveAndGetPeptideProtein() throws Exception {
+    @Test
+    @Transactional
+    public void testCountMappedProteinsByTaxId() throws Exception {
 
-		PeptideProtein peptideProteinTwo = new PeptideProtein(PEPTIDE_TWO, PROTEIN_ACCESSION, 4);
-		peptideProteinTwo.setPeptide(peptideRepository.findOne(PEPTIDE_TWO));
-		peptideProteinTwo.setProtein(proteinRepository.findOne(PROTEIN_ACCESSION));
-		peptideProteinTwo.setStartPosition(4);
+        long mappedProteinsByTaxId = peptideProteinRepository.countByMappedProteinsByTaxId(TAXID_HUMAN);
+        assertThat(mappedProteinsByTaxId, is(1L));
+        mappedProteinsByTaxId = proteinRepository.countByMappedProteins(TAXID_HUMAN);
+        assertThat(mappedProteinsByTaxId, is(1L));
 
-		peptideProteinRepository.save(peptideProteinTwo);
+    }
 
-		PeptideProtein otherTwo = peptideProteinRepository.findOne(new PeptideProteinPK(PEPTIDE_TWO, PROTEIN_ACCESSION, 4));
+    @Test
+    @Transactional
+    public void testSaveAndGetPeptideProtein() throws Exception {
 
-		checkPeptideProteinInDb(otherTwo);
+        PeptideProtein peptideProteinTwo = new PeptideProtein(PEPTIDE_TWO, PROTEIN_ACCESSION, 4);
+        peptideProteinTwo.setPeptide(peptideRepository.findOne(PEPTIDE_TWO));
+        peptideProteinTwo.setProtein(proteinRepository.findOne(PROTEIN_ACCESSION));
+        peptideProteinTwo.setStartPosition(4);
 
-		peptideProteinRepository.delete(otherTwo);
-	}
+        peptideProteinRepository.save(peptideProteinTwo);
 
-	private void checkPeptideProteinInDb(PeptideProtein other) {
-		assertNotNull(other);
-		assertThat(other.getPeptide().getPeptideId(), is(PEPTIDE_TWO));
-		assertThat(other.getProtein().getProteinAccession(), is(PROTEIN_ACCESSION));
-		assertThat(other.getStartPosition(), is(4));
-	}
+        PeptideProtein otherTwo = peptideProteinRepository.findOne(new PeptideProteinPK(PEPTIDE_TWO, PROTEIN_ACCESSION, 4));
+
+        checkPeptideProteinInDb(otherTwo);
+
+        peptideProteinRepository.delete(otherTwo);
+    }
+
+    private void checkPeptideProteinInDb(PeptideProtein other) {
+        assertNotNull(other);
+        assertThat(other.getPeptide().getPeptideId(), is(PEPTIDE_TWO));
+        assertThat(other.getProtein().getProteinAccession(), is(PROTEIN_ACCESSION));
+        assertThat(other.getStartPosition(), is(4));
+    }
 
 }

@@ -24,5 +24,4 @@ public interface ProteinGroupRepository extends JpaRepository<ProteinGroup, Stri
 
     long countByTaxid(int taxid);
 
-
 }

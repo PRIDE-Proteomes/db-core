@@ -23,6 +23,7 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long>, QueryDs
 
     @Query("select distinct p.sequence from Peptide p where p.taxid = :taxid")
     public List<String> findAllDistinctSequenceByTaxid(@Param("taxid") Integer taxid);
+
     @Query("select distinct p.sequence from Peptide p where p.taxid = :taxid")
     public List<String> findAllDistinctSequenceByTaxid(@Param("taxid") Integer taxid, Pageable pageable);
 
@@ -53,10 +54,6 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long>, QueryDs
     //As the symbolic peptide is a artificial representation of the peptide, it has to be only one by species.
     public SymbolicPeptide findSymbolicPeptideBySequenceAndTaxid(String sequence, Integer taxid);
 
-	public List<SymbolicPeptide> findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(Integer taxid, Long minValue, Long maxValue);
-
-
-
-
+    public List<SymbolicPeptide> findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(Integer taxid, Long minValue, Long maxValue);
 
 }

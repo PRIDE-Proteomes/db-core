@@ -16,27 +16,27 @@ import java.io.Serializable;
 @Table(name = "PEP_PROT", schema = "PRIDEPROT")
 public class PeptideProtein implements Serializable {
 
-	@EmbeddedId
-	private PeptideProteinPK id;
+    @EmbeddedId
+    private PeptideProteinPK id;
 
     @Basic
     @Column(name = "NTERM_DEGRADATION", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer nTermDegradation;
 
-	@Basic
-	@Column(name = "CTERM_DEGRADATION", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
-	private Integer cTermDegradation;
+    @Basic
+    @Column(name = "CTERM_DEGRADATION", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+    private Integer cTermDegradation;
 
-	@Basic
-	@Column(name = "UNIQUENESS", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
-	private Integer uniqueness;
+    @Basic
+    @Column(name = "UNIQUENESS", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+    private Integer uniqueness;
 
     @ManyToOne
-    @JoinColumn(name = "PEPTIDE_ID", referencedColumnName = "PEPTIDE_ID", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "PEPTIDE_ID", referencedColumnName = "PEPTIDE_ID", nullable = false, insertable = false, updatable = false)
     private Peptide peptide;
 
     @ManyToOne
-    @JoinColumn(name = "PROTEIN_ID", referencedColumnName = "PROTEIN_ID", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "PROTEIN_ID", referencedColumnName = "PROTEIN_ID", nullable = false, insertable = false, updatable = false)
     private Protein protein;
 
     @OneToOne
@@ -45,35 +45,35 @@ public class PeptideProtein implements Serializable {
 
     public PeptideProtein() {
         setId(new PeptideProteinPK());
-	}
+    }
 
-	public PeptideProtein(Long peptideId, String proteinAccession, Integer startPosition) {
-		setId(new PeptideProteinPK(peptideId, proteinAccession, startPosition));
-	}
+    public PeptideProtein(Long peptideId, String proteinAccession, Integer startPosition) {
+        setId(new PeptideProteinPK(peptideId, proteinAccession, startPosition));
+    }
 
-	public PeptideProteinPK getId() {
-		return id;
-	}
+    public PeptideProteinPK getId() {
+        return id;
+    }
 
-	public void setId(PeptideProteinPK id) {
-		this.id = id;
-	}
+    public void setId(PeptideProteinPK id) {
+        this.id = id;
+    }
 
-	public Peptide getPeptide() {
-		return peptide;
-	}
+    public Peptide getPeptide() {
+        return peptide;
+    }
 
-	public void setPeptide(Peptide peptide) {
-		this.peptide = peptide;
-	}
+    public void setPeptide(Peptide peptide) {
+        this.peptide = peptide;
+    }
 
-	public Protein getProtein() {
-		return protein;
-	}
+    public Protein getProtein() {
+        return protein;
+    }
 
-	public void setProtein(Protein proteinByProteinFkPk) {
-		this.protein = proteinByProteinFkPk;
-	}
+    public void setProtein(Protein proteinByProteinFkPk) {
+        this.protein = proteinByProteinFkPk;
+    }
 
     public Long getPeptideId() {
         return id.getPeptideId();
@@ -91,13 +91,13 @@ public class PeptideProtein implements Serializable {
         id.setProteinAccession(proteinAccession);
     }
 
-	public Integer getStartPosition() {
-		return id.getStartPosition();
-	}
+    public Integer getStartPosition() {
+        return id.getStartPosition();
+    }
 
-	public void setStartPosition(Integer startPosition) {
+    public void setStartPosition(Integer startPosition) {
         id.setStartPosition(startPosition);
-	}
+    }
 
     public Integer getnTermDegradation() {
         return nTermDegradation;
@@ -116,12 +116,12 @@ public class PeptideProtein implements Serializable {
     }
 
     public Integer getUniqueness() {
-		return uniqueness;
-	}
+        return uniqueness;
+    }
 
-	public void setUniqueness(Integer uniqueness) {
-		this.uniqueness = uniqueness;
-	}
+    public void setUniqueness(Integer uniqueness) {
+        this.uniqueness = uniqueness;
+    }
 
     public Score getScore() {
         return score;
@@ -133,21 +133,21 @@ public class PeptideProtein implements Serializable {
 
 
     @Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof PeptideProtein)) return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PeptideProtein)) return false;
 
-		PeptideProtein that = (PeptideProtein) o;
+        PeptideProtein that = (PeptideProtein) o;
 
-		if (!id.equals(that.id)) return false;
+        if (!id.equals(that.id)) return false;
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public int hashCode() {
-		return id.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 
     @Override
     public String toString() {

@@ -1,6 +1,8 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.peptide.group;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,5 +25,9 @@ public interface PeptideGroupRepository extends JpaRepository<PeptideGroup, Pept
 
     public List<PeptideGroup> findByProteinGroupIdAndUniqueness(String proteinGroupId, Integer uniqueness);
 
+    @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, EntryGroup eg where pg.proteinGroup.taxid = :taxid AND pg.proteinGroup.id = eg.id" )
+    public long countByMappedUPEntriesByTaxId(@Param("taxid") Integer taxid);
 
+    @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, GeneGroup gg where pg.proteinGroup.taxid = :taxid AND pg.proteinGroup.id = gg.id" )
+    public long countByMappedGenesByTaxId(@Param("taxid") Integer taxid);
 }
