@@ -27,6 +27,6 @@ public interface PeptideProteinRepository extends JpaRepository<PeptideProtein, 
     public List<PeptideProtein> findByProteinProteinAccession(String proteinAccession);
 
     @Query("select count (distinct pp.id.proteinAccession) from PeptideProtein pp where pp.protein.taxid = :taxid")
-    public long countByMappedProteinsByTaxId(@Param("taxid") Integer taxid);
+    public long countMappedProteinsByTaxId(@Param("taxid") Integer taxid);
 
 }
