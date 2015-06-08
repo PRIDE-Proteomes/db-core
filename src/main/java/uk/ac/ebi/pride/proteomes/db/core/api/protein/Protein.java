@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.protein;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
@@ -14,6 +15,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -26,10 +28,12 @@ import java.util.Set;
 public class Protein {
 
     @Id
+    @NotNull
     @Column(name = "PROTEIN_ID", nullable = false, insertable = true, updatable = true, length = 90, precision = 0)
     private String proteinAccession;
 
     @Basic
+    @NotNull
     @Lob
     @Column(name = "SEQUENCE", nullable = false, insertable = true, updatable = true)
     private String sequence;
@@ -44,8 +48,15 @@ public class Protein {
     private String description;
 
     @Basic
+    @NotNull
     @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer taxid;
+
+    @Basic
+    @NotNull
+    @Column(name = "CONTAMINANT", nullable = false, insertable = true, updatable = true, length = 1, precision = 0)
+    @Type(type="true_false")
+    private Boolean contaminant;
 
     @OrderColumn
     @ElementCollection(targetClass=ModificationLocation.class)
@@ -142,6 +153,14 @@ public class Protein {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getContaminant() {
+        return contaminant;
+    }
+
+    public void setContaminant(Boolean contaminant) {
+        this.contaminant = contaminant;
     }
 
     public Integer getTaxid() {

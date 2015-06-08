@@ -10,7 +10,7 @@ TRUNCATE TABLE PRIDEPROT.PROT_MOD  ;
 TRUNCATE TABLE PRIDEPROT.PROT_PGRP  ;
 TRUNCATE TABLE PRIDEPROT.CLUSTER_PSM  ;
 
-/*Delete doesn't need to disable the fk_constrains but it is slower than truncate (truncate can not be rollback) */
+--Delete doesn't need to disable the fk_constrains but it is slower than truncate (truncate can not be rollback)
 DELETE PRIDEPROT.PROTEIN ;
 DELETE PRIDEPROT.PEPTIDE  ;
 DELETE PRIDEPROT.PRIDE_CLUSTER  ;

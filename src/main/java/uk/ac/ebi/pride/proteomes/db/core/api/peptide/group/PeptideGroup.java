@@ -30,6 +30,17 @@ public class PeptideGroup implements Serializable {
     @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
     private ProteinGroup proteinGroup;
 
+//    @ManyToOne
+//    @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
+//    @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
+//    private GeneGroup geneGroup;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
+//    @Where(clause = "PROT_GROUP_TYPE = 'ENTRY'")  //This is necessary :(
+//    private EntryGroup entryGroup;
+
+
     public PeptideGroupPK getId() {
         return id;
     }
@@ -62,6 +73,22 @@ public class PeptideGroup implements Serializable {
         this.proteinGroup = proteinGroup;
     }
 
+//    public GeneGroup getGeneGroup() {
+//        return geneGroup;
+//    }
+//
+//    public void setGeneGroup(GeneGroup geneGroup) {
+//        this.geneGroup = geneGroup;
+//    }
+//
+//    public EntryGroup getEntryGroup() {
+//        return entryGroup;
+//    }
+//
+//    public void setEntryGroup(EntryGroup entryGroup) {
+//        this.entryGroup = entryGroup;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,7 +112,7 @@ public class PeptideGroup implements Serializable {
                 "id=" + id +
                 ", uniqueness=" + uniqueness +
                 ", peptide=" + peptide +
-                ", proteinGroup=" + proteinGroup +
+//                ", proteinGroup=" + proteinGroup +
                 '}';
     }
 }

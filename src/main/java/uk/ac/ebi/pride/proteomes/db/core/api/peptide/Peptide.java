@@ -9,6 +9,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.group.PeptideGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
@@ -132,8 +133,12 @@ public abstract class Peptide implements Serializable {
     private Set<Tissue> tissues;
 
     @OneToMany(mappedBy = "peptide")
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<PeptideProtein> proteins;
+
+    @OneToMany(mappedBy = "peptide")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<PeptideGroup> proteinGroups;
 
     @OneToOne
     @JoinColumn(name = "SCORE_ID", referencedColumnName = "SCORE_ID")
@@ -242,6 +247,14 @@ public abstract class Peptide implements Serializable {
 
     public void setProteins(Set<PeptideProtein> proteins) {
         this.proteins = proteins;
+    }
+
+    public Set<PeptideGroup> getProteinGroups() {
+        return proteinGroups;
+    }
+
+    public void setProteinGroups(Set<PeptideGroup> proteinGroups) {
+        this.proteinGroups = proteinGroups;
     }
 
     public Score getScore() {
