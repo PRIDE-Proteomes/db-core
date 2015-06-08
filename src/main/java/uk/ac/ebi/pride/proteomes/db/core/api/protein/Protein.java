@@ -155,7 +155,7 @@ public class Protein {
         this.description = description;
     }
 
-    public Boolean getContaminant() {
+    public Boolean isContaminant() {
         return contaminant;
     }
 

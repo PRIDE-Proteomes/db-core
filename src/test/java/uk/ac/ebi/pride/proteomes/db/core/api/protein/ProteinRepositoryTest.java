@@ -136,7 +136,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
         Protein protein = new Protein();
         protein.setTaxid(TAXID_HUMAN);
         protein.setDescription(NO_DESCRIPTION);
-
+        protein.setContaminant(Boolean.FALSE);
         protein.setProteinAccession(NEW_PROTEIN_ACCESSION);
         protein.setScore(scoreRepository.findOne(SCORE_ID));
 
