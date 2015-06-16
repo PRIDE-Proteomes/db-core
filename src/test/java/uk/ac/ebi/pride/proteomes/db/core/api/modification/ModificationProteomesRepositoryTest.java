@@ -16,33 +16,33 @@ import static org.hamcrest.Matchers.is;
  * Time: 14:28
  */
 
-public class ModificationRepositoryTest extends RepositoryTest {
+public class ModificationProteomesRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional(readOnly = true)
     public void testFindMethods() throws Exception {
 
-        Modification modification = modificationRepository.findByModId(MOD_TERM_RO);
+        Modification modification = modificationProteomesRepository.findByModId(MOD_TERM_RO);
 
         assertNotNull(modification);
         assertThat(modification.getModId(), is(MOD_TERM_RO));
 
-        modification = modificationRepository.findByModName(MOD_NAME_RO);
+        modification = modificationProteomesRepository.findByModName(MOD_NAME_RO);
 
         assertNotNull(modification);
         assertThat(modification.getModName(), is(MOD_NAME_RO));
 
-        List<Modification> modifications = modificationRepository.findByBiologicalSignificant(BIO_SIGN);
+        List<Modification> modifications = modificationProteomesRepository.findByBiologicalSignificant(BIO_SIGN);
 
         assertNotNull(modifications);
         assertThat(modifications.size(), is(MODS_BIO_SIGNIFICANT));
 
-        modifications = modificationRepository.findByBiologicalSignificant(!BIO_SIGN);
+        modifications = modificationProteomesRepository.findByBiologicalSignificant(!BIO_SIGN);
 
         assertNotNull(modifications);
         assertThat(modifications.size(), is(MODS_NO_BIO_SIGNIFICANT));
 
-        modifications = modificationRepository.findByMonoDeltaBetween(MIN_DELTA, MAX_DELTA);
+        modifications = modificationProteomesRepository.findByMonoDeltaBetween(MIN_DELTA, MAX_DELTA);
 
         assertNotNull(modifications);
         assertThat(modifications.size(), is(MODS_BETWEEN_DELTA));
@@ -56,7 +56,7 @@ public class ModificationRepositoryTest extends RepositoryTest {
 
 
         //Modification
-        Modification modification = modificationRepository.findByModId(MOD_TERM);
+        Modification modification = modificationProteomesRepository.findByModId(MOD_TERM);
 
         assertNull(modification);
 
@@ -66,17 +66,17 @@ public class ModificationRepositoryTest extends RepositoryTest {
         modification.setBiologicalSignificant(BIO_SIGN);
         modification.setMonoDelta(MONO_DELTA);
         modification.setDescription(NO_DESCRIPTION);
-        modification = modificationRepository.save(modification);
+        modification = modificationProteomesRepository.save(modification);
 
 
         //id set after save
         String newId = modification.getModId();
 
-        Modification other = modificationRepository.findOne(newId);
+        Modification other = modificationProteomesRepository.findOne(newId);
         checkModInDb(other);
 
         // delete the mod
-        modificationRepository.delete(other);
+        modificationProteomesRepository.delete(other);
 
     }
 

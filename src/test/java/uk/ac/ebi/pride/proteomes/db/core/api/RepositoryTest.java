@@ -6,7 +6,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.ac.ebi.pride.proteomes.db.core.api.assay.AssayProteomesRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.cluster.ClusterProteomesRepository;
-import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.feature.FeatureProteomesRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationProteomesRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CvParamProteomesRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.PeptideRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.group.PeptideGroupRepository;
@@ -121,9 +122,17 @@ public abstract class RepositoryTest {
     protected static final int DEAFULT_STAR_COUNT = 0;
     protected static final double DEFAULT_SCORE_VALUE = 0.0;
 
-	protected static final long PEPTIDE_TWO = 2;
-	protected static final long PEPTIDE_SEVEN = 7;
-	protected static final long PEPTIDE_TEN = 10;
+    protected static final long PEPTIDE_TWO = 2;
+    protected static final long PEPTIDE_SEVEN = 7;
+    protected static final long PEPTIDE_TEN = 10;
+
+    protected static final long FEATURE_ID = 1000;
+    protected static final long FEATURE_ID_SAVE = 500000;
+    protected static final String FEATURE_TYPE_CV_TERM = "FT:000002";
+    protected static final String FEATURE_TYPE_CV_NAME = "TOPO_DOM";
+    protected static final int FT_START_POS = 5;
+    protected static final int FT_END_POS = 10;
+
 
     @Autowired
     protected EntityManagerFactory entityManagerFactory;
@@ -135,13 +144,16 @@ public abstract class RepositoryTest {
     protected ClusterProteomesRepository clusterProteomesRepository;
 
     @Autowired
+    protected FeatureProteomesRepository featureProteomesRepository;
+
+    @Autowired
     protected PeptideRepository peptideRepository;
 
     @Autowired
     protected CvParamProteomesRepository cvParamProteomesRepository;
 
     @Autowired
-    protected ModificationRepository modificationRepository;
+    protected ModificationProteomesRepository modificationProteomesRepository;
 
     @Autowired
     protected ProteinGroupRepository proteinGroupRepository;

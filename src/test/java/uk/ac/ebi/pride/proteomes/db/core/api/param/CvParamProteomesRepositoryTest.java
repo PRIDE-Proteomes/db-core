@@ -33,6 +33,11 @@ public class CvParamProteomesRepositoryTest extends RepositoryTest {
         assertTrue(cvParam instanceof Tissue);
         assertThat(cvParam.getCvTerm(), is(CV_TERM));
 
+        Tissue tissue = cvParamProteomesRepository.findTissueByCvTerm(CV_TERM);
+
+        assertNotNull(tissue);
+        assertThat(tissue.getCvTerm(), is(CV_TERM));
+
     }
 
 }

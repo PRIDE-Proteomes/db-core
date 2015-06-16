@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface ModificationRepository extends JpaRepository<Modification, String> {
+public interface ModificationProteomesRepository extends JpaRepository<Modification, String> {
 
     public Modification findByModId(String id);
     public Modification findByModName(String name);

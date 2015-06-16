@@ -8,11 +8,14 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.assay.Assay</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.cluster.Cluster</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.cluster.ClusterPsm</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.feature.Feature</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.modification.Modification</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CvParam</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CellType</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Disease</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Disease</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.FeatureType</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.group.PeptideGroup</class>

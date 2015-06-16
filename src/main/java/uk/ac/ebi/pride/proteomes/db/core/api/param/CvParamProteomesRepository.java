@@ -3,6 +3,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,18 @@ import java.util.List;
 public interface CvParamProteomesRepository extends JpaRepository<CvParam, String> {
 
     public CvParam findByCvTerm(String term);
+
+    @Query("select cv from Tissue cv where cv.cvTerm = :term")
+    public Tissue findTissueByCvTerm(@Param("term") String term);
+
+    @Query("select cv from CellType cv where cv.cvTerm = :term")
+    public CellType findCellTypeByCvTerm(@Param("term") String term);
+
+    @Query("select cv from Disease cv where cv.cvTerm = :term")
+    public Disease findDiseaseByCvTerm(@Param("term") String term);
+
+    @Query("select cv from FeatureType cv where cv.cvTerm = :term")
+    public FeatureType findFeatureTypeByCvTerm(@Param("term") String term);
 
     //We are assuming that we don't have duplicated names
     public CvParam findByCvName(String name);
@@ -39,6 +52,12 @@ public interface CvParamProteomesRepository extends JpaRepository<CvParam, Strin
 
     @Query("select cv from Disease cv")
     public List<Disease> findAllDisease(Pageable pageable);
+
+    @Query("select cv from FeatureType cv")
+    public List<FeatureType> findAllFeatureType();
+
+    @Query("select cv from Disease cv")
+    public List<FeatureType> findAllFeatureType(Pageable pageable);
 
 
 }

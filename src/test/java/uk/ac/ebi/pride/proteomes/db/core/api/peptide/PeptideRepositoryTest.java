@@ -188,12 +188,12 @@ public class PeptideRepositoryTest extends RepositoryTest {
         ModificationLocation pepMod = new ModificationLocation();
 
         //Modification
-        Modification modification = modificationRepository.findByModId(NEW_MOD_TERM);
+        Modification modification = modificationProteomesRepository.findByModId(NEW_MOD_TERM);
         if (modification == null) {
             modification = new Modification();
             modification.setModId(NEW_MOD_TERM);
             modification.setModName(NEW_MOD_NAME);
-            modification = modificationRepository.save(modification);
+            modification = modificationProteomesRepository.save(modification);
         }
 
         //We know the real modification was persisted before

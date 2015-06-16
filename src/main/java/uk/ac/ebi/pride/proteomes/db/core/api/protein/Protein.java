@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
+import uk.ac.ebi.pride.proteomes.db.core.api.feature.Feature;
 import uk.ac.ebi.pride.proteomes.db.core.api.modification.ModificationLocation;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
@@ -68,6 +69,11 @@ public class Protein {
     @LazyCollection(LazyCollectionOption.TRUE)
     private Set<ModificationLocation> modificationLocations;
 
+    //Unidirectional relationship this side is the owner of the relationship
+    @OneToMany
+    @JoinColumn(name= "PROTEIN_ID" )
+    private Set<Feature> features;
+
     //Unidirectional relationship
     @ManyToMany(targetEntity = CellType.class)
     @JoinTable(
@@ -75,7 +81,7 @@ public class Protein {
             joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Set<CellType> cellTypes;
 
@@ -86,7 +92,7 @@ public class Protein {
             joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Set<Disease> diseases;
 
@@ -97,7 +103,7 @@ public class Protein {
             joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
     private Set<Tissue> tissues;
 

@@ -52,24 +52,6 @@ public abstract class CvParam {
         this.description = description;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof CvParam)) return false;
-//
-//        CvParam cvParam = (CvParam) o;
-//        if (!cvTerm.equals(cvParam.cvTerm)) return false;
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = cvTerm.hashCode();
-//        return result;
-//    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
