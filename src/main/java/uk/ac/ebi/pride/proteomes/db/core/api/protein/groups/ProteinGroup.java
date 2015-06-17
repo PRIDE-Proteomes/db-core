@@ -7,6 +7,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -78,20 +79,14 @@ public abstract class ProteinGroup implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ProteinGroup)) return false;
-
         ProteinGroup that = (ProteinGroup) o;
-
-        if (!id.equals(that.id)) return false;
-        if (!taxid.equals(that.taxid)) return false;
-
-        return true;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(taxid, that.taxid);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + taxid.hashCode();
-        return result;
+        return Objects.hash(id, taxid);
     }
 
     @Override

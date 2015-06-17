@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.reprocessed;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -27,17 +28,13 @@ public class Reprocessed {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Reprocessed)) return false;
-
         Reprocessed that = (Reprocessed) o;
-
-        if (!reprocessedAccession.equals(that.reprocessedAccession)) return false;
-
-        return true;
+        return Objects.equals(reprocessedAccession, that.reprocessedAccession);
     }
 
     @Override
     public int hashCode() {
-        return reprocessedAccession.hashCode();
+        return Objects.hash(reprocessedAccession);
     }
 
     @Override

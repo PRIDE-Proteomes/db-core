@@ -1,6 +1,7 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -54,21 +55,15 @@ public class Star {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Star)) return false;
         Star star = (Star) o;
-
-        if (!count.equals(star.count)) return false;
-        if (type != star.type) return false;
-
-        return true;
+        return Objects.equals(count, star.count) &&
+                Objects.equals(type, star.type);
     }
 
     @Override
     public int hashCode() {
-        int result = count.hashCode();
-        result = 31 * result + type.hashCode();
-        return result;
+        return Objects.hash(count, type);
     }
 
     @Override

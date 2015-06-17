@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.quality;
 
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -54,18 +55,14 @@ public class QMethod {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof QMethod)) return false;
         QMethod qMethod = (QMethod) o;
-
-        if (!name.equals(qMethod.name)) return false;
-
-        return true;
+        return Objects.equals(name, qMethod.name);
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return Objects.hash(name);
     }
 
     @Override

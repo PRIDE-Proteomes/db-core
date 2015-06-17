@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -81,17 +82,15 @@ public class Modification {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Modification)) return false;
-
         Modification that = (Modification) o;
-
-        if (!modId.equals(that.modId)) return false;
-
-        return true;
+        return Objects.equals(modId, that.modId) &&
+                Objects.equals(monoDelta, that.monoDelta) &&
+                Objects.equals(biologicalSignificant, that.biologicalSignificant);
     }
 
     @Override
     public int hashCode() {
-        return modId.hashCode();
+        return Objects.hash(modId, monoDelta, biologicalSignificant);
     }
 
     @Override

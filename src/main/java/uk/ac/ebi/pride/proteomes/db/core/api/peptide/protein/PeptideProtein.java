@@ -6,6 +6,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -136,17 +137,14 @@ public class PeptideProtein implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PeptideProtein)) return false;
-
         PeptideProtein that = (PeptideProtein) o;
-
-        if (!id.equals(that.id)) return false;
-
-        return true;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(uniqueness, that.uniqueness);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return Objects.hash(id, uniqueness);
     }
 
     @Override

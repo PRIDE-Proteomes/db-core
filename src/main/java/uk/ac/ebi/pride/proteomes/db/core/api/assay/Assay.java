@@ -130,25 +130,6 @@ public class Assay {
         this.reprocessed = reprocessed;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Assay assay = (Assay) o;
-//
-//        if (!assayAccession.equals(assay.assayAccession)) return false;
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = assayAccession.hashCode();
-//        return result;
-//    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

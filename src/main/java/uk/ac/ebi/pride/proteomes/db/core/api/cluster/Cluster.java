@@ -27,25 +27,6 @@ public class Cluster {
         this.clusterId = clusterId;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Cluster cluster = (Cluster) o;
-//
-//        if (!clusterId.equals(cluster.clusterId)) return false;
-//
-//        return true;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = clusterId.hashCode();
-//        return result;
-//    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

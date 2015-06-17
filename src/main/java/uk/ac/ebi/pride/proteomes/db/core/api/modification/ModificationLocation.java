@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -41,20 +42,14 @@ public class ModificationLocation implements Serializable, Comparable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ModificationLocation)) return false;
-
         ModificationLocation that = (ModificationLocation) o;
-
-        if (!modId.equals(that.modId)) return false;
-        if (!position.equals(that.position)) return false;
-
-        return true;
+        return Objects.equals(position, that.position) &&
+                Objects.equals(modId, that.modId);
     }
 
     @Override
     public int hashCode() {
-        int result = position.hashCode();
-        result = 31 * result + modId.hashCode();
-        return result;
+        return Objects.hash(position, modId);
     }
 
     @Override

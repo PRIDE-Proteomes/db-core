@@ -35,6 +35,19 @@ public interface CvParamProteomesRepository extends JpaRepository<CvParam, Strin
     //We are assuming that we don't have duplicated names
     public CvParam findByCvName(String name);
 
+    @Query("select cv from Tissue cv where cv.cvName = :name")
+    public Tissue findTissueByCvName(@Param("name") String name);
+
+    @Query("select cv from CellType cv where cv.cvName = :name")
+    public CellType findCellTypeByCvName(@Param("name") String name);
+
+    @Query("select cv from Disease cv where cv.cvName = :name")
+    public Disease findDiseaseByCvName(@Param("name") String name);
+
+    @Query("select cv from FeatureType cv where cv.cvName = :name")
+    public FeatureType findFeatureTypeByCvName(@Param("name") String name);
+
+
     @Query("select cv from Tissue cv")
     public List<Tissue> findAllTissue();
 

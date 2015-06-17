@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -41,20 +42,14 @@ public class PeptideGroupPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PeptideGroupPK)) return false;
-
         PeptideGroupPK that = (PeptideGroupPK) o;
-
-        if (!peptideId.equals(that.peptideId)) return false;
-        if (!proteinGroupId.equals(that.proteinGroupId)) return false;
-
-        return true;
+        return Objects.equals(peptideId, that.peptideId) &&
+                Objects.equals(proteinGroupId, that.proteinGroupId);
     }
 
     @Override
     public int hashCode() {
-        int result = peptideId.hashCode();
-        result = 31 * result + proteinGroupId.hashCode();
-        return result;
+        return Objects.hash(peptideId, proteinGroupId);
     }
 
     @Override

@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -62,27 +63,20 @@ public class PeptideProteinPK implements Serializable {
         this.startPosition = startPosition;
     }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof PeptideProteinPK)) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PeptideProteinPK)) return false;
+        PeptideProteinPK that = (PeptideProteinPK) o;
+        return Objects.equals(peptideId, that.peptideId) &&
+                Objects.equals(proteinAccession, that.proteinAccession) &&
+                Objects.equals(startPosition, that.startPosition);
+    }
 
-		PeptideProteinPK that = (PeptideProteinPK) o;
-
-		if (!peptideId.equals(that.peptideId)) return false;
-		if (!proteinAccession.equals(that.proteinAccession)) return false;
-		if (!startPosition.equals(that.startPosition)) return false;
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = peptideId.hashCode();
-		result = 31 * result + proteinAccession.hashCode();
-		result = 31 * result + startPosition.hashCode();
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(peptideId, proteinAccession, startPosition);
+    }
 
     @Override
     public String toString() {

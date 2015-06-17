@@ -17,6 +17,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -50,14 +51,14 @@ public class Protein {
 
     @Basic
     @NotNull
-    @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
-    private Integer taxid;
-
-    @Basic
-    @NotNull
     @Column(name = "CONTAMINANT", nullable = false, insertable = true, updatable = true, length = 1, precision = 0)
     @Type(type="true_false")
     private Boolean contaminant;
+
+    @Basic
+    @NotNull
+    @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    private Integer taxid;
 
     @OrderColumn
     @ElementCollection(targetClass=ModificationLocation.class)
@@ -107,7 +108,7 @@ public class Protein {
     @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
     private Set<Tissue> tissues;
 
-	@OneToMany(mappedBy = "protein")
+    @OneToMany(mappedBy = "protein")
 	@LazyCollection(LazyCollectionOption.TRUE)
 	private Set<PeptideProtein> peptides;
 
@@ -185,6 +186,14 @@ public class Protein {
         this.modificationLocations = modificationLocations;
     }
 
+    public Set<Feature> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(Set<Feature> features) {
+        this.features = features;
+    }
+
     public Set<CellType> getCellTypes() {
         return cellTypes;
     }
@@ -252,21 +261,15 @@ public class Protein {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Protein)) return false;
         Protein protein = (Protein) o;
-
-        if (!proteinAccession.equals(protein.proteinAccession)) return false;
-        if (!taxid.equals(protein.taxid)) return false;
-
-        return true;
+        return Objects.equals(proteinAccession, protein.proteinAccession) &&
+                Objects.equals(taxid, protein.taxid);
     }
 
     @Override
     public int hashCode() {
-        int result = proteinAccession.hashCode();
-        result = 31 * result + taxid.hashCode();
-        return result;
+        return Objects.hash(proteinAccession, taxid);
     }
 
     @Override

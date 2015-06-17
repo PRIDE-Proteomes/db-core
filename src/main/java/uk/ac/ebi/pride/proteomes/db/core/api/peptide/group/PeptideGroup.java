@@ -5,6 +5,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * User: ntoro
@@ -89,21 +90,19 @@ public class PeptideGroup implements Serializable {
 //        this.entryGroup = entryGroup;
 //    }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PeptideGroup)) return false;
-
         PeptideGroup that = (PeptideGroup) o;
-
-        if (!id.equals(that.id)) return false;
-
-        return true;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(uniqueness, that.uniqueness);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return Objects.hash(id, uniqueness);
     }
 
     @Override
