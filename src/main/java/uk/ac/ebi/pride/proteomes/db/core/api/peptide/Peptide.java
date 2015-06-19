@@ -75,7 +75,7 @@ public abstract class Peptide implements Serializable {
     )
     @OrderBy("position ASC")
     //The lazy loading in the modifications is necessary for the pipeline
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<ModificationLocation> modificationLocations;
 
     //Unidirectional relationship
@@ -105,7 +105,7 @@ public abstract class Peptide implements Serializable {
             joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Set<CellType> cellTypes;
 
@@ -116,7 +116,7 @@ public abstract class Peptide implements Serializable {
             joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Set<Disease> diseases;
 
@@ -128,16 +128,16 @@ public abstract class Peptide implements Serializable {
             joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
     private Set<Tissue> tissues;
 
     @OneToMany(mappedBy = "peptide")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Set<PeptideProtein> proteins;
 
     @OneToMany(mappedBy = "peptide")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Set<PeptideGroup> proteinGroups;
 
     @OneToOne

@@ -82,7 +82,7 @@ public class Protein {
             joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Set<CellType> cellTypes;
 
@@ -93,7 +93,7 @@ public class Protein {
             joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Set<Disease> diseases;
 
@@ -104,7 +104,7 @@ public class Protein {
             joinColumns = {@JoinColumn(name = "PROTEIN_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CV_TERM")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     @Where(clause = "CV_TYPE = 'TISSUE'") // This is necessary :(
     private Set<Tissue> tissues;
 
