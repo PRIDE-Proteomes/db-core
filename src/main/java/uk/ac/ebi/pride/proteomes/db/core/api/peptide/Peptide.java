@@ -85,7 +85,7 @@ public abstract class Peptide implements Serializable {
             joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "ASSAY_ACCESSION")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Set<Assay> assays;
 
     //Unidirectional relationship
@@ -95,7 +95,7 @@ public abstract class Peptide implements Serializable {
             joinColumns = {@JoinColumn(name = "PEPTIDE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "CLUSTER_ID")}
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Set<Cluster> clusters;
 
     //Unidirectional relationship

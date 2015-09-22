@@ -40,7 +40,7 @@ public class Assay {
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
             inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'CELL_TYPE'")  //This is necessary :(
     private Set<CellType> cellTypes;
 
@@ -51,7 +51,7 @@ public class Assay {
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
             inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'DISEASE'")  //This is necessary :(
     private Set<Disease> diseases;
 
@@ -62,7 +62,7 @@ public class Assay {
             joinColumns = @JoinColumn( name = "ASSAY_ACCESSION" ),
             inverseJoinColumns = @JoinColumn( name = "CV_TERM" )
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @Where(clause = "CV_TYPE = 'TISSUE'")  //This is necessary :(
     private Set<Tissue> tissues;
 
@@ -71,7 +71,7 @@ public class Assay {
             name = "REPRO", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "ASSAY_ACCESSION", referencedColumnName = "ASSAY_ACCESSION")
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     private Set<Reprocessed> reprocessed;
 
     public String getAssayAccession() {
