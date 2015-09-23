@@ -10,7 +10,7 @@
 
     <groupId>uk.ac.ebi.pride.proteomes.db</groupId>
     <artifactId>db-core</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <name>PRIDE Proteomes API</name>
     <description>This package define the API for access to the PRIDE Proteomes database.</description>
