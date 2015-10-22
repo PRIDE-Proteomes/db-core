@@ -12,7 +12,7 @@
     <artifactId>db-core</artifactId>
     <version>1.0.3-SNAPSHOT</version>
 
-    <name>PRIDE Proteomes API</name>
+    <name>PRIDE Proteomes DB Repositories</name>
     <description>This package define the API for access to the PRIDE Proteomes database.</description>
     <url>http://www.ebi.ac.uk/pride</url>
     <licenses>
