@@ -62,8 +62,7 @@ public class Protein {
     private String geneSymbol;
 
     @Basic
-    @NotNull
-    @Column(name = "EVIDENCE", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @Column(name = "EVIDENCE", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
     private Integer evidence;
 
     @Basic
@@ -326,15 +325,24 @@ public class Protein {
         return "Protein{" +
                 "proteinAccession='" + proteinAccession + '\'' +
                 ", sequence='" + sequence + '\'' +
+                ", curationLevel=" + curationLevel +
+                ", name='" + name + '\'' +
+                ", alternativeName='" + alternativeName + '\'' +
                 ", description='" + description + '\'' +
+                ", geneSymbol='" + geneSymbol + '\'' +
+                ", evidence=" + evidence +
+                ", contaminant=" + contaminant +
                 ", taxid=" + taxid +
                 ", modificationLocations=" + modificationLocations +
                 ", features=" + features +
-//                ", peptides=" + peptides +
+                ", cellTypes=" + cellTypes +
+                ", diseases=" + diseases +
+                ", tissues=" + tissues +
+                ", peptides=" + peptides +
+//                ", proteinGroups=" + proteinGroups +
 //                ", entryGroups=" + entryGroups +
 //                ", geneGroups=" + geneGroups +
                 ", score=" + score +
                 '}';
     }
-
 }
