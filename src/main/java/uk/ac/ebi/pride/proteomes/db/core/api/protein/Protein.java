@@ -10,7 +10,6 @@ import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
@@ -132,14 +131,9 @@ public class Protein {
     @LazyCollection(LazyCollectionOption.TRUE)
     private Set<ProteinGroup> proteinGroups;
 
-    @ManyToMany(mappedBy = "entryProteins")
-    @LazyCollection(LazyCollectionOption.TRUE)
-    @Where(clause = "PROT_GROUP_TYPE = 'ENTRY'")  //This is necessary :(
-    private Set<EntryGroup> entryGroups;
-
     @ManyToMany(mappedBy = "geneProteins")
     @LazyCollection(LazyCollectionOption.TRUE)
-    @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
+    @Where(clause = "PROT_GROUP_TYPE = 'GENE'") //This is necessary if there are several group types :(
     private Set<GeneGroup> geneGroups;
 
     @OneToOne
@@ -280,14 +274,6 @@ public class Protein {
 
     public void setProteinGroups(Set<ProteinGroup> proteinGroups) {
         this.proteinGroups = proteinGroups;
-    }
-
-    public Set<EntryGroup> getEntryGroups() {
-        return entryGroups;
-    }
-
-    public void setEntryGroups(Set<EntryGroup> entryGroups) {
-        this.entryGroups = entryGroups;
     }
 
     public Set<GeneGroup> getGeneGroups() {

@@ -24,7 +24,6 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptiform</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.QMethod</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Score</class>

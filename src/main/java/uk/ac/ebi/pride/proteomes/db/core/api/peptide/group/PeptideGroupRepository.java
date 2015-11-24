@@ -25,9 +25,6 @@ public interface PeptideGroupRepository extends JpaRepository<PeptideGroup, Pept
 
     public List<PeptideGroup> findByProteinGroupIdAndUniqueness(String proteinGroupId, Integer uniqueness);
 
-    @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, EntryGroup eg where pg.proteinGroup.taxid = :taxid AND pg.proteinGroup.id = eg.id" )
-    public long countMappedUPEntriesByTaxId(@Param("taxid") Integer taxid);
-
     @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, GeneGroup gg where pg.proteinGroup.taxid = :taxid AND pg.proteinGroup.id = gg.id" )
     public long countMappedGenesByTaxId(@Param("taxid") Integer taxid);
 }

@@ -10,7 +10,6 @@ public enum Uniqueness {
 
     NON_UNIQUE,
     UNIQUE_TO_PROTEIN,
-    UNIQUE_TO_UP_ENTRY,
     UNIQUE_TO_GENE;
 
 }

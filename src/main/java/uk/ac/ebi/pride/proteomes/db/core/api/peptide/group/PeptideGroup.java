@@ -36,10 +36,6 @@ public class PeptideGroup implements Serializable {
 //    @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
 //    private GeneGroup geneGroup;
 //
-//    @ManyToOne
-//    @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
-//    @Where(clause = "PROT_GROUP_TYPE = 'ENTRY'")  //This is necessary :(
-//    private EntryGroup entryGroup;
 
 
     public PeptideGroupPK getId() {
@@ -82,13 +78,6 @@ public class PeptideGroup implements Serializable {
 //        this.geneGroup = geneGroup;
 //    }
 //
-//    public EntryGroup getEntryGroup() {
-//        return entryGroup;
-//    }
-//
-//    public void setEntryGroup(EntryGroup entryGroup) {
-//        this.entryGroup = entryGroup;
-//    }
 
 
     @Override
