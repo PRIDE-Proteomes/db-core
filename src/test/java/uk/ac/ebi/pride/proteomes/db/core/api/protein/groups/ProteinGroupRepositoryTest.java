@@ -34,15 +34,15 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
 
         Collection<ProteinGroup> proteinGroup = proteinGroupRepository.findAll();
         assertNotNull(proteinGroup);
-        assertThat(proteinGroup.size(), is(3));
+        assertThat(proteinGroup.size(), is(1));
 
-        Collection<ProteinGroup> proteinGroupPaged = proteinGroupRepository.findAll(new PageRequest(1, 1)).getContent();
+        Collection<ProteinGroup> proteinGroupPaged = proteinGroupRepository.findAll(new PageRequest(0, 1)).getContent();
         assertNotNull(proteinGroupPaged);
         assertThat(proteinGroupPaged.size(), is(1));
 
         Collection<ProteinGroup> humanList = proteinGroupRepository.findByTaxid(TAXID_HUMAN);
         assertNotNull(humanList);
-        assertThat(humanList.size(), is(2));
+        assertThat(humanList.size(), is(1));
 
         Collection<ProteinGroup> humanListPaged = proteinGroupRepository.findByTaxid(TAXID_HUMAN, new PageRequest(0, 1));
         assertNotNull(humanListPaged);
@@ -50,7 +50,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
 
         Collection<ProteinGroup> mouseList = proteinGroupRepository.findByTaxid(TAXID_MOUSE);
         assertNotNull(mouseList);
-        assertThat(mouseList.size(), is(1));
+        assertThat(mouseList.size(), is(0));
 
     }
 
@@ -61,9 +61,9 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         long humanTotal = proteinGroupRepository.countByTaxid(TAXID_HUMAN);
         long mouseTotal = proteinGroupRepository.countByTaxid(TAXID_MOUSE);
 
-        assertEquals(3, total);
-        assertEquals(2, humanTotal);
-        assertEquals(1, mouseTotal);
+        assertEquals(1, total);
+        assertEquals(1, humanTotal);
+        assertEquals(0, mouseTotal);
     }
 
 
@@ -80,7 +80,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         geneGroup.setGeneProteins(proteins);
         geneGroup.setProteins(proteins);
         geneGroup.setTaxid(TAXID_HUMAN);
-        geneGroup.setId(ENTRY_GROUP_ID);
+        geneGroup.setId(GENE_GROUP_ID);
 
         geneGroup = proteinGroupRepository.save(geneGroup);
 

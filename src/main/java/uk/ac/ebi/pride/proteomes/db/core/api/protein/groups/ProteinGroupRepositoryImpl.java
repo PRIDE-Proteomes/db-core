@@ -10,7 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 
-import static uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroupPredicates.*;
+import static uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroupPredicates.isGeneGroup;
+import static uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroupPredicates.isGeneGroupHasTaxid;
 
 
 @Repository
@@ -36,23 +37,9 @@ public class ProteinGroupRepositoryImpl implements ProteinGroupRepositoryCustom 
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-
-
-
-    @Override
-    public long countEntryGroups() {
-        return proteinGroupRepository.count(isEntryGroup());
-    }
-
     @Override
     public long countGeneGroups() {
         return proteinGroupRepository.count(isGeneGroup());
-    }
-
-
-    @Override
-    public long countEntryGroupsByTaxid(Integer taxid) {
-        return proteinGroupRepository.count(isEntryGroupHasTaxid(taxid));
     }
 
     @Override
