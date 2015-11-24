@@ -14,7 +14,6 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.CellType</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Disease</class>
-        <class>uk.ac.ebi.pride.proteomes.db.core.api.param.Disease</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.param.FeatureType</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein</class>
