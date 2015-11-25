@@ -326,7 +326,6 @@ public class Protein {
                 ", tissues=" + tissues +
                 ", peptides=" + peptides +
 //                ", proteinGroups=" + proteinGroups +
-//                ", entryGroups=" + entryGroups +
 //                ", geneGroups=" + geneGroups +
                 ", score=" + score +
                 '}';
