@@ -17,14 +17,17 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface PeptideGroupRepository extends JpaRepository<PeptideGroup, PeptideGroupPK> {
 
-    public PeptideGroup findByPeptidePeptideIdAndProteinGroupId(Long peptideId, String proteinGroupId);
+    PeptideGroup findByPeptidePeptideIdAndProteinGroupId(Long peptideId, String proteinGroupId);
 
-    public List<PeptideGroup> findByProteinGroupId(String proteinGroupId);
+    List<PeptideGroup> findByProteinGroupId(String proteinGroupId);
 
-    public List<PeptideGroup> findByPeptidePeptideId(Long peptideId);
+    List<PeptideGroup> findByPeptidePeptideId(Long peptideId);
 
-    public List<PeptideGroup> findByProteinGroupIdAndUniqueness(String proteinGroupId, Integer uniqueness);
+    List<PeptideGroup> findByProteinGroupIdAndUniqueness(String proteinGroupId, Integer uniqueness);
 
-    @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, GeneGroup gg where pg.proteinGroup.taxid = :taxid AND pg.proteinGroup.id = gg.id" )
-    public long countMappedGenesByTaxId(@Param("taxid") Integer taxid);
+
+    //    Num genes with assigned protein
+    //    SELECT COUNT(distinct PROT_PGRP.PROT_GROUP_ID) FROM PROT_PGRP,PROT_GROUP WHERE PROT_PGRP.PROT_GROUP_ID = PROT_GROUP.PROT_GROUP_ID and  PROT_GROUP_TYPE='GENE' and TAXID=9606; --22189
+    @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, GeneGroup gg where pg.geneGroup.taxid = :taxid AND pg.geneGroup.id = gg.id")
+    Long countMappedGenesByTaxId(@Param("taxid") Integer taxid);
 }

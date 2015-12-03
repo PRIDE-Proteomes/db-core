@@ -15,7 +15,7 @@ public enum StarType {
 
     private final String value;
 
-    private StarType(String value) {
+    StarType(String value) {
         this.value = value;
     }
 

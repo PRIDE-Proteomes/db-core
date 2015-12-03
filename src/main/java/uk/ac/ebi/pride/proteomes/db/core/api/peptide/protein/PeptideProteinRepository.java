@@ -19,14 +19,14 @@ public interface PeptideProteinRepository extends JpaRepository<PeptideProtein, 
 
     // the combination Peptide id + protein accession has to be unique in the peptide-protein table
     // so we can expect a single result at max
-    public PeptideProtein findByPeptidePeptideIdAndProteinProteinAccession(Long peptideId, String proteinAccession);
+    PeptideProtein findByPeptidePeptideIdAndProteinProteinAccession(Long peptideId, String proteinAccession);
 
     // to find all peptide-protein mappings for a give peptide
-    public List<PeptideProtein> findByPeptidePeptideId(Long peptideId);
+    List<PeptideProtein> findByPeptidePeptideId(Long peptideId);
 
-    public List<PeptideProtein> findByProteinProteinAccession(String proteinAccession);
+    List<PeptideProtein> findByProteinProteinAccession(String proteinAccession);
 
     @Query("select count (distinct pp.id.proteinAccession) from PeptideProtein pp where pp.protein.taxid = :taxid")
-    public long countMappedProteinsByTaxId(@Param("taxid") Integer taxid);
+    long countMappedProteinsByTaxId(@Param("taxid") Integer taxid);
 
 }

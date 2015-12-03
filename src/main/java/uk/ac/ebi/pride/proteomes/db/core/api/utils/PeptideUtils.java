@@ -28,7 +28,7 @@ public class PeptideUtils {
 
         if (peptide instanceof Peptiform) {
             stringBuilder.append("|");
-            stringBuilder.append(serializeModifications(((Peptiform) peptide).getModificationLocations()));
+            stringBuilder.append(serializeModifications(peptide.getModificationLocations()));
         }
         stringBuilder.append("]");
 
