@@ -15,5 +15,5 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface AssayProteomesRepository extends JpaRepository<Assay, String> {
 
-    public List<Assay> findByProjectAccession(String projectAccession);
+    List<Assay> findByProjectAccession(String projectAccession);
 }

@@ -15,8 +15,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface ModificationProteomesRepository extends JpaRepository<Modification, String> {
 
-    public Modification findByModId(String id);
-    public Modification findByModName(String name);
-    public List<Modification> findByBiologicalSignificant(Boolean biologicalSignificant);
-    public List<Modification> findByMonoDeltaBetween(Double min, Double max);
+    Modification findByModId(String id);
+    Modification findByModName(String name);
+    List<Modification> findByBiologicalSignificant(Boolean biologicalSignificant);
+    List<Modification> findByMonoDeltaBetween(Double min, Double max);
 }

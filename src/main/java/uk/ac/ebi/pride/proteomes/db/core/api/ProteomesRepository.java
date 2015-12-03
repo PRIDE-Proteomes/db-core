@@ -19,39 +19,39 @@ import java.util.List;
 @NoRepositoryBean
 public interface ProteomesRepository<T> {
 
-    public List<T> findAllByTaxid(Integer taxid);
+    List<T> findAllByTaxid(Integer taxid);
 
-    public List<T> findAllByTissue(String cvTerm);
+    List<T> findAllByTissue(String cvTerm);
 
-    public List<T> findAllByModification(String modId);
+    List<T> findAllByModification(String modId);
 
-    public List<T> findAllByTaxidAndTissue(Integer taxid, String cvTerm);
+    List<T> findAllByTaxidAndTissue(Integer taxid, String cvTerm);
 
-    public List<T> findAllByTaxidAndModification(Integer taxid, String modId);
+    List<T> findAllByTaxidAndModification(Integer taxid, String modId);
 
-    public List<T> findAllByTissueAndModification(String cvTerm, String modId);
+    List<T> findAllByTissueAndModification(String cvTerm, String modId);
 
-    public List<T> findAllByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
+    List<T> findAllByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
 
-    public List<T> findAllByTaxid(Integer taxid, Pageable pageable);
+    List<T> findAllByTaxid(Integer taxid, Pageable pageable);
 
-    public List<T> findAllByTissue(String cvTerm, Pageable pageable);
+    List<T> findAllByTissue(String cvTerm, Pageable pageable);
 
-    public List<T> findAllByModification(String modId, Pageable pageable);
+    List<T> findAllByModification(String modId, Pageable pageable);
 
-    public List<T> findAllByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable);
+    List<T> findAllByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable);
 
-    public List<T> findAllByTaxidAndModification(Integer taxid, String modId, Pageable pageable);
+    List<T> findAllByTaxidAndModification(Integer taxid, String modId, Pageable pageable);
 
-    public List<T> findAllByTissueAndModification(String cvTerm, String modId, Pageable pageable);
+    List<T> findAllByTissueAndModification(String cvTerm, String modId, Pageable pageable);
 
-    public List<T> findAllByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable);
+    List<T> findAllByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable);
 
-    public long countByTaxid(Integer taxid);
+    long countByTaxid(Integer taxid);
 
-    public long countByTaxidAndTissue(Integer taxid, String cvTerm);
+    long countByTaxidAndTissue(Integer taxid, String cvTerm);
 
-    public long countByTaxidAndModification(Integer taxid, String modId);
+    long countByTaxidAndModification(Integer taxid, String modId);
 
-    public long countByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
+    long countByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
 }

@@ -28,7 +28,7 @@ public class PeptideGroupRepositoryTest extends RepositoryTest {
         assertThat(group.getProteinGroup().getId(), is(GENE_GROUP_ID));
         assertThat(group.getUniqueness(), is(1));
 
-        long mappedGeneEntries = peptideGroupRepository.countMappedGenesByTaxId(TAXID_HUMAN);
+        Long mappedGeneEntries = peptideGroupRepository.countMappedGenesByTaxId(TAXID_HUMAN);
         assertThat(mappedGeneEntries, is(1L));
 
     }

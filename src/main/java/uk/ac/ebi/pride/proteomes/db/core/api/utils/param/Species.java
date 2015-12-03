@@ -165,7 +165,7 @@ public enum Species {
 
     public static final String defaultValue = "9606";
 
-    private Species(Integer taxid, String commonName, String scientificName) {
+    Species(Integer taxid, String commonName, String scientificName) {
         this.taxid = taxid;
         this.commonName = commonName;
         this.scientificName = scientificName;
