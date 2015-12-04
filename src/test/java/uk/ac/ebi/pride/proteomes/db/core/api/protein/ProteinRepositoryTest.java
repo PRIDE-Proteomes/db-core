@@ -6,11 +6,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -41,10 +43,6 @@ public class ProteinRepositoryTest extends RepositoryTest {
         Set<GeneGroup> genes = protein.getGeneGroups();
         assertNotNull(genes);
         assertThat(genes.size(), is(NUM_GENES));
-
-        Set<EntryGroup> entryGroups = protein.getEntryGroups();
-        assertNotNull(entryGroups);
-        assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS_FOR_PROTEIN));
 
         Set<ProteinGroup> proteinGroups = protein.getProteinGroups();
         assertNotNull(proteinGroups);
@@ -143,17 +141,11 @@ public class ProteinRepositoryTest extends RepositoryTest {
         protein.setSequence(NEW_PROTEIN_SEQUENCE);
         protein.setCurationLevel(CurationLevel.PREDICTED);
 
-        Set<EntryGroup> entryGroups = new HashSet<EntryGroup>();
-        EntryGroup entryGroup = (EntryGroup) proteinGroupRepository.findOne(ENTRY_GROUP_ID);
-        entryGroup.getEntryProteins().addAll(Collections.singletonList(protein));
-        entryGroups.add(entryGroup);
-
         Set<GeneGroup> geneGroups = new HashSet<GeneGroup>();
         GeneGroup geneGroup = (GeneGroup) proteinGroupRepository.findOne(GENE_GROUP_ID);
         geneGroup.getGeneProteins().addAll(Collections.singletonList(protein));
         geneGroups.add(geneGroup);
 
-        protein.setEntryGroups(entryGroups);
         protein.setGeneGroups(geneGroups);
 
         protein = proteinRepository.save(protein);
@@ -203,15 +195,9 @@ public class ProteinRepositoryTest extends RepositoryTest {
         assertThat(other.getSequence(), is(NEW_PROTEIN_SEQUENCE));
         assertThat(other.getCurationLevel(), is(CurationLevel.PREDICTED));
         checkSymbolicPeptides(other.getPeptides());
-        checkEntryGroups(other.getEntryGroups());
         checkGeneGroups(other.getGeneGroups());
     }
 
-    private void checkEntryGroups(Set<EntryGroup> entryGroups) {
-        assertNotNull(entryGroups);
-        assertThat(entryGroups.size(), is(NUM_ENTRY_GROUPS_FOR_PROTEIN));
-        assertThat(entryGroups.iterator().next().getId(), is(ENTRY_GROUP_ID));
-    }
 
     private void checkGeneGroups(Set<GeneGroup> geneGroups) {
         assertNotNull(geneGroups);

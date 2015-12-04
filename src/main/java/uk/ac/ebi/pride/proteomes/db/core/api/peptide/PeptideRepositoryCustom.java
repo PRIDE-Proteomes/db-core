@@ -19,65 +19,65 @@ import java.util.List;
 @NoRepositoryBean
 public interface PeptideRepositoryCustom extends ProteomesRepository<Peptide> {
 
-    public List<SymbolicPeptide> findAllSymbolicPeptides();
+    List<SymbolicPeptide> findAllSymbolicPeptides();
 
-    public List<SymbolicPeptide> findAllSymbolicPeptides(Pageable pageable);
+    List<SymbolicPeptide> findAllSymbolicPeptides(Pageable pageable);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxid(Integer taxid);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxid(Integer taxid);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxid(Integer taxid, Pageable pageable);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxid(Integer taxid, Pageable pageable);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndModification(Integer taxid, String modId);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndModification(Integer taxid, String modId);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndModification(Integer taxid, String modId, Pageable pageable);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndModification(Integer taxid, String modId, Pageable pageable);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
 
-    public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable);
+    List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable);
 
-    public List<Peptiform> findAllPeptiforms();
+    List<Peptiform> findAllPeptiforms();
 
-    public List<Peptiform> findAllPeptiforms(Pageable pageable);
+    List<Peptiform> findAllPeptiforms(Pageable pageable);
 
-    public List<Peptiform> findAllPeptiformsByTaxid(Integer taxid);
+    List<Peptiform> findAllPeptiformsByTaxid(Integer taxid);
 
-    public List<Peptiform> findAllPeptiformsByTaxid(Integer taxid, Pageable pageable);
+    List<Peptiform> findAllPeptiformsByTaxid(Integer taxid, Pageable pageable);
 
-    public List<Peptiform> findAllPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm);
+    List<Peptiform> findAllPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm);
 
-    public List<Peptiform> findAllPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable);
+    List<Peptiform> findAllPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable);
 
-    public List<Peptiform> findAllPeptiformsByTaxidAndModification(Integer taxid, String modId);
+    List<Peptiform> findAllPeptiformsByTaxidAndModification(Integer taxid, String modId);
 
-    public List<Peptiform> findAllPeptiformsByTaxidAndModification(Integer taxid, String modId, Pageable pageable);
+    List<Peptiform> findAllPeptiformsByTaxidAndModification(Integer taxid, String modId, Pageable pageable);
 
-    public List<Peptiform> findAllPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
+    List<Peptiform> findAllPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
 
-    public List<Peptiform> findAllPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable);
+    List<Peptiform> findAllPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable);
 
-    public long countSymbolicPeptide();
+    long countSymbolicPeptide();
 
-    public long countSymbolicPeptideByTaxid(Integer taxid);
+    long countSymbolicPeptideByTaxid(Integer taxid);
 
-    public long countSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm);
+    long countSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm);
 
-    public long countSymbolicPeptideByTaxidAndModification(Integer taxid, String modId);
+    long countSymbolicPeptideByTaxidAndModification(Integer taxid, String modId);
 
-    public long countSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
+    long countSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
 
-    public long countPeptiforms();
+    long countPeptiforms();
 
-    public long countPeptiformsByTaxid(Integer taxid);
+    long countPeptiformsByTaxid(Integer taxid);
 
-    public long countPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm);
+    long countPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm);
 
-    public long countPeptiformsByTaxidAndModification(Integer taxid, String modId);
+    long countPeptiformsByTaxidAndModification(Integer taxid, String modId);
 
-    public long countPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
+    long countPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId);
 
 
 }

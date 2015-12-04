@@ -347,7 +347,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             tissue.setCvTerm(TISSUE_TERM);
             tissue.setCvName(TISSUE_NAME);
             tissue.setDescription(NO_DESCRIPTION);
-            tissue = (Tissue) cvParamProteomesRepository.save(tissue);
+            tissue = cvParamProteomesRepository.save(tissue);
         }
         Set<Tissue> tissues = new HashSet<Tissue>();
         tissues.add(tissue);
@@ -360,7 +360,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             cellType.setCvTerm(CELL_TYPE_TERM);
             cellType.setCvName(CELL_TYPE_NAME);
             cellType.setDescription(NO_DESCRIPTION);
-            cellType = (CellType) cvParamProteomesRepository.save(cellType);
+            cellType = cvParamProteomesRepository.save(cellType);
         }
         Set<CellType> cellTypes = new HashSet<CellType>();
         cellTypes.add(cellType);
@@ -372,7 +372,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             disease.setCvTerm(DISEASE_TERM);
             disease.setCvName(DISEASE_NAME);
             disease.setDescription(NO_DESCRIPTION);
-            disease = (Disease) cvParamProteomesRepository.save(disease);
+            disease = cvParamProteomesRepository.save(disease);
 
         }
 
@@ -597,7 +597,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         peptiform.setTissues(tissues);
         peptiform.setCellTypes(cellTypes);
         peptiform.setDiseases(diseases);
-        peptiform = (Peptiform) peptideRepository.saveAndFlush(peptiform);
+        peptiform = peptideRepository.saveAndFlush(peptiform);
 
         return peptiform;
     }

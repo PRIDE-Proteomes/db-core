@@ -27,28 +27,22 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Transactional(readOnly = true)
     public void testFindByMethods() throws Exception {
 
-        EntryGroup entryGroupGroup = (EntryGroup) proteinGroupRepository.findById(ENTRY_GROUP_ID);
-        Set<Protein> proteins = entryGroupGroup.getEntryProteins();
-        assertNotNull(proteins);
-        assertThat(proteins.size(), is(PROTS_IN_GROUP));
-
-
         GeneGroup geneGroup = (GeneGroup) proteinGroupRepository.findById(GENE_GROUP_ID);
-        proteins = geneGroup.getGeneProteins();
+        Set<Protein> proteins = geneGroup.getGeneProteins();
         assertNotNull(proteins);
         assertThat(proteins.size(), is(PROTS_IN_GENE));
 
         Collection<ProteinGroup> proteinGroup = proteinGroupRepository.findAll();
         assertNotNull(proteinGroup);
-        assertThat(proteinGroup.size(), is(3));
+        assertThat(proteinGroup.size(), is(1));
 
-        Collection<ProteinGroup> proteinGroupPaged = proteinGroupRepository.findAll(new PageRequest(1, 1)).getContent();
+        Collection<ProteinGroup> proteinGroupPaged = proteinGroupRepository.findAll(new PageRequest(0, 1)).getContent();
         assertNotNull(proteinGroupPaged);
         assertThat(proteinGroupPaged.size(), is(1));
 
         Collection<ProteinGroup> humanList = proteinGroupRepository.findByTaxid(TAXID_HUMAN);
         assertNotNull(humanList);
-        assertThat(humanList.size(), is(2));
+        assertThat(humanList.size(), is(1));
 
         Collection<ProteinGroup> humanListPaged = proteinGroupRepository.findByTaxid(TAXID_HUMAN, new PageRequest(0, 1));
         assertNotNull(humanListPaged);
@@ -56,7 +50,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
 
         Collection<ProteinGroup> mouseList = proteinGroupRepository.findByTaxid(TAXID_MOUSE);
         assertNotNull(mouseList);
-        assertThat(mouseList.size(), is(1));
+        assertThat(mouseList.size(), is(0));
 
     }
 
@@ -67,9 +61,9 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         long humanTotal = proteinGroupRepository.countByTaxid(TAXID_HUMAN);
         long mouseTotal = proteinGroupRepository.countByTaxid(TAXID_MOUSE);
 
-        assertEquals(3, total);
-        assertEquals(2, humanTotal);
-        assertEquals(1, mouseTotal);
+        assertEquals(1, total);
+        assertEquals(1, humanTotal);
+        assertEquals(0, mouseTotal);
     }
 
 
@@ -77,20 +71,20 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Transactional
     public void testSaveAndGetProteinGroup() throws Exception {
 
-        EntryGroup entryGroup = new EntryGroup();
-        entryGroup.setDescription(NO_DESCRIPTION);
+        GeneGroup geneGroup = new GeneGroup();
+        geneGroup.setDescription(NO_DESCRIPTION);
 
         Set<Protein> proteins = new HashSet<Protein>();
         proteins.add(proteinRepository.findByProteinAccession(PROTEIN_ACCESSION));
         proteins.add(proteinRepository.findByProteinAccession(ISOFORM_ACCESSION));
-        entryGroup.setEntryProteins(proteins);
-        entryGroup.setProteins(proteins);
-        entryGroup.setTaxid(TAXID_HUMAN);
-        entryGroup.setId(ENTRY_GROUP_ID);
+        geneGroup.setGeneProteins(proteins);
+        geneGroup.setProteins(proteins);
+        geneGroup.setTaxid(TAXID_HUMAN);
+        geneGroup.setId(GENE_GROUP_ID);
 
-        entryGroup = proteinGroupRepository.save(entryGroup);
+        geneGroup = proteinGroupRepository.save(geneGroup);
 
-        String newId = entryGroup.getId();
+        String newId = geneGroup.getId();
 
         ProteinGroup other = proteinGroupRepository.findById(newId);
 
@@ -104,7 +98,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
 
         assertThat(other.getTaxid(),is(TAXID_HUMAN));
         assertThat(other.getDescription(), is(NO_DESCRIPTION));
-        assertEquals(other.getClass(), EntryGroup.class);
+        assertEquals(other.getClass(), GeneGroup.class);
         assertThat(other.getProteins().size(), is(NUM_PROTS));
 
     }

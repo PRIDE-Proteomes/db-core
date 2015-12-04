@@ -54,7 +54,7 @@ public class AssayProteomesRepositoryTest extends RepositoryTest {
             tissue.setCvTerm(TISSUE_TERM);
             tissue.setCvName(TISSUE_NAME);
             tissue.setDescription(NO_DESCRIPTION);
-            tissue = (Tissue) cvParamProteomesRepository.save(tissue);  //Should be persisted before we persist the parent
+            tissue = cvParamProteomesRepository.save(tissue);  //Should be persisted before we persist the parent
         }
 
         Set<Tissue> tissues = new HashSet<Tissue>();
@@ -68,7 +68,7 @@ public class AssayProteomesRepositoryTest extends RepositoryTest {
             cellType.setCvTerm(CELL_TYPE_TERM);
             cellType.setCvName(CELL_TYPE_NAME);
             cellType.setDescription(NO_DESCRIPTION);
-            cellType = (CellType) cvParamProteomesRepository.save(cellType);   //Should be persisted before we persist the parent
+            cellType = cvParamProteomesRepository.save(cellType);   //Should be persisted before we persist the parent
         }
 
         Set<CellType> cellTypes = new HashSet<CellType>();
@@ -82,7 +82,7 @@ public class AssayProteomesRepositoryTest extends RepositoryTest {
             disease.setCvTerm(DISEASE_TERM);
             disease.setCvName(DISEASE_NAME);
             disease.setDescription(NO_DESCRIPTION);
-            disease = (Disease) cvParamProteomesRepository.save(disease);  //Should be persisted before we persist the parent
+            disease = cvParamProteomesRepository.save(disease);  //Should be persisted before we persist the parent
 
         }
         Set<Disease> diseases = new HashSet<Disease>();

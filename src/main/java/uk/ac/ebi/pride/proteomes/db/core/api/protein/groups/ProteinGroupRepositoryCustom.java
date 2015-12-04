@@ -1,14 +1,8 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
-import uk.ac.ebi.pride.proteomes.db.core.api.ProteomesRepository;
-
 public interface ProteinGroupRepositoryCustom {
 
-    public long countEntryGroups();
+    long countGeneGroups();
 
-    public long countGeneGroups();
-
-    public long countEntryGroupsByTaxid(Integer taxid);
-
-    public long countGeneGroupsByTaxid(Integer taxid);
+    long countGeneGroupsByTaxid(Integer taxid);
 }

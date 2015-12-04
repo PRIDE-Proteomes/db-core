@@ -11,7 +11,7 @@ public enum ProteinGroupType {
 
     private final String groupName;
 
-    private ProteinGroupType(String groupName) {
+    ProteinGroupType(String groupName) {
         this.groupName = groupName;
     }
 

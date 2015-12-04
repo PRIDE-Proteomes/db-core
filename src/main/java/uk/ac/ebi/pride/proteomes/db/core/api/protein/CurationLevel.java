@@ -11,7 +11,7 @@ public enum CurationLevel {
 
     private final String level;
 
-    private CurationLevel(String level) {
+    CurationLevel(String level) {
         this.level = level;
     }
 

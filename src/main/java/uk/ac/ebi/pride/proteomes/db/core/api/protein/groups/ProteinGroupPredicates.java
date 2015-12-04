@@ -11,23 +11,10 @@ public class ProteinGroupPredicates {
         return proteinGroup.taxid.eq(taxid);
     }
 
-    public static Predicate isEntryGroup() {
-        QProteinGroup proteinGroup = QProteinGroup.proteinGroup;
-        QEntryGroup entryGroup = QEntryGroup.entryGroup;
-        return proteinGroup.instanceOf(entryGroup.getType());
-    }
-
     public static Predicate isGeneGroup() {
         QProteinGroup proteinGroup = QProteinGroup.proteinGroup;
         QGeneGroup geneGroup = QGeneGroup.geneGroup;
         return proteinGroup.instanceOf(geneGroup.getType());
-    }
-
-    public static Predicate isEntryGroupHasTaxid(final Integer taxid) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.and(isEntryGroup());
-        booleanBuilder.and(hasTaxid(taxid));
-        return booleanBuilder.getValue();
     }
 
     public static Predicate isGeneGroupHasTaxid(final Integer taxid) {

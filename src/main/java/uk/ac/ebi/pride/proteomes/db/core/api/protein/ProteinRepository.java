@@ -38,12 +38,6 @@ public interface ProteinRepository extends JpaRepository<Protein, String>, Query
     @Query("SELECT COUNT (DISTINCT p.proteinAccession) from Protein p where p.taxid = :taxid AND p.peptides.size > 0")
     long countByMappedProteins(@Param("taxid") Integer taxid);
 
-//    @Query("SELECT COUNT (DISTINCT p.proteinAccession) from Protein p where p.taxid = :taxid AND p.entryGroups.size > 0")
-//    long countByTaxidAndUPEntriesNotNull(@Param("taxid") Integer taxid);
-//
-//    @Query("SELECT COUNT (DISTINCT p.proteinAccession) from Protein p where p.taxid = :taxid AND p.geneGroups.size > 0")
-//    long countByTaxidAndEntryGroupsNotNull(@Param("taxid") Integer taxid);
-
 
 
 }

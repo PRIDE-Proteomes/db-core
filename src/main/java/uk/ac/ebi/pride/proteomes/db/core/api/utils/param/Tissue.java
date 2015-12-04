@@ -166,7 +166,7 @@ public enum Tissue {
     private final String cvTerm;
     private final String cvName;
 
-    private Tissue(String cvTerm, String cvName) {
+    Tissue(String cvTerm, String cvName) {
         this.cvTerm = cvTerm;
         this.cvName = cvName;
     }

@@ -80,13 +80,10 @@ public abstract class RepositoryTest {
 
     protected static final long SCORE_ID = 1;
 
-    protected static final String ENTRY_GROUP_ID = "X12345";
     protected static final String GENE_GROUP_ID = "XGENE";
-    protected static final int PROTS_IN_GROUP = 2;
     protected static final int PROTS_IN_GENE = 2;
-    protected static final int NUM_ENTRY_GROUPS_FOR_PROTEIN = 1;
     protected static final int NUM_GENES = 1;
-    protected static final int NUM_PROT_GROUPS_FOR_PROTEIN = 2;
+    protected static final int NUM_PROT_GROUPS_FOR_PROTEIN = 1;
 
     protected static final String PROTEIN_ACCESSION = "X12345";
     protected static final String ISOFORM_ACCESSION = "X12345-1";

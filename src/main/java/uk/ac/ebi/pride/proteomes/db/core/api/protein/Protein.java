@@ -10,7 +10,6 @@ import uk.ac.ebi.pride.proteomes.db.core.api.param.CellType;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Disease;
 import uk.ac.ebi.pride.proteomes.db.core.api.param.Tissue;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProtein;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.EntryGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.Score;
@@ -46,13 +45,29 @@ public class Protein {
     private CurationLevel curationLevel;
 
     @Basic
+    @Column(name = "NAME", nullable = true, insertable = true, updatable = true, length = 500, precision = 0)
+    private String name;
+
+    @Basic
+    @Column(name = "ALT_NAME", nullable = true, insertable = true, updatable = true, length = 500, precision = 0)
+    private String alternativeName;
+
+    @Basic
     @Column(name = "DESCRIPTION", nullable = true, insertable = true, updatable = true, length = 500, precision = 0)
     private String description;
 
     @Basic
+    @Column(name = "GENE_SYMBOL", nullable = true, insertable = true, updatable = true, length = 500, precision = 0)
+    private String geneSymbol;
+
+    @Basic
+    @Column(name = "EVIDENCE", nullable = true, insertable = true, updatable = true, length = 22, precision = 0)
+    private Integer evidence;
+
+    @Basic
     @NotNull
     @Column(name = "CONTAMINANT", nullable = false, insertable = true, updatable = true, length = 1, precision = 0)
-    @Type(type="true_false")
+    @Type(type = "true_false")
     private Boolean contaminant;
 
     @Basic
@@ -61,7 +76,7 @@ public class Protein {
     private Integer taxid;
 
     @OrderColumn
-    @ElementCollection(targetClass=ModificationLocation.class)
+    @ElementCollection(targetClass = ModificationLocation.class)
     @CollectionTable(
             name = "PROT_MOD", schema = "PRIDEPROT",
             joinColumns = @JoinColumn(name = "PROTEIN_ID", referencedColumnName = "PROTEIN_ID")
@@ -72,7 +87,7 @@ public class Protein {
 
     //Unidirectional relationship this side is the owner of the relationship
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name= "PROTEIN_ID" )
+    @JoinColumn(name = "PROTEIN_ID")
     private Set<Feature> features;
 
     //Unidirectional relationship
@@ -109,21 +124,16 @@ public class Protein {
     private Set<Tissue> tissues;
 
     @OneToMany(mappedBy = "protein")
-	@LazyCollection(LazyCollectionOption.TRUE)
-	private Set<PeptideProtein> peptides;
+    @LazyCollection(LazyCollectionOption.TRUE)
+    private Set<PeptideProtein> peptides;
 
     @ManyToMany(mappedBy = "proteins")
     @LazyCollection(LazyCollectionOption.TRUE)
     private Set<ProteinGroup> proteinGroups;
 
-    @ManyToMany(mappedBy = "entryProteins")
-    @LazyCollection(LazyCollectionOption.TRUE)
-    @Where(clause = "PROT_GROUP_TYPE = 'ENTRY'")  //This is necessary :(
-    private Set<EntryGroup> entryGroups;
-
     @ManyToMany(mappedBy = "geneProteins")
     @LazyCollection(LazyCollectionOption.TRUE)
-    @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
+    @Where(clause = "PROT_GROUP_TYPE = 'GENE'") //This is necessary if there are several group types :(
     private Set<GeneGroup> geneGroups;
 
     @OneToOne
@@ -154,12 +164,44 @@ public class Protein {
         this.curationLevel = level;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAlternativeName() {
+        return alternativeName;
+    }
+
+    public void setAlternativeName(String alternativeName) {
+        this.alternativeName = alternativeName;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getGeneSymbol() {
+        return geneSymbol;
+    }
+
+    public void setGeneSymbol(String geneName) {
+        this.geneSymbol = geneName;
+    }
+
+    public Integer getEvidence() {
+        return evidence;
+    }
+
+    public void setEvidence(Integer evidence) {
+        this.evidence = evidence;
     }
 
     public Boolean isContaminant() {
@@ -219,27 +261,19 @@ public class Protein {
     }
 
     public Set<PeptideProtein> getPeptides() {
-		return peptides;
-	}
+        return peptides;
+    }
 
-	public void setPeptides(Set<PeptideProtein> peptideProteins) {
-		this.peptides = peptideProteins;
-	}
+    public void setPeptides(Set<PeptideProtein> peptideProteins) {
+        this.peptides = peptideProteins;
+    }
 
-	public Set<ProteinGroup> getProteinGroups() {
+    public Set<ProteinGroup> getProteinGroups() {
         return proteinGroups;
     }
 
     public void setProteinGroups(Set<ProteinGroup> proteinGroups) {
         this.proteinGroups = proteinGroups;
-    }
-
-    public Set<EntryGroup> getEntryGroups() {
-        return entryGroups;
-    }
-
-    public void setEntryGroups(Set<EntryGroup> entryGroups) {
-        this.entryGroups = entryGroups;
     }
 
     public Set<GeneGroup> getGeneGroups() {
@@ -277,15 +311,23 @@ public class Protein {
         return "Protein{" +
                 "proteinAccession='" + proteinAccession + '\'' +
                 ", sequence='" + sequence + '\'' +
+                ", curationLevel=" + curationLevel +
+                ", name='" + name + '\'' +
+                ", alternativeName='" + alternativeName + '\'' +
                 ", description='" + description + '\'' +
+                ", geneSymbol='" + geneSymbol + '\'' +
+                ", evidence=" + evidence +
+                ", contaminant=" + contaminant +
                 ", taxid=" + taxid +
                 ", modificationLocations=" + modificationLocations +
                 ", features=" + features +
-//                ", peptides=" + peptides +
-//                ", entryGroups=" + entryGroups +
+                ", cellTypes=" + cellTypes +
+                ", diseases=" + diseases +
+                ", tissues=" + tissues +
+                ", peptides=" + peptides +
+//                ", proteinGroups=" + proteinGroups +
 //                ", geneGroups=" + geneGroups +
                 ", score=" + score +
                 '}';
     }
-
 }
