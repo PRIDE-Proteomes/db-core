@@ -138,7 +138,7 @@ public abstract class Peptide implements Serializable {
 
     @OneToMany(mappedBy = "peptide")
     @LazyCollection(LazyCollectionOption.TRUE)
-    private Set<PeptideGroup> proteinGroups;
+    private Set<PeptideGroup> peptideGroups;
 
     @OneToOne
     @JoinColumn(name = "SCORE_ID", referencedColumnName = "SCORE_ID")
@@ -249,12 +249,12 @@ public abstract class Peptide implements Serializable {
         this.proteins = proteins;
     }
 
-    public Set<PeptideGroup> getProteinGroups() {
-        return proteinGroups;
+    public Set<PeptideGroup> getPeptideGroups() {
+        return peptideGroups;
     }
 
-    public void setProteinGroups(Set<PeptideGroup> proteinGroups) {
-        this.proteinGroups = proteinGroups;
+    public void setPeptideGroups(Set<PeptideGroup> proteinGroups) {
+        this.peptideGroups = proteinGroups;
     }
 
     public Score getScore() {

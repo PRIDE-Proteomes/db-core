@@ -34,17 +34,6 @@ public class PeptideProteinRepositoryTest extends RepositoryTest {
 
     @Test
     @Transactional
-    public void testCountMappedProteinsByTaxId() throws Exception {
-
-        long mappedProteinsByTaxId = peptideProteinRepository.countMappedProteinsByTaxId(TAXID_HUMAN);
-        assertThat(mappedProteinsByTaxId, is(1L));
-        mappedProteinsByTaxId = proteinRepository.countByMappedProteins(TAXID_HUMAN);
-        assertThat(mappedProteinsByTaxId, is(1L));
-
-    }
-
-    @Test
-    @Transactional
     public void testSaveAndGetPeptideProtein() throws Exception {
 
         PeptideProtein peptideProteinTwo = new PeptideProtein(PEPTIDE_TWO, PROTEIN_ACCESSION, 4);

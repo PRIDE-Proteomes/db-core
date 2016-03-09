@@ -21,7 +21,7 @@ import static uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinPredicates.*;
  * Time: 11:08
  */
 @Repository
-public class ProteinRepositoryImpl implements ProteomesRepository<Protein> {
+public class ProteinRepositoryImpl implements ProteomesRepository<Protein>, ProteinRepositoryCustom {
 
     private EntityManagerFactory entityManagerFactory;
 
@@ -121,6 +121,51 @@ public class ProteinRepositoryImpl implements ProteomesRepository<Protein> {
     @Override
     public long countByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
         return proteinRepository.count(hasTaxidAndTissueAndModification(taxid,cvTerm,modId));
+    }
+
+    /* Specific for proteins. It is used in the stats */
+    public long countByTaxidAndIsNotContaminant(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminant(taxid));
+    }
+
+    public long countByTaxidAndIsNotContaminantAndIsCanonical(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndIsCanonical(taxid));
+    }
+
+    public long countByTaxidAndIsNotContaminantAndIsIsoform(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndIsNotCanonical(taxid));
+    }
+
+    /* Mapped proteins with peptides */
+    // Mapped proteins
+    public long countByTaxidAndIsNotContaminantAndHasPeptides(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndHasPeptides(taxid));
+    }
+
+    // Mapped canonical proteins
+    public long countByTaxidAndIsNotContaminantAndIsCanonicalAndHasPeptides(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndIsCanonicalHasPeptides(taxid));
+    }
+
+    // Mapped isoform proteins
+    public long countByTaxidAndIsNotContaminantAndIsIsoformAndHasPeptides(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndIsNotCanonicalHasPeptides(taxid));
+    }
+
+    /* Mapped proteins with unique peptides */
+    // Mapped proteins with at least one unique peptide
+    public long countByTaxidAndIsNotContaminantAndHasUniquePeptides(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndHasUniquePeptides(taxid));
+    }
+
+    // Mapped canonical proteins with at least one unique peptide
+    public long countByTaxidAndIsNotContaminantAndIsCanonicalAndHasUniquePeptides(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndIsCanonicalHasUniquePeptides(taxid));
+    }
+
+    // Mapped isoform proteins with at least one unique peptide
+    public long countByTaxidAndIsNotContaminantAndIsIsoformAndHasUniquePeptides(Integer taxid) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndIsNotCanonicalHasUniquePeptides(taxid));
     }
 
     /**

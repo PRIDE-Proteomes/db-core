@@ -2,6 +2,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
 
 import javax.persistence.*;
@@ -42,6 +43,12 @@ public abstract class ProteinGroup implements Serializable {
     @LazyCollection(LazyCollectionOption.TRUE)
     private Set<Protein> proteins;
 
+    @ManyToMany
+    @JoinTable(name = "PEP_PGROUP", schema = "PRIDEPROT",
+            inverseJoinColumns = @JoinColumn(name = "PEPTIDE_ID"),
+            joinColumns = @JoinColumn(name = "PROT_GROUP_ID"))
+    @LazyCollection(LazyCollectionOption.TRUE)
+    private Set<Peptide> peptides;
 
     public String getId() {
         return id;
@@ -73,6 +80,14 @@ public abstract class ProteinGroup implements Serializable {
 
     public void setProteins(Set<Protein> proteins) {
         this.proteins = proteins;
+    }
+
+    public Set<Peptide> getPeptides() {
+        return peptides;
+    }
+
+    public void setPeptides(Set<Peptide> peptides) {
+        this.peptides = peptides;
     }
 
     @Override

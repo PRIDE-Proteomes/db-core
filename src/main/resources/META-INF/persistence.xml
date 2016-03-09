@@ -25,6 +25,7 @@
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.QMethod</class>
+        <class>uk.ac.ebi.pride.proteomes.db.core.api.release.ReleaseSummary</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Score</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.quality.Star</class>
         <class>uk.ac.ebi.pride.proteomes.db.core.api.reprocessed.Reprocessed</class>

@@ -118,42 +118,42 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxid(Integer taxid) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxid(taxid));
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxid(taxid));
     }
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxid(Integer taxid, Pageable pageable) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxid(taxid),pageable).getContent();
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxid(taxid), pageable).getContent();
     }
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxidAndTissue(taxid, cvTerm));
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxidAndTissue(taxid, cvTerm));
     }
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxidAndTissue(taxid, cvTerm),pageable).getContent();
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxidAndTissue(taxid, cvTerm), pageable).getContent();
     }
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndModification(Integer taxid, String modId) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxidAndModification(taxid, modId));
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxidAndModification(taxid, modId));
     }
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndModification(Integer taxid, String modId, Pageable pageable) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxidAndModification(taxid, modId),pageable).getContent();
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxidAndModification(taxid, modId), pageable).getContent();
     }
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxidAndTissueAndModification(taxid, cvTerm, modId));
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxidAndTissueAndModification(taxid, cvTerm, modId));
     }
 
     @Override
     public List<SymbolicPeptide> findAllSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable) {
-        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideHasTaxidAndTissueAndModification(taxid, cvTerm, modId),pageable).getContent();
+        return (List<SymbolicPeptide>) peptideRepository.findAll(isSymbolicPeptideAndHasTaxidAndTissueAndModification(taxid, cvTerm, modId), pageable).getContent();
     }
 
     @Override
@@ -163,7 +163,7 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public List<Peptiform> findAllPeptiforms(Pageable pageable) {
-        return (List<Peptiform>) peptideRepository.findAll(isPeptiform(),pageable).getContent();
+        return (List<Peptiform>) peptideRepository.findAll(isPeptiform(), pageable).getContent();
     }
 
     @Override
@@ -173,7 +173,7 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public List<Peptiform> findAllPeptiformsByTaxid(Integer taxid, Pageable pageable) {
-        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxid(taxid),pageable).getContent();
+        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxid(taxid), pageable).getContent();
     }
 
     @Override
@@ -182,8 +182,8 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
     }
 
     @Override
-    public List<Peptiform>  findAllPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable) {
-        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxidAndTissue(taxid, cvTerm),pageable).getContent();
+    public List<Peptiform> findAllPeptiformsByTaxidAndTissue(Integer taxid, String cvTerm, Pageable pageable) {
+        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxidAndTissue(taxid, cvTerm), pageable).getContent();
     }
 
     @Override
@@ -192,8 +192,8 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
     }
 
     @Override
-    public List<Peptiform>  findAllPeptiformsByTaxidAndModification(Integer taxid, String modId, Pageable pageable) {
-        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxidAndModification(taxid, modId),pageable).getContent();
+    public List<Peptiform> findAllPeptiformsByTaxidAndModification(Integer taxid, String modId, Pageable pageable) {
+        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxidAndModification(taxid, modId), pageable).getContent();
     }
 
     @Override
@@ -202,8 +202,8 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
     }
 
     @Override
-    public List<Peptiform>  findAllPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable) {
-        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxidAndTissueAndModification(taxid, cvTerm, modId),pageable).getContent();
+    public List<Peptiform> findAllPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId, Pageable pageable) {
+        return (List<Peptiform>) peptideRepository.findAll(isPeptiformHasTaxidAndTissueAndModification(taxid, cvTerm, modId), pageable).getContent();
     }
 
     @Override
@@ -233,22 +233,72 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public long countSymbolicPeptideByTaxid(Integer taxid) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxid(taxid));
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxid(taxid));
     }
 
     @Override
     public long countSymbolicPeptideByTaxidAndTissue(Integer taxid, String cvTerm) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxidAndTissue(taxid, cvTerm));
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndTissue(taxid, cvTerm));
     }
 
     @Override
     public long countSymbolicPeptideByTaxidAndModification(Integer taxid, String modId) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxidAndModification(taxid, modId));
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndModification(taxid, modId));
     }
 
     @Override
     public long countSymbolicPeptideByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxidAndTissueAndModification(taxid, cvTerm, modId));
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndTissueAndModification(taxid, cvTerm, modId));
+    }
+
+    @Override
+    public long countSymbolicPeptideByTaxidAndHasProteins(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndHasProteins(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByTaxidAndHasProteinsWithoutContaminants(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndHasProteinsWithoutContaminants(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByTaxidAndAndHasCanonicalProteinsWithoutContaminants(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndHasCanonicalProteinsWithoutContaminants(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByTaxidAndAndHasIsoformProteinsWithoutContaminants(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndHasNonCanonicalProteinsWithoutContaminants(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByIsUniqueAndTaxidAndHasProteins(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasProteins(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByIsUniqueAndTaxidAndHasProteinsWithoutContaminants(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasProteinsWithoutContaminants(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByIsUniqueAndTaxidAndHasCanonicalProteinsWithoutContaminants(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasCanonicalProteinsWithoutContaminants(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByIsUniqueAndTaxidAndHasIsoformProteinsWithoutContaminants(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasNonCanonicalProteinsWithoutContaminants(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByTaxidAndHasGenes(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndHasGenes(taxid));
+    }
+
+    @Override
+    public long countSymbolicPeptideByIsUniqueAndTaxidAndHasGenes(Integer taxid) {
+        return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasGenes(taxid));
     }
 
     @Override
@@ -273,7 +323,7 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
 
     @Override
     public long countPeptiformsByTaxidAndTissueAndModification(Integer taxid, String cvTerm, String modId) {
-        return peptideRepository.count(isSymbolicPeptideHasTaxidAndTissueAndModification(taxid,cvTerm,modId));
+        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndTissueAndModification(taxid, cvTerm, modId));
     }
 
     /**
