@@ -125,6 +125,44 @@ public class ProteinRepositoryTest extends RepositoryTest {
         assertEquals(2, searchTerm2Count);
         assertEquals(2, searchTerm1HumanCount);
         assertEquals(1, searchTerm2HumanCount);
+
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminant(TAXID_HUMAN);
+        assertEquals(3, humanTotal);
+
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsCanonical(TAXID_HUMAN);
+        assertEquals(3, humanTotal);
+
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsIsoform(TAXID_HUMAN);
+        assertEquals(0, humanTotal);
+
+        /* Mapped proteins with peptides */
+
+        // Mapped proteins
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndHasPeptides(TAXID_HUMAN);
+        assertEquals(1, humanTotal);
+
+        // Mapped canonical proteins
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsCanonicalAndHasPeptides(TAXID_HUMAN);
+        assertEquals(1, humanTotal);
+
+        // Mapped isoform proteins
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsIsoformAndHasPeptides(TAXID_HUMAN);
+        assertEquals(0, humanTotal);
+
+        /* Mapped proteins with unique peptides */
+
+        // Mapped proteins with at least one unique peptide
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndHasUniquePeptides(TAXID_HUMAN);
+        assertEquals(0, humanTotal);
+
+        // Mapped canonical proteins with at least one unique peptide
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsCanonicalAndHasUniquePeptides(TAXID_HUMAN);
+        assertEquals(0, humanTotal);
+
+        // Mapped isoform proteins with at least one unique peptide
+        humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsIsoformAndHasUniquePeptides(TAXID_HUMAN);
+        assertEquals(0, humanTotal);
+
     }
 
     @Test
@@ -141,9 +179,9 @@ public class ProteinRepositoryTest extends RepositoryTest {
         protein.setSequence(NEW_PROTEIN_SEQUENCE);
         protein.setCurationLevel(CurationLevel.PREDICTED);
 
-        Set<GeneGroup> geneGroups = new HashSet<GeneGroup>();
+        Set<GeneGroup> geneGroups = new HashSet<>();
         GeneGroup geneGroup = (GeneGroup) proteinGroupRepository.findOne(GENE_GROUP_ID);
-        geneGroup.getGeneProteins().addAll(Collections.singletonList(protein));
+        geneGroup.getProteins().addAll(Collections.singletonList(protein));
         geneGroups.add(geneGroup);
 
         protein.setGeneGroups(geneGroups);
@@ -173,7 +211,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
         peptideProteinSeven = peptideProteinRepository.save(peptideProteinSeven);
         peptideProteinTen = peptideProteinRepository.save(peptideProteinTen);
 
-        Set<PeptideProtein> symbolicPeptides = new HashSet<PeptideProtein>();
+        Set<PeptideProtein> symbolicPeptides = new HashSet<>();
         symbolicPeptides.add(peptideProteinTwo);
         symbolicPeptides.add(peptideProteinSeven);
         symbolicPeptides.add(peptideProteinTen);

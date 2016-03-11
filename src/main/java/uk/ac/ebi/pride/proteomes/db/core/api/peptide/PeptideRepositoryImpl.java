@@ -262,16 +262,6 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
     }
 
     @Override
-    public long countSymbolicPeptideByTaxidAndAndHasCanonicalProteinsWithoutContaminants(Integer taxid) {
-        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndHasCanonicalProteinsWithoutContaminants(taxid));
-    }
-
-    @Override
-    public long countSymbolicPeptideByTaxidAndAndHasIsoformProteinsWithoutContaminants(Integer taxid) {
-        return peptideRepository.count(isSymbolicPeptideAndHasTaxidAndHasNonCanonicalProteinsWithoutContaminants(taxid));
-    }
-
-    @Override
     public long countSymbolicPeptideByIsUniqueAndTaxidAndHasProteins(Integer taxid) {
         return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasProteins(taxid));
     }
@@ -279,16 +269,6 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
     @Override
     public long countSymbolicPeptideByIsUniqueAndTaxidAndHasProteinsWithoutContaminants(Integer taxid) {
         return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasProteinsWithoutContaminants(taxid));
-    }
-
-    @Override
-    public long countSymbolicPeptideByIsUniqueAndTaxidAndHasCanonicalProteinsWithoutContaminants(Integer taxid) {
-        return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasCanonicalProteinsWithoutContaminants(taxid));
-    }
-
-    @Override
-    public long countSymbolicPeptideByIsUniqueAndTaxidAndHasIsoformProteinsWithoutContaminants(Integer taxid) {
-        return peptideRepository.count(isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasNonCanonicalProteinsWithoutContaminants(taxid));
     }
 
     @Override
@@ -332,8 +312,8 @@ public class PeptideRepositoryImpl implements ProteomesRepository<Peptide>, Pept
      */
     @PostConstruct
     public void init() {
-        JpaEntityInformation<Peptide, Long> peptideEntityInfo = new JpaMetamodelEntityInformation<Peptide, Long>(Peptide.class, entityManager.getMetamodel());
-        peptideRepository = new QueryDslJpaRepository<Peptide, Long>(peptideEntityInfo, entityManager);
+        JpaEntityInformation<Peptide, Long> peptideEntityInfo = new JpaMetamodelEntityInformation<>(Peptide.class, entityManager.getMetamodel());
+        peptideRepository = new QueryDslJpaRepository<>(peptideEntityInfo, entityManager);
     }
 
     @PersistenceUnit(unitName = "pride-proteomes-db-core")

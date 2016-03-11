@@ -73,17 +73,9 @@ public interface PeptideRepositoryCustom extends ProteomesRepository<Peptide> {
 
     long countSymbolicPeptideByTaxidAndHasProteinsWithoutContaminants(Integer taxid);
 
-    long countSymbolicPeptideByTaxidAndAndHasCanonicalProteinsWithoutContaminants(Integer taxid);
-
-    long countSymbolicPeptideByTaxidAndAndHasIsoformProteinsWithoutContaminants(Integer taxid);
-
     long countSymbolicPeptideByIsUniqueAndTaxidAndHasProteins(Integer taxid);
 
     long countSymbolicPeptideByIsUniqueAndTaxidAndHasProteinsWithoutContaminants(Integer taxid);
-
-    long countSymbolicPeptideByIsUniqueAndTaxidAndHasCanonicalProteinsWithoutContaminants(Integer taxid);
-
-    long countSymbolicPeptideByIsUniqueAndTaxidAndHasIsoformProteinsWithoutContaminants(Integer taxid);
 
     long countSymbolicPeptideByTaxidAndHasGenes(Integer taxid);
 

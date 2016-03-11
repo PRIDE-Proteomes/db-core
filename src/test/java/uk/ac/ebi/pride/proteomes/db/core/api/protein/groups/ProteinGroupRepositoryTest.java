@@ -57,6 +57,7 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Test
     @Transactional
     public void testCountMethods() throws Exception {
+
         long total = proteinGroupRepository.count();
         long humanTotal = proteinGroupRepository.countByTaxid(TAXID_HUMAN);
         long mouseTotal = proteinGroupRepository.countByTaxid(TAXID_MOUSE);
@@ -64,6 +65,19 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         assertEquals(1, total);
         assertEquals(1, humanTotal);
         assertEquals(0, mouseTotal);
+
+        total = proteinGroupRepository.countGeneGroups();
+        assertEquals(1, total);
+
+        humanTotal = proteinGroupRepository.countGeneGroupsByTaxid(TAXID_HUMAN);
+        assertEquals(1, humanTotal);
+
+        humanTotal = proteinGroupRepository.countGeneGroupsByTaxidAndHasPeptides(TAXID_HUMAN);
+        assertEquals(0, humanTotal);
+
+        humanTotal = proteinGroupRepository.countGeneGroupsByTaxidAndHasUniquePeptides(TAXID_HUMAN);
+        assertEquals(0, humanTotal);
+
     }
 
 
@@ -71,12 +85,12 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
     @Transactional
     public void testSaveAndGetProteinGroup() throws Exception {
 
-        GeneGroup geneGroup = new GeneGroup();
-        geneGroup.setDescription(NO_DESCRIPTION);
-
-        Set<Protein> proteins = new HashSet<Protein>();
+        Set<Protein> proteins = new HashSet<>();
         proteins.add(proteinRepository.findByProteinAccession(PROTEIN_ACCESSION));
         proteins.add(proteinRepository.findByProteinAccession(ISOFORM_ACCESSION));
+
+        GeneGroup geneGroup = new GeneGroup();
+        geneGroup.setDescription(NO_DESCRIPTION);
         geneGroup.setGeneProteins(proteins);
         geneGroup.setProteins(proteins);
         geneGroup.setTaxid(TAXID_HUMAN);

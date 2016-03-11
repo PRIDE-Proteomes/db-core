@@ -21,15 +21,13 @@ public class PeptideGroupRepositoryTest extends RepositoryTest {
     @Transactional(readOnly = true)
     public void testFindMethods() throws Exception {
 
-        Collection<PeptideGroup> proteinPeptideGroups = peptideGroupRepository.findByProteinGroupId(GENE_GROUP_ID);
+        Collection<PeptideGroup> proteinPeptideGroups = peptideGroupRepository.findByGeneGroupId(GENE_GROUP_ID);
         assertNotNull(proteinPeptideGroups);
         assertThat(proteinPeptideGroups.size(), is(3));
         PeptideGroup group = proteinPeptideGroups.iterator().next();
-        assertThat(group.getProteinGroup().getId(), is(GENE_GROUP_ID));
+        assertThat(group.getGeneGroup().getId(), is(GENE_GROUP_ID));
         assertThat(group.getUniqueness(), is(1));
 
-        Long mappedGeneEntries = peptideGroupRepository.countMappedGenesByTaxId(TAXID_HUMAN);
-        assertThat(mappedGeneEntries, is(1L));
 
     }
 

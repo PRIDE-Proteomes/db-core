@@ -56,4 +56,16 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long>, QueryDs
 
     List<SymbolicPeptide> findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(Integer taxid, Long minValue, Long maxValue);
 
+    @Query("select count(distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.protein.contaminant = false and pp.protein.description like '%soform%'")
+    long countSymbolicPeptideByTaxidAndHasIsoformProteinsWithoutContaminants(@Param("taxid") Integer taxid);
+
+    @Query("select count( distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.protein.contaminant = false and pp.protein.description not like '%soform%' and pp.protein.proteinAccession not like '%-%'")
+    long countSymbolicPeptideByTaxidAndHasCanonicalProteinsWithoutContaminants(@Param("taxid") Integer taxid);
+
+    @Query("select count( distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.uniqueness=1 and pp.protein.contaminant = false and pp.protein.description like '%soform%'")
+    long countSymbolicPeptideByIsUniqueAndTaxidAndHasIsoformProteinsWithoutContaminants(@Param("taxid") Integer taxid);
+
+    @Query("select count(distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.uniqueness=1 and pp.protein.contaminant = false and pp.protein.description not like '%soform%' and pp.protein.proteinAccession not like '%-%'")
+    long countSymbolicPeptideByIsUniqueAndTaxidAndHasCanonicalProteinsWithoutContaminants(@Param("taxid") Integer taxid);
+
 }

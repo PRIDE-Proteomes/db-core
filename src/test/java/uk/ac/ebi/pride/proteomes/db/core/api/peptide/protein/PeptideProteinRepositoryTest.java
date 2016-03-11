@@ -6,6 +6,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.RepositoryTest;
 
 import java.util.Collection;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -29,6 +30,19 @@ public class PeptideProteinRepositoryTest extends RepositoryTest {
         Collection<PeptideProtein> peptideProteins = peptideProteinRepository.findByProteinProteinAccession(PROTEIN_ACCESSION);
         assertNotNull(peptideProteins);
         assertThat(peptideProteins.size(), is(3));
+
+    }
+
+    @Test
+    @Transactional
+    public void testCountMethods() throws Exception {
+        long total = peptideProteinRepository.count();
+        long humanTotal = peptideProteinRepository.countMappedProteinsByTaxId(TAXID_HUMAN);
+        long mouseTotal = peptideProteinRepository.countMappedProteinsByTaxId(TAXID_MOUSE);
+
+        assertEquals(3, total);
+        assertEquals(1, humanTotal);
+        assertEquals(0, mouseTotal);
 
     }
 

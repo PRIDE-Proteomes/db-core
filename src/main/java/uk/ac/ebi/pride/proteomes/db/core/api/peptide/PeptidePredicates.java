@@ -2,8 +2,6 @@ package uk.ac.ebi.pride.proteomes.db.core.api.peptide;
 
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.types.Predicate;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinPredicates;
-import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.QGeneGroup;
 
 
 /**
@@ -40,23 +38,12 @@ public class PeptidePredicates {
 
     public static Predicate hasGenes() {
         QPeptide peptide = QPeptide.peptide;
-        QGeneGroup geneGroup = QGeneGroup.geneGroup;
-        return peptide.peptideGroups.any().geneGroup.instanceOf(geneGroup.getType());
+        return peptide.peptideGroups.any().geneGroup.isNotNull();
     }
 
     public static Predicate hasProteinsWithoutContaminants() {
         QPeptide peptide = QPeptide.peptide;
         return peptide.proteins.any().protein.contaminant.eq(false);
-    }
-
-    public static Predicate hasCanonicalProteinsWithoutContaminants() {
-        QPeptide peptide = QPeptide.peptide;
-        return peptide.proteins.any().protein.contaminant.eq(false).and(ProteinPredicates.isCanonical());
-    }
-
-    public static Predicate hasNonCanonicalProteinsWithoutContaminants() {
-        QPeptide peptide = QPeptide.peptide;
-        return peptide.proteins.any().protein.contaminant.eq(false).not().and(ProteinPredicates.isCanonical());
     }
 
     public static Predicate hasTaxidAndTissue(final Integer taxid, final String cvTerm) {
@@ -144,22 +131,6 @@ public class PeptidePredicates {
         return booleanBuilder.getValue();
     }
 
-    public static Predicate isSymbolicPeptideAndHasTaxidAndHasCanonicalProteinsWithoutContaminants(final Integer taxid) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.and(isSymbolicPeptide());
-        booleanBuilder.and(hasTaxid(taxid));
-        booleanBuilder.and(hasCanonicalProteinsWithoutContaminants());
-        return booleanBuilder.getValue();
-    }
-
-    public static Predicate isSymbolicPeptideAndHasTaxidAndHasNonCanonicalProteinsWithoutContaminants(final Integer taxid) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.and(isSymbolicPeptide());
-        booleanBuilder.and(hasTaxid(taxid));
-        booleanBuilder.and(hasNonCanonicalProteinsWithoutContaminants());
-        return booleanBuilder.getValue();
-    }
-
     public static Predicate isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasProteins(final Integer taxid) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         booleanBuilder.and(isSymbolicPeptideAndIsUnique());
@@ -173,22 +144,6 @@ public class PeptidePredicates {
         booleanBuilder.and(isSymbolicPeptideAndIsUnique());
         booleanBuilder.and(hasTaxid(taxid));
         booleanBuilder.and(hasProteinsWithoutContaminants());
-        return booleanBuilder.getValue();
-    }
-
-    public static Predicate isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasCanonicalProteinsWithoutContaminants(final Integer taxid) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.and(isSymbolicPeptideAndIsUnique());
-        booleanBuilder.and(hasTaxid(taxid));
-        booleanBuilder.and(hasCanonicalProteinsWithoutContaminants());
-        return booleanBuilder.getValue();
-    }
-
-    public static Predicate isSymbolicPeptideAndIsUniqueAndHasTaxidAndHasNonCanonicalProteinsWithoutContaminants(final Integer taxid) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.and(isSymbolicPeptideAndIsUnique());
-        booleanBuilder.and(hasTaxid(taxid));
-        booleanBuilder.and(hasNonCanonicalProteinsWithoutContaminants());
         return booleanBuilder.getValue();
     }
 

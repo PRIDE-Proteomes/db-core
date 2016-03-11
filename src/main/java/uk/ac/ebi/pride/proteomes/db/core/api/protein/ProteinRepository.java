@@ -7,7 +7,6 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.pride.proteomes.db.core.api.ProteomesRepository;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import java.util.List;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface ProteinRepository extends JpaRepository<Protein, String>, QueryDslPredicateExecutor<Protein>, ProteomesRepository<Protein> {
+public interface ProteinRepository extends JpaRepository<Protein, String>, QueryDslPredicateExecutor<Protein>, ProteinRepositoryCustom {
 
     Protein findByProteinAccession(String proteinAccession);
     Long countByProteinAccession(String proteinAccession);
@@ -33,7 +32,5 @@ public interface ProteinRepository extends JpaRepository<Protein, String>, Query
 
     @Query("SELECT p FROM Protein p WHERE LOWER(p.sequence) LIKE LOWER(CONCAT('%',:searchTerm,'%'))")
     List<Protein> findBySequenceContaining(@Param("searchTerm") String searchTerm);
-
-
 
 }

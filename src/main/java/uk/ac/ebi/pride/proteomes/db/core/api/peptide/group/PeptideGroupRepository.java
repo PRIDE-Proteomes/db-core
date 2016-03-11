@@ -17,13 +17,13 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface PeptideGroupRepository extends JpaRepository<PeptideGroup, PeptideGroupPK> {
 
-    PeptideGroup findByPeptidePeptideIdAndProteinGroupId(Long peptideId, String proteinGroupId);
+    PeptideGroup findByPeptidePeptideIdAndGeneGroupId(Long peptideId, String geneGroupId);
 
-    List<PeptideGroup> findByProteinGroupId(String proteinGroupId);
+    List<PeptideGroup> findByGeneGroupId(String geneGroupId);
 
     List<PeptideGroup> findByPeptidePeptideId(Long peptideId);
 
-    List<PeptideGroup> findByProteinGroupIdAndUniqueness(String proteinGroupId, Integer uniqueness);
+    List<PeptideGroup> findByGeneGroupIdAndUniqueness(String geneGroupId, Integer uniqueness);
 
 
     //    Num genes with assigned protein

@@ -164,6 +164,36 @@ public class PeptideRepositoryTest extends RepositoryTest {
         long humanSymbolicModsCnt = peptideRepository.countSymbolicPeptideByTaxidAndModification(TAXID_HUMAN,MOD_ID);
         assertThat(humanSymbolicModsCnt, is((long) 0));
 
+        long  humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByTaxidAndHasProteins(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 3));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByTaxidAndHasProteinsWithoutContaminants(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 3));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByTaxidAndHasCanonicalProteinsWithoutContaminants(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 31));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByTaxidAndHasIsoformProteinsWithoutContaminants(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 0));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByTaxidAndHasGenes(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 3));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByIsUniqueAndTaxidAndHasProteins(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 0));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByIsUniqueAndTaxidAndHasProteinsWithoutContaminants(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 0));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByIsUniqueAndTaxidAndHasCanonicalProteinsWithoutContaminants(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 0));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByIsUniqueAndTaxidAndHasIsoformProteinsWithoutContaminants(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 0));
+
+        humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByIsUniqueAndTaxidAndHasGenes(TAXID_HUMAN);
+        assertThat(humanSymbolicMappedCnt, is((long) 0));
+
     }
 
     @Test
@@ -193,14 +223,14 @@ public class PeptideRepositoryTest extends RepositoryTest {
             modification = new Modification();
             modification.setModId(NEW_MOD_TERM);
             modification.setModName(NEW_MOD_NAME);
-            modification = modificationProteomesRepository.save(modification);
+            modificationProteomesRepository.save(modification);
         }
 
         //We know the real modification was persisted before
         pepMod.setModId(NEW_MOD_TERM);
         pepMod.setPosition(NEW_MOD_POS);
 
-        TreeSet<ModificationLocation> peptideMods = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> peptideMods = new TreeSet<>();
         peptideMods.add(pepMod);
         peptiform.setModificationLocations(peptideMods);
 
@@ -217,7 +247,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             tissue = cvParamProteomesRepository.save(tissue);
         }
 
-        Set<Tissue> tissues = new HashSet<Tissue>();
+        Set<Tissue> tissues = new HashSet<>();
         tissues.add(tissue);
 
         //Cell Type
@@ -229,7 +259,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             cellType.setDescription(NO_DESCRIPTION);
             cellType = cvParamProteomesRepository.save(cellType);
         }
-        Set<CellType> cellTypes = new HashSet<CellType>();
+        Set<CellType> cellTypes = new HashSet<>();
         cellTypes.add(cellType);
 
         //Disease
@@ -242,7 +272,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             disease = cvParamProteomesRepository.save(disease);
 
         }
-        Set<Disease> diseases = new HashSet<Disease>();
+        Set<Disease> diseases = new HashSet<>();
         diseases.add(disease);
 
         peptiform.setTissues(tissues);
@@ -329,7 +359,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         pepMod.setModId(NEW_MOD_TERM);
         pepMod.setPosition(NEW_MOD_POS);
 
-        TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> modificationLocations = new TreeSet<>();
         modificationLocations.add(pepMod);
 
         samePeptiform.setModificationLocations(modificationLocations);
@@ -349,7 +379,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             tissue.setDescription(NO_DESCRIPTION);
             tissue = cvParamProteomesRepository.save(tissue);
         }
-        Set<Tissue> tissues = new HashSet<Tissue>();
+        Set<Tissue> tissues = new HashSet<>();
         tissues.add(tissue);
 
 
@@ -362,7 +392,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             cellType.setDescription(NO_DESCRIPTION);
             cellType = cvParamProteomesRepository.save(cellType);
         }
-        Set<CellType> cellTypes = new HashSet<CellType>();
+        Set<CellType> cellTypes = new HashSet<>();
         cellTypes.add(cellType);
 
         //Disease
@@ -376,7 +406,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
         }
 
-        Set<Disease> diseases = new HashSet<Disease>();
+        Set<Disease> diseases = new HashSet<>();
         diseases.add(disease);
 
         samePeptiform.setTissues(tissues);
@@ -438,7 +468,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         pepModB.setModId(NEW_MOD_TERM);
         pepModB.setPosition(SEC_MOD_POS);
 
-        TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> modificationLocations = new TreeSet<>();
         modificationLocations.add(pepModB);
         modificationLocations.add(pepModA);
 
@@ -458,7 +488,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             tissue.setDescription(NO_DESCRIPTION);
 //			tissue = cvParamRepository.save(tissue);
         }
-        Set<Tissue> tissues = new HashSet<Tissue>();
+        Set<Tissue> tissues = new HashSet<>();
         tissues.add(tissue);
 
 
@@ -471,7 +501,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             cellType.setDescription(NO_DESCRIPTION);
 //			cellType = cvParamRepository.save(cellType);
         }
-        Set<CellType> cellTypes = new HashSet<CellType>();
+        Set<CellType> cellTypes = new HashSet<>();
         cellTypes.add(cellType);
 
         //Disease
@@ -485,7 +515,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
         }
 
-        Set<Disease> diseases = new HashSet<Disease>();
+        Set<Disease> diseases = new HashSet<>();
         diseases.add(disease);
 
         differentPeptiform.setTissues(tissues);
@@ -544,7 +574,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         pepMod.setModId(NEW_MOD_TERM);
         pepMod.setPosition(NEW_MOD_POS);
 
-        TreeSet<ModificationLocation> modificationLocations = new TreeSet<ModificationLocation>();
+        TreeSet<ModificationLocation> modificationLocations = new TreeSet<>();
         modificationLocations.add(pepMod);
         peptiform.setModificationLocations(modificationLocations);
 
@@ -563,7 +593,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             tissue.setDescription(NO_DESCRIPTION);
             tissue = cvParamProteomesRepository.save(tissue);
         }
-        Set<Tissue> tissues = new HashSet<Tissue>();
+        Set<Tissue> tissues = new HashSet<>();
         tissues.add(tissue);
 
 
@@ -576,7 +606,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
             cellType.setDescription(NO_DESCRIPTION);
             cellType = cvParamProteomesRepository.save(cellType);
         }
-        Set<CellType> cellTypes = new HashSet<CellType>();
+        Set<CellType> cellTypes = new HashSet<>();
         cellTypes.add(cellType);
 
         //Disease
@@ -590,7 +620,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
 
         }
 
-        Set<Disease> diseases = new HashSet<Disease>();
+        Set<Disease> diseases = new HashSet<>();
         diseases.add(disease);
 
 

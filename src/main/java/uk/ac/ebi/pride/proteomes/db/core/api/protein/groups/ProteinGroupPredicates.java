@@ -19,12 +19,12 @@ public class ProteinGroupPredicates {
 
     public static Predicate hasPeptides() {
         QProteinGroup proteinGroup = QProteinGroup.proteinGroup;
-        return proteinGroup.peptides.isNotEmpty();
+        return proteinGroup.proteins.any().peptides.isNotEmpty();
     }
 
     public static Predicate hasUniquePeptides() {
         QProteinGroup proteinGroup = QProteinGroup.proteinGroup;
-        return proteinGroup.peptides.any().peptideGroups.any().uniqueness.eq(1);
+        return proteinGroup.proteins.any().peptides.any().uniqueness.eq(1);
     }
 
     public static Predicate isGeneGroupAndHasTaxid(final Integer taxid) {

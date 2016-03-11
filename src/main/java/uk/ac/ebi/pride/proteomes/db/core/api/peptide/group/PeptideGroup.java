@@ -3,6 +3,7 @@ package uk.ac.ebi.pride.proteomes.db.core.api.peptide.group;
 import org.hibernate.annotations.Where;
 import uk.ac.ebi.pride.proteomes.db.core.api.peptide.Peptide;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
+import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,15 +29,14 @@ public class PeptideGroup implements Serializable {
     @JoinColumn(name = "PEPTIDE_ID", referencedColumnName = "PEPTIDE_ID", nullable = false, insertable=false, updatable=false)
     private Peptide peptide;
 
-//    @ManyToOne
-//    @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
-//    private ProteinGroup proteinGroup;
+    @ManyToOne
+    @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
+    private ProteinGroup proteinGroup;
 
     @ManyToOne
     @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
     @Where(clause = "PROT_GROUP_TYPE = 'GENE'")  //This is necessary :(
     private GeneGroup geneGroup;
-
 
 
     public PeptideGroupPK getId() {
@@ -63,13 +63,13 @@ public class PeptideGroup implements Serializable {
         this.peptide = peptideByPeptideFkPk;
     }
 
-//     public  ProteinGroup getProteinGroup() {
-//        return proteinGroup;
-//    }
-//
-//    public void setProteinGroup(ProteinGroup proteinGroup) {
-//        this.proteinGroup = proteinGroup;
-//    }
+     public  ProteinGroup getProteinGroup() {
+        return proteinGroup;
+    }
+
+    public void setProteinGroup(ProteinGroup proteinGroup) {
+        this.proteinGroup = proteinGroup;
+    }
 
     public GeneGroup getGeneGroup() {
         return geneGroup;
