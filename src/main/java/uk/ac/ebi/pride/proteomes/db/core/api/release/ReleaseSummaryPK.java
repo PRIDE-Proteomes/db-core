@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -21,7 +20,7 @@ public class ReleaseSummaryPK implements Serializable {
 
     @NotNull
     @Column(name = "RELEASE_DATE", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
-    private Date releaseDate;
+    private String releaseDate;
 
     public Integer getTaxid() {
         return taxid;
@@ -31,12 +30,20 @@ public class ReleaseSummaryPK implements Serializable {
         this.taxid = taxid;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public ReleaseSummaryPK() {
+    }
+
+    public ReleaseSummaryPK(Integer taxid, String releaseDate) {
+        setTaxid(taxid);
+        setReleaseDate(releaseDate);
     }
 
     @Override

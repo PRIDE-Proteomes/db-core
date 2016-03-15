@@ -30,6 +30,9 @@ public interface ProteinRepository extends JpaRepository<Protein, String>, Query
     List<Protein> findByTaxidAndDescriptionContaining(Integer taxid, String searchTerm, Pageable pageable);
     long countByTaxidAndDescriptionContaining(int taxid, String searchTerm);
 
+    List<Protein> findByTaxidAndEvidence(Integer taxid, Integer evidence);
+    long countByTaxidAndEvidence(Integer taxid, Integer evidence);
+
     @Query("SELECT p FROM Protein p WHERE LOWER(p.sequence) LIKE LOWER(CONCAT('%',:searchTerm,'%'))")
     List<Protein> findBySequenceContaining(@Param("searchTerm") String searchTerm);
 

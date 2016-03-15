@@ -23,91 +23,104 @@ public class ReleaseSummary {
 
     @Basic
     @Column(name = "NUM_PEPTIFORMS")
-    private Integer numPeptiforms;
+    private Long numPeptiforms;
 
     @Basic
     @Column(name = "NUM_PEPTIDES")
-    private Integer numPeptides;
+    private Long numPeptides;
 
     @Basic
     @Column(name = "NUM_PROTEINS")
-    private Integer numProteins;
+    private Long numProteins;
 
     @Basic
     @Column(name = "NUM_ISOFORMS_PROTEINS")
-    private Integer numIsoformProteins;
+    private Long numIsoformProteins;
 
     @Basic
     @Column(name = "NUM_CANONICAL_PROTEINS")
-    private Integer numCanonicalProteins;
+    private Long numCanonicalProteins;
 
     @Basic
     @Column(name = "NUM_GENES")
-    private Integer numGenes;
+    private Long numGenes;
 
     @Basic
     @Column(name = "NUM_MAPPED_PROTEINS")
-    private Integer numMappedProteins;
+    private Long numMappedProteins;
 
     @Basic
     @Column(name = "NUM_MAPPED_CANONICAL_PROTEINS")
-    private Integer numMappedCanonicalProteins;
+    private Long numMappedCanonicalProteins;
 
     @Basic
     @Column(name = "NUM_MAPPED_ISOFORM_PROTEINS")
-    private Integer numMappedIsoformProteins;
+    private Long numMappedIsoformProteins;
 
     @Basic
     @Column(name = "NUM_MAPPED_GENES")
-    private Integer numMappedGenes;
+    private Long numMappedGenes;
 
     @Basic
     @Column(name = "NUM_MAPPED_PEP_TO_PROT")
-    private Integer numMappedPeptidesToProteins;
+    private Long numMappedPeptidesToProteins;
 
     @Basic
     @Column(name = "NUM_MAPPED_UNIQ_PEP_TO_PROT")
-    private Integer numMappedUniquePeptidesToProteins;
+    private Long numMappedUniquePeptidesToProteins;
 
     @Basic
     @Column(name = "NUM_MAPPED_UNIQ_PEP_TO_I_PROT")
-    private Integer numMappedUniquePeptidesToIsoformProteins;
+    private Long numMappedUniquePeptidesToIsoformProteins;
 
     @Basic
     @Column(name = "NUM_MAPPED_UNIQ_PEP_TO_C_PROT")
-    private Integer numMappedUniquePeptidesToCanonicalProteins;
+    private Long numMappedUniquePeptidesToCanonicalProteins;
 
     @Basic
     @Column(name = "NUM_MAPPED_UNIQ_PEP_TO_GENES")
-    private Integer numMappedUniquePeptidesToGenes;
+    private Long numMappedUniquePeptidesToGenes;
+
+    @Basic
+    @Column(name = "NUM_MAPPED_PROTS_W_UNIQ_PEPS")
+    private Long numMappedProteinsWithUniquePeptides;
 
     @Basic
     @Column(name = "NUM_MAPPED_C_PROT_W_UNIQ_PEPS")
-    private Integer numMappedCanonicalProteinsWithUniquePeptides;
+    private Long numMappedCanonicalProteinsWithUniquePeptides;
 
     @Basic
     @Column(name = "NUM_MAPPED_I_PROT_W_UNIQ_PEPS")
-    private Integer numMappedIsoformProteinsWithUniquePeptides;
+    private Long numMappedIsoformProteinsWithUniquePeptides;
 
     @Basic
     @Column(name = "NUM_MAPPED_GENES_W_UNIQ_PEPS")
-    private Integer numMappedGenesWithUniquePeptides;
+    private Long numMappedGenesWithUniquePeptides;
 
     @Basic
     @Column(name = "NUM_MAPPED_PROTS_W_PE2")
-    private Integer numMappedProteinsWithExpEvidenceAtTranscript;
+    private Long numMappedProteinsWithExpEvidenceAtTranscript;
 
     @Basic
     @Column(name = "NUM_MAPPED_PROTS_W_PE3")
-    private Integer numMappedProteinsWithEvidenceInferredByHomology;
+    private Long numMappedProteinsWithEvidenceInferredByHomology;
 
     @Basic
     @Column(name = "NUM_MAPPED_PROTS_W_PE4")
-    private Integer numMappedProteinWithEvidencePredicted;
+    private Long numMappedProteinWithEvidencePredicted;
 
     @Basic
     @Column(name = "NUM_MAPPED_PROTS_W_PE5")
-    private Integer numMappedProteinWithEvidenceUncertain;
+    private Long numMappedProteinWithEvidenceUncertain;
+
+
+    public ReleaseSummary() {
+        setId(new ReleaseSummaryPK());
+    }
+
+    public ReleaseSummary(Integer taxid, String releaseDate) {
+        setId(new ReleaseSummaryPK(taxid, releaseDate));
+    }
 
     public ReleaseSummaryPK getId() {
         return id;
@@ -133,179 +146,187 @@ public class ReleaseSummary {
         this.referenceDatabaseVersion = referenceDatabaseVersion;
     }
 
-    public Integer getNumPeptiforms() {
+    public Long getNumPeptiforms() {
         return numPeptiforms;
     }
 
-    public void setNumPeptiforms(Integer numPeptiforms) {
+    public void setNumPeptiforms(Long numPeptiforms) {
         this.numPeptiforms = numPeptiforms;
     }
 
-    public Integer getNumPeptides() {
+    public Long getNumPeptides() {
         return numPeptides;
     }
 
-    public void setNumPeptides(Integer numPeptides) {
+    public void setNumPeptides(Long numPeptides) {
         this.numPeptides = numPeptides;
     }
 
-    public Integer getNumProteins() {
+    public Long getNumProteins() {
         return numProteins;
     }
 
-    public void setNumProteins(Integer numProteins) {
+    public void setNumProteins(Long numProteins) {
         this.numProteins = numProteins;
     }
 
-    public Integer getNumIsoformProteins() {
+    public Long getNumIsoformProteins() {
         return numIsoformProteins;
     }
 
-    public void setNumIsoformProteins(Integer numIsoformProteins) {
+    public void setNumIsoformProteins(Long numIsoformProteins) {
         this.numIsoformProteins = numIsoformProteins;
     }
 
-    public Integer getNumCanonicalProteins() {
+    public Long getNumCanonicalProteins() {
         return numCanonicalProteins;
     }
 
-    public void setNumCanonicalProteins(Integer numCanonicalProteins) {
+    public void setNumCanonicalProteins(Long numCanonicalProteins) {
         this.numCanonicalProteins = numCanonicalProteins;
     }
 
-    public Integer getNumGenes() {
+    public Long getNumGenes() {
         return numGenes;
     }
 
-    public void setNumGenes(Integer numGenes) {
+    public void setNumGenes(Long numGenes) {
         this.numGenes = numGenes;
     }
 
-    public Integer getNumMappedProteins() {
+    public Long getNumMappedProteins() {
         return numMappedProteins;
     }
 
-    public void setNumMappedProteins(Integer numMappedProteins) {
+    public void setNumMappedProteins(Long numMappedProteins) {
         this.numMappedProteins = numMappedProteins;
     }
 
-    public Integer getNumMappedCanonicalProteins() {
+    public Long getNumMappedCanonicalProteins() {
         return numMappedCanonicalProteins;
     }
 
-    public void setNumMappedCanonicalProteins(Integer numMappedCanonicalProteins) {
+    public void setNumMappedCanonicalProteins(Long numMappedCanonicalProteins) {
         this.numMappedCanonicalProteins = numMappedCanonicalProteins;
     }
 
-    public Integer getNumMappedIsoformProteins() {
+    public Long getNumMappedIsoformProteins() {
         return numMappedIsoformProteins;
     }
 
-    public void setNumMappedIsoformProteins(Integer numMappedIsoformProteins) {
+    public void setNumMappedIsoformProteins(Long numMappedIsoformProteins) {
         this.numMappedIsoformProteins = numMappedIsoformProteins;
     }
 
-    public Integer getNumMappedGenes() {
+    public Long getNumMappedGenes() {
         return numMappedGenes;
     }
 
-    public void setNumMappedGenes(Integer numMappedGenes) {
+    public void setNumMappedGenes(Long numMappedGenes) {
         this.numMappedGenes = numMappedGenes;
     }
 
-    public Integer getNumMappedPeptidesToProteins() {
+    public Long getNumMappedPeptidesToProteins() {
         return numMappedPeptidesToProteins;
     }
 
-    public void setNumMappedPeptidesToProteins(Integer numMappedPeptidesToProteins) {
+    public void setNumMappedPeptidesToProteins(Long numMappedPeptidesToProteins) {
         this.numMappedPeptidesToProteins = numMappedPeptidesToProteins;
     }
 
-    public Integer getNumMappedUniquePeptidesToProteins() {
+    public Long getNumMappedUniquePeptidesToProteins() {
         return numMappedUniquePeptidesToProteins;
     }
 
-    public void setNumMappedUniquePeptidesToProteins(Integer numMappedUniquePeptidesToProteins) {
+    public void setNumMappedUniquePeptidesToProteins(Long numMappedUniquePeptidesToProteins) {
         this.numMappedUniquePeptidesToProteins = numMappedUniquePeptidesToProteins;
     }
 
-    public Integer getNumMappedUniquePeptidesToIsoformProteins() {
+    public Long getNumMappedUniquePeptidesToIsoformProteins() {
         return numMappedUniquePeptidesToIsoformProteins;
     }
 
-    public void setNumMappedUniquePeptidesToIsoformProteins(Integer numMappedUniquePeptidesToIsoformProteins) {
+    public void setNumMappedUniquePeptidesToIsoformProteins(Long numMappedUniquePeptidesToIsoformProteins) {
         this.numMappedUniquePeptidesToIsoformProteins = numMappedUniquePeptidesToIsoformProteins;
     }
 
-    public Integer getNumMappedUniquePeptidesToCanonicalProteins() {
+    public Long getNumMappedUniquePeptidesToCanonicalProteins() {
         return numMappedUniquePeptidesToCanonicalProteins;
     }
 
-    public void setNumMappedUniquePeptidesToCanonicalProteins(Integer numMappedUniquePeptidesToCanonicalProteins) {
+    public void setNumMappedUniquePeptidesToCanonicalProteins(Long numMappedUniquePeptidesToCanonicalProteins) {
         this.numMappedUniquePeptidesToCanonicalProteins = numMappedUniquePeptidesToCanonicalProteins;
     }
 
-    public Integer getNumMappedUniquePeptidesToGenes() {
+    public Long getNumMappedUniquePeptidesToGenes() {
         return numMappedUniquePeptidesToGenes;
     }
 
-    public void setNumMappedUniquePeptidesToGenes(Integer numMappedUniquePeptidesToGenes) {
+    public void setNumMappedUniquePeptidesToGenes(Long numMappedUniquePeptidesToGenes) {
         this.numMappedUniquePeptidesToGenes = numMappedUniquePeptidesToGenes;
     }
 
-    public Integer getNumMappedCanonicalProteinsWithUniquePeptides() {
+    public Long getNumMappedProteinsWithUniquePeptides() {
+        return numMappedProteinsWithUniquePeptides;
+    }
+
+    public void setNumMappedProteinsWithUniquePeptides(Long numMappedProteinsWithUniquePeptides) {
+        this.numMappedProteinsWithUniquePeptides = numMappedProteinsWithUniquePeptides;
+    }
+
+    public Long getNumMappedCanonicalProteinsWithUniquePeptides() {
         return numMappedCanonicalProteinsWithUniquePeptides;
     }
 
-    public void setNumMappedCanonicalProteinsWithUniquePeptides(Integer numMappedCanonicalProteinsWithUniquePeptides) {
+    public void setNumMappedCanonicalProteinsWithUniquePeptides(Long numMappedCanonicalProteinsWithUniquePeptides) {
         this.numMappedCanonicalProteinsWithUniquePeptides = numMappedCanonicalProteinsWithUniquePeptides;
     }
 
-    public Integer getNumMappedIsoformProteinsWithUniquePeptides() {
+    public Long getNumMappedIsoformProteinsWithUniquePeptides() {
         return numMappedIsoformProteinsWithUniquePeptides;
     }
 
-    public void setNumMappedIsoformProteinsWithUniquePeptides(Integer numMappedIsoformProteinsWithUniquePeptides) {
+    public void setNumMappedIsoformProteinsWithUniquePeptides(Long numMappedIsoformProteinsWithUniquePeptides) {
         this.numMappedIsoformProteinsWithUniquePeptides = numMappedIsoformProteinsWithUniquePeptides;
     }
 
-    public Integer getNumMappedGenesWithUniquePeptides() {
+    public Long getNumMappedGenesWithUniquePeptides() {
         return numMappedGenesWithUniquePeptides;
     }
 
-    public void setNumMappedGenesWithUniquePeptides(Integer numMappedGenesWithUniquePeptides) {
+    public void setNumMappedGenesWithUniquePeptides(Long numMappedGenesWithUniquePeptides) {
         this.numMappedGenesWithUniquePeptides = numMappedGenesWithUniquePeptides;
     }
 
-    public Integer getNumMappedProteinsWithExpEvidenceAtTranscript() {
+    public Long getNumMappedProteinsWithExpEvidenceAtTranscript() {
         return numMappedProteinsWithExpEvidenceAtTranscript;
     }
 
-    public void setNumMappedProteinsWithExpEvidenceAtTranscript(Integer numMappedProteinsWithExpEvidenceAtTranscript) {
+    public void setNumMappedProteinsWithExpEvidenceAtTranscript(Long numMappedProteinsWithExpEvidenceAtTranscript) {
         this.numMappedProteinsWithExpEvidenceAtTranscript = numMappedProteinsWithExpEvidenceAtTranscript;
     }
 
-    public Integer getNumMappedProteinsWithEvidenceInferredByHomology() {
+    public Long getNumMappedProteinsWithEvidenceInferredByHomology() {
         return numMappedProteinsWithEvidenceInferredByHomology;
     }
 
-    public void setNumMappedProteinsWithEvidenceInferredByHomology(Integer numMappedProteinsWithEvidenceInferredByHomology) {
+    public void setNumMappedProteinsWithEvidenceInferredByHomology(Long numMappedProteinsWithEvidenceInferredByHomology) {
         this.numMappedProteinsWithEvidenceInferredByHomology = numMappedProteinsWithEvidenceInferredByHomology;
     }
 
-    public Integer getNumMappedProteinWithEvidencePredicted() {
+    public Long getNumMappedProteinWithEvidencePredicted() {
         return numMappedProteinWithEvidencePredicted;
     }
 
-    public void setNumMappedProteinWithEvidencePredicted(Integer numMappedProteinWithEvidencePredicted) {
+    public void setNumMappedProteinWithEvidencePredicted(Long numMappedProteinWithEvidencePredicted) {
         this.numMappedProteinWithEvidencePredicted = numMappedProteinWithEvidencePredicted;
     }
 
-    public Integer getNumMappedProteinWithEvidenceUncertain() {
+    public Long getNumMappedProteinWithEvidenceUncertain() {
         return numMappedProteinWithEvidenceUncertain;
     }
 
-    public void setNumMappedProteinWithEvidenceUncertain(Integer numMappedProteinWithEvidenceUncertain) {
+    public void setNumMappedProteinWithEvidenceUncertain(Long numMappedProteinWithEvidenceUncertain) {
         this.numMappedProteinWithEvidenceUncertain = numMappedProteinWithEvidenceUncertain;
     }
 }

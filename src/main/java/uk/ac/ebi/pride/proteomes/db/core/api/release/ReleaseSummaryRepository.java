@@ -12,5 +12,5 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.Protein;
  */
 @Repository
 @Transactional(readOnly = true)
-public interface ReleaseSummaryRepository extends JpaRepository<Protein, String>, QueryDslPredicateExecutor<Protein> {
+public interface ReleaseSummaryRepository extends JpaRepository<ReleaseSummary, ReleaseSummaryPK>, QueryDslPredicateExecutor<Protein> {
 }
