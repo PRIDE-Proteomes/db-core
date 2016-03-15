@@ -5,7 +5,7 @@
     <parent> <!-- parent POM -->
         <groupId>uk.ac.ebi.pride.proteomes.maven</groupId>
         <artifactId>proteomes-maven-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>uk.ac.ebi.pride.proteomes.db</groupId>
@@ -206,11 +206,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>commons-collections</groupId>-->
+            <!--<artifactId>commons-collections</artifactId>-->
+            <!--<version>3.2.2</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 
