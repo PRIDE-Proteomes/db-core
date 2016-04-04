@@ -22,13 +22,13 @@ public interface ProteinRepository extends JpaRepository<Protein, String>, Query
     Protein findByProteinAccession(String proteinAccession);
     Long countByProteinAccession(String proteinAccession);
 
-    List<Protein> findByDescriptionContaining(String searchTerm);
-    List<Protein> findByDescriptionContaining(String searchTerm, Pageable pageable);
-    long countByDescriptionContaining(String searchTerm);
+    List<Protein> findByNameContaining(String searchTerm);
+    List<Protein> findByNameContaining(String searchTerm, Pageable pageable);
+    long countByNameContaining(String searchTerm);
 
-    List<Protein> findByTaxidAndDescriptionContaining(Integer taxid, String searchTerm);
-    List<Protein> findByTaxidAndDescriptionContaining(Integer taxid, String searchTerm, Pageable pageable);
-    long countByTaxidAndDescriptionContaining(int taxid, String searchTerm);
+    List<Protein> findByTaxidAndNameContaining(Integer taxid, String searchTerm);
+    List<Protein> findByTaxidAndNameContaining(Integer taxid, String searchTerm, Pageable pageable);
+    long countByTaxidAndNameContaining(int taxid, String searchTerm);
 
     List<Protein> findByTaxidAndEvidence(Integer taxid, Integer evidence);
     long countByTaxidAndEvidence(Integer taxid, Integer evidence);

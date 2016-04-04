@@ -77,20 +77,20 @@ public class ProteinRepositoryTest extends RepositoryTest {
         assertThat(resultsTaxidPaged.get(0).getProteinAccession(), is("X12345"));
 
 
-        List<Protein> resultsDescContains = proteinRepository.findByDescriptionContaining("kinase");
+        List<Protein> resultsDescContains = proteinRepository.findByNameContaining("kinase");
         assertNotNull(resultsDescContains);
         assertThat(resultsDescContains.size(), is(3));
 
-        List<Protein> resultsDescContainsPaged = proteinRepository.findByDescriptionContaining("kinase", new PageRequest(1, 2));
+        List<Protein> resultsDescContainsPaged = proteinRepository.findByNameContaining("kinase", new PageRequest(1, 2));
         assertNotNull(resultsDescContainsPaged);
         assertThat(resultsDescContainsPaged.size(), is(1)); // total 3 proteins, second page has to have 1 result
 
 
-        List<Protein> resultsTaxidDescContains = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase");
+        List<Protein> resultsTaxidDescContains = proteinRepository.findByTaxidAndNameContaining(TAXID_HUMAN, "kinase");
         assertNotNull(resultsTaxidDescContains);
         assertThat(resultsTaxidDescContains.size(), is(2));
 
-        List<Protein> resultsTaxidDescContainsPaged = proteinRepository.findByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase", new PageRequest(1, 1));
+        List<Protein> resultsTaxidDescContainsPaged = proteinRepository.findByTaxidAndNameContaining(TAXID_HUMAN, "kinase", new PageRequest(1, 1));
         assertNotNull(resultsTaxidDescContainsPaged);
         assertThat(resultsTaxidDescContainsPaged.size(), is(1)); // total 2 proteins, second page has to have 1 rsult
 
@@ -113,10 +113,10 @@ public class ProteinRepositoryTest extends RepositoryTest {
         long total = proteinRepository.count();
         long humanTotal = proteinRepository.countByTaxid(TAXID_HUMAN);
         long mouseTotal = proteinRepository.countByTaxid(TAXID_MOUSE);
-        long searchTerm1Count = proteinRepository.countByDescriptionContaining("kinase");
-        long searchTerm2Count = proteinRepository.countByDescriptionContaining("random");
-        long searchTerm1HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(TAXID_HUMAN, "kinase");
-        long searchTerm2HumanCount = proteinRepository.countByTaxidAndDescriptionContaining(TAXID_HUMAN, "random");
+        long searchTerm1Count = proteinRepository.countByNameContaining("kinase");
+        long searchTerm2Count = proteinRepository.countByNameContaining("random");
+        long searchTerm1HumanCount = proteinRepository.countByTaxidAndNameContaining(TAXID_HUMAN, "kinase");
+        long searchTerm2HumanCount = proteinRepository.countByTaxidAndNameContaining(TAXID_HUMAN, "random");
 
         assertEquals(5, total);
         assertEquals(3, humanTotal);

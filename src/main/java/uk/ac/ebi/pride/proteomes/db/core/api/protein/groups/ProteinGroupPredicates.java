@@ -34,20 +34,20 @@ public class ProteinGroupPredicates {
         return booleanBuilder.getValue();
     }
 
-    public static Predicate isGeneGroupAndHasTaxidAndHasPeptides(final Integer taxid) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.and(isGeneGroup());
-        booleanBuilder.and(hasTaxid(taxid));
-        booleanBuilder.and(hasPeptides());
-        return booleanBuilder.getValue();
-    }
+//    public static Predicate isGeneGroupAndHasTaxidAndHasPeptides(final Integer taxid) {
+//        BooleanBuilder booleanBuilder = new BooleanBuilder();
+//        booleanBuilder.and(isGeneGroup());
+//        booleanBuilder.and(hasTaxid(taxid));
+//        booleanBuilder.and(hasPeptides());
+//        return booleanBuilder.getValue();
+//    }
 
-    public static Predicate isGeneGroupAndHasTaxidAndHasUniquePeptides(final Integer taxid) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
-        booleanBuilder.and(isGeneGroup());
-        booleanBuilder.and(hasTaxid(taxid));
-        booleanBuilder.and(hasUniquePeptides());
-        return booleanBuilder.getValue();
-    }
+//    public static Predicate isGeneGroupAndHasTaxidAndHasUniquePeptides(final Integer taxid) {
+//        BooleanBuilder booleanBuilder = new BooleanBuilder();
+//        booleanBuilder.and(isGeneGroup());
+//        booleanBuilder.and(hasTaxid(taxid));
+//        booleanBuilder.and(hasUniquePeptides());
+//        return booleanBuilder.getValue();
+//    }
 
 }

@@ -73,10 +73,10 @@ public class ProteinGroupRepositoryTest extends RepositoryTest {
         assertEquals(1, humanTotal);
 
         humanTotal = proteinGroupRepository.countGeneGroupsByTaxidAndHasPeptides(TAXID_HUMAN);
-        assertEquals(0, humanTotal);
+        assertEquals(1, humanTotal);
 
         humanTotal = proteinGroupRepository.countGeneGroupsByTaxidAndHasUniquePeptides(TAXID_HUMAN);
-        assertEquals(0, humanTotal);
+        assertEquals(1, humanTotal);
 
     }
 

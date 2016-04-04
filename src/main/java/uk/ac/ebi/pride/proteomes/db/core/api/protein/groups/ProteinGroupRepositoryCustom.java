@@ -6,7 +6,7 @@ public interface ProteinGroupRepositoryCustom {
 
     long countGeneGroupsByTaxid(Integer taxid);
 
-    long countGeneGroupsByTaxidAndHasPeptides(Integer taxid);
+//    long countGeneGroupsByTaxidAndHasPeptides(Integer taxid);
 
-    long countGeneGroupsByTaxidAndHasUniquePeptides(Integer taxid);
+//    long countGeneGroupsByTaxidAndHasUniquePeptides(Integer taxid);
 }

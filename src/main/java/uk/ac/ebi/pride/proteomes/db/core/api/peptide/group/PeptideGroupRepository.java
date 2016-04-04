@@ -28,6 +28,6 @@ public interface PeptideGroupRepository extends JpaRepository<PeptideGroup, Pept
 
     //    Num genes with assigned protein
     //    SELECT COUNT(distinct PROT_PGRP.PROT_GROUP_ID) FROM PROT_PGRP,PROT_GROUP WHERE PROT_PGRP.PROT_GROUP_ID = PROT_GROUP.PROT_GROUP_ID and  PROT_GROUP_TYPE='GENE' and TAXID=9606; --22189
-    @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, GeneGroup gg where pg.geneGroup.taxid = :taxid AND pg.geneGroup.id = gg.id")
+    @Query("select count (distinct pg.id.proteinGroupId) from PeptideGroup pg, GeneGroup gg where pg.taxid = :taxid AND pg.geneGroup.id = gg.id")
     Long countMappedGenesByTaxId(@Param("taxid") Integer taxid);
 }

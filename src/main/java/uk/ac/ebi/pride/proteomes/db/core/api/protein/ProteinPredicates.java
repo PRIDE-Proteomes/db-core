@@ -33,7 +33,7 @@ public class ProteinPredicates {
 
     public static Predicate isCanonical() {
         QProtein protein = QProtein.protein;
-        return protein.description.notLike("%soform");
+        return protein.name.notLike("%soform");
     }
 
     public static Predicate hasPeptides() {

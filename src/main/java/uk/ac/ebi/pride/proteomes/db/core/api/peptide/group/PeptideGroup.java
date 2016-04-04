@@ -6,6 +6,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroup;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -28,6 +29,11 @@ public class PeptideGroup implements Serializable {
     @ManyToOne
     @JoinColumn(name = "PEPTIDE_ID", referencedColumnName = "PEPTIDE_ID", nullable = false, insertable=false, updatable=false)
     private Peptide peptide;
+
+    @Basic
+    @Column(name = "TAXID", nullable = false, insertable = true, updatable = true, length = 22, precision = 0)
+    @NotNull
+    private Integer taxid;
 
     @ManyToOne
     @JoinColumn(name = "PROT_GROUP_ID", referencedColumnName = "PROT_GROUP_ID", nullable = false, insertable=false, updatable=false)
@@ -63,7 +69,15 @@ public class PeptideGroup implements Serializable {
         this.peptide = peptideByPeptideFkPk;
     }
 
-     public  ProteinGroup getProteinGroup() {
+    public Integer getTaxid() {
+        return taxid;
+    }
+
+    public void setTaxid(Integer taxid) {
+        this.taxid = taxid;
+    }
+
+    public ProteinGroup getProteinGroup() {
         return proteinGroup;
     }
 
@@ -101,7 +115,7 @@ public class PeptideGroup implements Serializable {
                 "id=" + id +
                 ", uniqueness=" + uniqueness +
                 ", peptide=" + peptide +
-//                ", proteinGroup=" + proteinGroup +
+                ", taxid=" + taxid +
                 '}';
     }
 }

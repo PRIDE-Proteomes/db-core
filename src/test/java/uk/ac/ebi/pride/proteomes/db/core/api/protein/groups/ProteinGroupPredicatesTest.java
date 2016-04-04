@@ -62,17 +62,17 @@ public class ProteinGroupPredicatesTest extends TestCase {
         assertEquals(GENE_GROUP_TAXID_PREDICATE_STRING, predicateAsString);
     }
 
-    public void testIsGeneGroupAndHasTaxidAndHasPeptides() throws Exception {
-        Predicate predicate = ProteinGroupPredicates.isGeneGroupAndHasTaxidAndHasPeptides(TAXID);
-        String predicateAsString = predicate.toString();
-        assertEquals(GENE_GROUP_TAXID_PEPTIDES_PREDICATE_STRING, predicateAsString);
-    }
-
-
-    public void testIsGeneGroupAndHasTaxidAndHasUniquePeptides() throws Exception {
-        Predicate predicate = ProteinGroupPredicates.isGeneGroupAndHasTaxidAndHasUniquePeptides(TAXID);
-        String predicateAsString = predicate.toString();
-        assertEquals(GENE_GROUP_TAXID_UNIQUE_PEPTIDES_PREDICATE_STRING, predicateAsString);
-    }
+//    public void testIsGeneGroupAndHasTaxidAndHasPeptides() throws Exception {
+//        Predicate predicate = ProteinGroupPredicates.isGeneGroupAndHasTaxidAndHasPeptides(TAXID);
+//        String predicateAsString = predicate.toString();
+//        assertEquals(GENE_GROUP_TAXID_PEPTIDES_PREDICATE_STRING, predicateAsString);
+//    }
+//
+//
+//    public void testIsGeneGroupAndHasTaxidAndHasUniquePeptides() throws Exception {
+//        Predicate predicate = ProteinGroupPredicates.isGeneGroupAndHasTaxidAndHasUniquePeptides(TAXID);
+//        String predicateAsString = predicate.toString();
+//        assertEquals(GENE_GROUP_TAXID_UNIQUE_PEPTIDES_PREDICATE_STRING, predicateAsString);
+//    }
 
 }
