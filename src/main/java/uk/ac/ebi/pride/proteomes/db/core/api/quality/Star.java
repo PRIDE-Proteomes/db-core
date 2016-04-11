@@ -10,6 +10,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "STAR", schema = "PRIDEPROT")
+//Allocation size must by same than the increment in the sequence by default is 50-> http://skay-dev.blogspot.co.uk/2013/09/hibernate-sequence-and-negative.html
 @SequenceGenerator(name="STAR_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.STAR_STAR_ID_SEQ")
 public class Star {
 

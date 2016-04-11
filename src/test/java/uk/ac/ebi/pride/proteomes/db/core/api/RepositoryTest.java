@@ -15,6 +15,7 @@ import uk.ac.ebi.pride.proteomes.db.core.api.peptide.protein.PeptideProteinRepos
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.ProteinRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.ProteinGroupRepository;
 import uk.ac.ebi.pride.proteomes.db.core.api.quality.ScoreRepository;
+import uk.ac.ebi.pride.proteomes.db.core.api.release.ReleaseSummaryRepository;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -124,12 +125,13 @@ public abstract class RepositoryTest {
     protected static final long PEPTIDE_TEN = 10;
 
     protected static final long FEATURE_ID = 1000;
-    protected static final long FEATURE_ID_SAVE = 500000;
+    protected static final long FEATURE_ID_SAVE = 9951;
     protected static final String FEATURE_TYPE_CV_TERM = "FT:000002";
     protected static final String FEATURE_TYPE_CV_NAME = "TOPO_DOM";
     protected static final int FT_START_POS = 5;
     protected static final int FT_END_POS = 10;
 
+    protected static final int NUM_RELEASE_PER_TAXID = 1;
 
     @Autowired
     protected EntityManagerFactory entityManagerFactory;
@@ -166,4 +168,7 @@ public abstract class RepositoryTest {
 
     @Autowired
     protected ScoreRepository scoreRepository;
+
+    @Autowired
+    protected ReleaseSummaryRepository releaseSummaryRepository;
 }

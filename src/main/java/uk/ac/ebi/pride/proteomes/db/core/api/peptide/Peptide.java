@@ -35,7 +35,9 @@ import java.util.SortedSet;
 @Table(name = "PEPTIDE", schema = "PRIDEPROT", uniqueConstraints = @UniqueConstraint(columnNames = {"REPRESENTATION"}))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "SYMBOLIC", discriminatorType = DiscriminatorType.STRING)
-@SequenceGenerator(name = "PEPTIDE_SEQ", schema = "PRIDEPROT", sequenceName = "PRIDEPROT.PEPTIDE_PEPTIDE_ID_SEQ")
+//Allocation size must by same than the increment in the sequence by default is 50-> http://skay-dev.blogspot.co.uk/2013/09/hibernate-sequence-and-negative.html
+//Investigate, because when the partition is running in the pipeline, looks like it is not working when the allocationSize is higher than 1
+@SequenceGenerator(name = "PEPTIDE_SEQ", schema = "PRIDEPROT", sequenceName = "PRIDEPROT.PEPTIDE_PEPTIDE_ID_SEQ", allocationSize = 1)
 public abstract class Peptide implements Serializable {
 
     @Id

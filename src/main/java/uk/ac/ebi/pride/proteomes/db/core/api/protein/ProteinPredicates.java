@@ -1,8 +1,7 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein;
 
-import com.mysema.query.BooleanBuilder;
-import com.mysema.query.types.Predicate;
-
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
 
 /**
  * User: ntoro

@@ -12,7 +12,8 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "CLUSTER_PSM", schema = "PRIDEPROT", uniqueConstraints = @UniqueConstraint(columnNames = {"SEQUENCE", "TAXID", "MODS", "ASSAY_ACCESSION", "CLUSTER_ID"}))
-@SequenceGenerator(name = "PSM_SEQ", schema = "PRIDEPROT", sequenceName = "PRIDEPROT.CLUSTER_PSM_PSM_ID_SEQ")
+//Allocation size must by same than the increment in the sequence by default is 50-> http://skay-dev.blogspot.co.uk/2013/09/hibernate-sequence-and-negative.html
+@SequenceGenerator(name = "PSM_SEQ", schema = "PRIDEPROT", sequenceName = "PRIDEPROT.CLUSTER_PSM_PSM_ID_SEQ", allocationSize = 50000)
 public class ClusterPsm {
 
     @Id

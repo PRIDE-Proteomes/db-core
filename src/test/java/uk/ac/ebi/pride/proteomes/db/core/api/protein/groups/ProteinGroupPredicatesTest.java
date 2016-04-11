@@ -1,6 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein.groups;
 
-import com.mysema.query.types.Predicate;
+import com.querydsl.core.types.Predicate;
 import junit.framework.TestCase;
 
 /**
@@ -16,19 +16,19 @@ public class ProteinGroupPredicatesTest extends TestCase {
     private static final String TAXID_PREDICATE_STRING = "proteinGroup.taxid = 9606";
 
     private static final String GENE_GROUP_PREDICATE_STRING =
-            "proteinGroup.class = class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup";
+            "proteinGroup instanceof class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup";
     private static final String PEPTIDES_PREDICATE_STRING =
             "!empty(any(proteinGroup.proteins).peptides)";
     private static final String UNIQUE_PEPTIDES_PREDICATE_STRING =
             "!empty(any(proteinGroup.proteins).peptides)";
     private static final String GENE_GROUP_TAXID_PREDICATE_STRING =
-            "proteinGroup.class = class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup " +
+            "proteinGroup instanceof class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup " +
                     "&& proteinGroup.taxid = 9606";
     private static final String GENE_GROUP_TAXID_PEPTIDES_PREDICATE_STRING =
-            "proteinGroup.class = class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup " +
+            "proteinGroup instanceof class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup " +
                     "&& proteinGroup.taxid = 9606 && !empty(any(proteinGroup.proteins).peptides)";
     private static final String GENE_GROUP_TAXID_UNIQUE_PEPTIDES_PREDICATE_STRING =
-            "proteinGroup.class = class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup " +
+            "proteinGroup instanceof class uk.ac.ebi.pride.proteomes.db.core.api.protein.groups.GeneGroup " +
                     "&& proteinGroup.taxid = 9606 && any(any(proteinGroup.proteins).peptides).uniqueness = 1";
 
 

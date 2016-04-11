@@ -11,6 +11,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "Q_METHOD", schema = "PRIDEPROT")
+//Allocation size must by same than the increment in the sequence by default is 50-> http://skay-dev.blogspot.co.uk/2013/09/hibernate-sequence-and-negative.html
 @SequenceGenerator(name="Q_METHOD_SEQ", schema = "PRIDEPROT", sequenceName="PRIDEPROT.Q_METHOD_QUALITY_METHOD_ID_SEQ")
 public class QMethod {
 

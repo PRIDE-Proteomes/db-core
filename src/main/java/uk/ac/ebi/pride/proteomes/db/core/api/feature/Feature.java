@@ -14,6 +14,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "FEATURE", schema = "PRIDEPROT")
+//Allocation size must by same than the increment in the sequence by default is 50-> http://skay-dev.blogspot.co.uk/2013/09/hibernate-sequence-and-negative.html
 @SequenceGenerator(name = "FEATURE_SEQ", schema = "PRIDEPROT", sequenceName = "PRIDEPROT.FEATURE_FEATURE_ID_SEQ")
 public class Feature {
 

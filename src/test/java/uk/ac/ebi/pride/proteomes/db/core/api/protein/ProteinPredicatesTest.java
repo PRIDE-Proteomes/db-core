@@ -1,6 +1,6 @@
 package uk.ac.ebi.pride.proteomes.db.core.api.protein;
 
-import com.mysema.query.types.Predicate;
+import com.querydsl.core.types.Predicate;
 import junit.framework.TestCase;
 
 /**
