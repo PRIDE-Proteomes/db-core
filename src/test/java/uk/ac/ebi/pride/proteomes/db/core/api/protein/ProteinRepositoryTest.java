@@ -133,7 +133,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
         assertEquals(1, humanTotal);
 
         humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsIsoform(TAXID_HUMAN);
-        assertEquals(0, humanTotal);
+        assertEquals(2, humanTotal);
 
         /* Mapped proteins with peptides */
 
