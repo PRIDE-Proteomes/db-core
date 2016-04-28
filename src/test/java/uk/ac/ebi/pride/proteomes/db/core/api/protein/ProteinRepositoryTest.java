@@ -130,7 +130,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
         assertEquals(3, humanTotal);
 
         humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsCanonical(TAXID_HUMAN);
-        assertEquals(3, humanTotal);
+        assertEquals(1, humanTotal);
 
         humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsIsoform(TAXID_HUMAN);
         assertEquals(0, humanTotal);
