@@ -66,6 +66,12 @@ public class Protein {
 
     @Basic
     @NotNull
+    @Column(name = "ISOFORM", nullable = false, insertable = true, updatable = true, length = 1, precision = 0)
+    @Type(type = "true_false")
+    private Boolean isoform;
+
+    @Basic
+    @NotNull
     @Column(name = "CONTAMINANT", nullable = false, insertable = true, updatable = true, length = 1, precision = 0)
     @Type(type = "true_false")
     private Boolean contaminant;
@@ -202,6 +208,14 @@ public class Protein {
 
     public void setEvidence(Integer evidence) {
         this.evidence = evidence;
+    }
+
+    public Boolean isIsoform() {
+        return isoform;
+    }
+
+    public void setIsoform(Boolean isoform) {
+        this.isoform = isoform;
     }
 
     public Boolean isContaminant() {

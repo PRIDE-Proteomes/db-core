@@ -173,6 +173,7 @@ public class ProteinRepositoryTest extends RepositoryTest {
         protein.setTaxid(TAXID_HUMAN);
         protein.setDescription(NO_DESCRIPTION);
         protein.setContaminant(Boolean.FALSE);
+        protein.setIsoform(Boolean.TRUE);
         protein.setProteinAccession(NEW_PROTEIN_ACCESSION);
         protein.setScore(scoreRepository.findOne(SCORE_ID));
 

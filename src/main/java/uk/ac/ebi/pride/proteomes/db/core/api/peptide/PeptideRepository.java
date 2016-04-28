@@ -56,16 +56,17 @@ public interface PeptideRepository extends JpaRepository<Peptide, Long>, QueryDs
 
     List<SymbolicPeptide> findAllSymbolicPeptidesByTaxidAndPeptideIdBetween(Integer taxid, Long minValue, Long maxValue);
 
-    @Query("select count(distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.protein.contaminant = false and pp.protein.name like '%soform%'")
+    //NOTE: Maybe these methods should be under the peptideProtein repository instead of peptide repository
+    @Query("select count(distinct pp.peptide.peptideId) from PeptideProtein pp where pp.peptide.taxid = :taxid and pp.protein.contaminant = false and pp.protein.isoform = true")
     long countSymbolicPeptideByTaxidAndHasIsoformProteinsWithoutContaminants(@Param("taxid") Integer taxid);
 
-    @Query("select count( distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.protein.contaminant = false and pp.protein.name not like '%soform%' and pp.protein.proteinAccession not like '%-%'")
+    @Query("select count( distinct pp.peptide.peptideId) from PeptideProtein pp where pp.peptide.taxid = :taxid and pp.protein.contaminant = false and pp.protein.isoform = false")
     long countSymbolicPeptideByTaxidAndHasCanonicalProteinsWithoutContaminants(@Param("taxid") Integer taxid);
 
-    @Query("select count( distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.uniqueness=1 and pp.protein.contaminant = false and pp.protein.name like '%soform%'")
+    @Query("select count(distinct pp.peptide.peptideId) from PeptideProtein pp where pp.peptide.taxid = :taxid and pp.uniqueness=1 and pp.protein.contaminant = false and pp.protein.isoform = true")
     long countSymbolicPeptideByIsUniqueAndTaxidAndHasIsoformProteinsWithoutContaminants(@Param("taxid") Integer taxid);
 
-    @Query("select count(distinct p.peptideId) from SymbolicPeptide p, PeptideProtein pp where p.taxid = :taxid and pp.uniqueness=1 and pp.protein.contaminant = false and pp.protein.name not like '%soform%' and pp.protein.proteinAccession not like '%-%'")
+    @Query("select count(distinct pp.peptide.peptideId) from PeptideProtein pp where pp.peptide.taxid = :taxid and pp.uniqueness=1 and pp.protein.contaminant = false and pp.protein.isoform = false")
     long countSymbolicPeptideByIsUniqueAndTaxidAndHasCanonicalProteinsWithoutContaminants(@Param("taxid") Integer taxid);
 
 }

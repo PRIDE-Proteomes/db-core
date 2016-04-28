@@ -17,7 +17,7 @@ public class ProteinPredicatesTest extends TestCase {
     private static final String MOD_PREDICATE_STRING = "any(protein.modificationLocations).modId = MOD:01214";
 
     private static final String CONTAMINANT_PREDICATE_STRING = "protein.contaminant = true";
-    private static final String CANONICAL_PREDICATE_STRING = "!(protein.name like %soform)";
+    private static final String CANONICAL_PREDICATE_STRING = "protein.isoform = false";
     private static final String PEPTIDES_PREDICATE_STRING = "!empty(protein.peptides)";
     private static final String UNIQUE_PEPTIDES_PREDICATE_STRING = "any(protein.peptides).uniqueness = 1";
 

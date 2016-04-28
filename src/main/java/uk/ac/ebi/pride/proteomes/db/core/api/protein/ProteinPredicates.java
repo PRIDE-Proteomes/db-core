@@ -32,7 +32,7 @@ public class ProteinPredicates {
 
     public static Predicate isCanonical() {
         QProtein protein = QProtein.protein;
-        return protein.name.notLike("%soform");
+        return protein.isoform.eq(false);
     }
 
     public static Predicate hasPeptides() {

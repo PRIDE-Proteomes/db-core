@@ -171,7 +171,7 @@ public class PeptideRepositoryTest extends RepositoryTest {
         assertThat(humanSymbolicMappedCnt, is((long) 3));
 
         humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByTaxidAndHasCanonicalProteinsWithoutContaminants(TAXID_HUMAN);
-        assertThat(humanSymbolicMappedCnt, is((long) 31));
+        assertThat(humanSymbolicMappedCnt, is((long) 3));
 
         humanSymbolicMappedCnt = peptideRepository.countSymbolicPeptideByTaxidAndHasIsoformProteinsWithoutContaminants(TAXID_HUMAN);
         assertThat(humanSymbolicMappedCnt, is((long) 0));
