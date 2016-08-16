@@ -24,8 +24,8 @@ public class ClusterPsm {
     @Basic
     @Column(name = "SEQUENCE", nullable = false, insertable = true, updatable = true, length = 1000, precision = 0)
     @NotNull     // validation constrain
-    @Size(min = 6, max = 100)   // validation constrain
-    @Pattern(regexp = "[GPAVLIMCFYWHKRQNEDST]{6,100}")  // validation constrain only valid amino acids
+    @Size(min = 7, max = 100)   // validation constrain
+    @Pattern(regexp = "[GPAVLIMCFYWHKRQNEDST]{7,100}")  // validation constrain only valid amino acids
     private String sequence;
 
     @Basic
