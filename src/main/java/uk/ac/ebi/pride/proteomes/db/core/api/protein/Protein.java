@@ -331,6 +331,7 @@ public class Protein {
                 ", description='" + description + '\'' +
                 ", geneSymbol='" + geneSymbol + '\'' +
                 ", evidence=" + evidence +
+                ", isoform=" + isoform +
                 ", contaminant=" + contaminant +
                 ", taxid=" + taxid +
                 ", modificationLocations=" + modificationLocations +
