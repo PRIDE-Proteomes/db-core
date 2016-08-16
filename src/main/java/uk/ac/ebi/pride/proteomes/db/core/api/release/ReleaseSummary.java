@@ -2,6 +2,8 @@ package uk.ac.ebi.pride.proteomes.db.core.api.release;
 
 import javax.persistence.*;
 
+import static org.eclipse.jdt.internal.compiler.parser.Parser.name;
+
 /**
  * @author ntoro
  * @since 07/03/2016 16:55
@@ -98,6 +100,10 @@ public class ReleaseSummary {
     private Long numMappedGenesWithUniquePeptides;
 
     @Basic
+    @Column(name = "NUM_MAPPED_PROTS_W_PE1")
+    private Long numMappedProteinsWithExpEvidence;
+
+    @Basic
     @Column(name = "NUM_MAPPED_PROTS_W_PE2")
     private Long numMappedProteinsWithExpEvidenceAtTranscript;
 
@@ -112,6 +118,34 @@ public class ReleaseSummary {
     @Basic
     @Column(name = "NUM_MAPPED_PROTS_W_PE5")
     private Long numMappedProteinWithEvidenceUncertain;
+
+    @Basic
+    @Column(name = "NUM_MAPPED_PROTS_W_PE_NOT_REPORTED")
+    private Long numMappedProteinsWithEvidenceNotReported;
+
+    @Basic
+    @Column(name = "NUM_PROTS_W_PE1")
+    private Long numProteinsWithExpEvidence;
+
+    @Basic
+    @Column(name = "NUM_PROTS_W_PE2")
+    private Long numProteinsWithExpEvidenceAtTranscript;
+
+    @Basic
+    @Column(name = "NUM_PROTS_W_PE3")
+    private Long numProteinsWithEvidenceInferredByHomology;
+
+    @Basic
+    @Column(name = "NUM_PROTS_W_PE4")
+    private Long numProteinsWithEvidencePredicted;
+
+    @Basic
+    @Column(name = "NUM_PROTS_W_PE5")
+    private Long numProteinsWithEvidenceUncertain;
+
+    @Basic
+    @Column(name = "NUM_PROTS_W_PE_NOT_REPORTED")
+    private Long numProteinsWithEvidenceNotReported;
 
 
     public ReleaseSummary() {
@@ -328,5 +362,69 @@ public class ReleaseSummary {
 
     public void setNumMappedProteinWithEvidenceUncertain(Long numMappedProteinWithEvidenceUncertain) {
         this.numMappedProteinWithEvidenceUncertain = numMappedProteinWithEvidenceUncertain;
+    }
+
+    public Long getNumMappedProteinsWithExpEvidence() {
+        return numMappedProteinsWithExpEvidence;
+    }
+
+    public void setNumMappedProteinsWithExpEvidence(Long numMappedProteinsWithExpEvidence) {
+        this.numMappedProteinsWithExpEvidence = numMappedProteinsWithExpEvidence;
+    }
+
+    public Long getNumMappedProteinsWithEvidenceNotReported() {
+        return numMappedProteinsWithEvidenceNotReported;
+    }
+
+    public void setNumMappedProteinsWithEvidenceNotReported(Long numMappedProteinsWithEvidenceNotReported) {
+        this.numMappedProteinsWithEvidenceNotReported = numMappedProteinsWithEvidenceNotReported;
+    }
+
+    public Long getNumProteinsWithExpEvidence() {
+        return numProteinsWithExpEvidence;
+    }
+
+    public void setNumProteinsWithExpEvidence(Long numProteinsWithExpEvidence) {
+        this.numProteinsWithExpEvidence = numProteinsWithExpEvidence;
+    }
+
+    public Long getNumProteinsWithExpEvidenceAtTranscript() {
+        return numProteinsWithExpEvidenceAtTranscript;
+    }
+
+    public void setNumProteinsWithExpEvidenceAtTranscript(Long numProteinsWithExpEvidenceAtTranscript) {
+        this.numProteinsWithExpEvidenceAtTranscript = numProteinsWithExpEvidenceAtTranscript;
+    }
+
+    public Long getNumProteinsWithEvidenceInferredByHomology() {
+        return numProteinsWithEvidenceInferredByHomology;
+    }
+
+    public void setNumProteinsWithEvidenceInferredByHomology(Long numProteinsWithEvidenceInferredByHomology) {
+        this.numProteinsWithEvidenceInferredByHomology = numProteinsWithEvidenceInferredByHomology;
+    }
+
+    public Long getNumProteinsWithEvidencePredicted() {
+        return numProteinsWithEvidencePredicted;
+    }
+
+    public void setNumProteinsWithEvidencePredicted(Long numProteinsWithEvidencePredicted) {
+        this.numProteinsWithEvidencePredicted = numProteinsWithEvidencePredicted;
+    }
+
+    public Long getNumProteinsWithEvidenceUncertain() {
+        return numProteinsWithEvidenceUncertain;
+    }
+
+    public void setNumProteinsWithEvidenceUncertain(Long numProteinsWithEvidenceUncertain) {
+        this.numProteinsWithEvidenceUncertain = numProteinsWithEvidenceUncertain;
+    }
+
+    public Long getNumProteinsWithEvidenceNotReported() {
+        return numProteinsWithEvidenceNotReported;
+    }
+
+    public void setNumProteinsWithEvidenceNotReported(Long numProteinsWithEvidenceNotReported) {
+        this.numProteinsWithEvidenceNotReported = numProteinsWithEvidenceNotReported;
     }
 }
