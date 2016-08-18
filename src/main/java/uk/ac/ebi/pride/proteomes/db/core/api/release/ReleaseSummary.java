@@ -2,8 +2,6 @@ package uk.ac.ebi.pride.proteomes.db.core.api.release;
 
 import javax.persistence.*;
 
-import static org.eclipse.jdt.internal.compiler.parser.Parser.name;
-
 /**
  * @author ntoro
  * @since 07/03/2016 16:55
@@ -120,7 +118,7 @@ public class ReleaseSummary {
     private Long numMappedProteinWithEvidenceUncertain;
 
     @Basic
-    @Column(name = "NUM_MAPPED_PROTS_W_PE_NOT_REPORTED")
+    @Column(name = "NUM_MAPPED_PROTS_W_PE_NA")
     private Long numMappedProteinsWithEvidenceNotReported;
 
     @Basic
@@ -144,7 +142,7 @@ public class ReleaseSummary {
     private Long numProteinsWithEvidenceUncertain;
 
     @Basic
-    @Column(name = "NUM_PROTS_W_PE_NOT_REPORTED")
+    @Column(name = "NUM_PROTS_W_PE_NA")
     private Long numProteinsWithEvidenceNotReported;
 
 
