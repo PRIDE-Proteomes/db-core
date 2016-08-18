@@ -168,6 +168,16 @@ public class ProteinRepositoryImpl implements ProteomesRepository<Protein>, Prot
         return proteinRepository.count(hasTaxidAndIsNotContaminantAndIsNotCanonicalHasUniquePeptides(taxid));
     }
 
+    // Calculate protein evidence for the total number of proteins
+    public long countByTaxidAndEvidenceAndIsNotContaminant(Integer taxid, Integer evidence) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndHasEvidence(taxid, evidence));
+    }
+
+    // Calculate protein evidence for the mapped proteins only
+    public long countByTaxidAndEvidenceAndIsNotContaminantAndHasPeptides(Integer taxid, Integer evidence) {
+        return proteinRepository.count(hasTaxidAndIsNotContaminantAndHasPeptidesAndHasEvidence(taxid, evidence));
+    }
+
     /**
      * An initialization method which is run after the bean has been constructed.
      * This ensures that the entity manager is injected before we try to use it.

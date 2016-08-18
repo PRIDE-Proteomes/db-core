@@ -45,6 +45,11 @@ public class ProteinPredicates {
         return protein.peptides.any().uniqueness.eq(1);
     }
 
+    public static Predicate hasEvidence(final Integer evidence) {
+        QProtein protein = QProtein.protein;
+        return protein.evidence.eq(evidence);
+    }
+
     public static Predicate hasTaxidAndTissue(final Integer taxid, final String cvTerm) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
         booleanBuilder.and(hasTaxid(taxid));
@@ -141,4 +146,19 @@ public class ProteinPredicates {
         booleanBuilder.andNot(isCanonical());
         return booleanBuilder.getValue();
     }
+
+    public static Predicate hasTaxidAndIsNotContaminantAndHasEvidence(final Integer taxid, final Integer evidence) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        booleanBuilder.and(hasTaxidAndIsNotContaminant(taxid));
+        booleanBuilder.and(hasEvidence(evidence));
+        return booleanBuilder.getValue();
+    }
+
+    public static Predicate hasTaxidAndIsNotContaminantAndHasPeptidesAndHasEvidence (final Integer taxid, final Integer evidence) {
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        booleanBuilder.and(hasTaxidAndIsNotContaminantAndHasPeptides(taxid));
+        booleanBuilder.and(hasEvidence(evidence));
+        return booleanBuilder.getValue();
+    }
 }
+

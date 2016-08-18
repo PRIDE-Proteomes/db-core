@@ -16,10 +16,14 @@ public class ProteinPredicatesTest extends TestCase {
     private static final String MOD_ID = "MOD:01214";
     private static final String MOD_PREDICATE_STRING = "any(protein.modificationLocations).modId = MOD:01214";
 
+    private static final Integer EVIDENCE = 1;
+
     private static final String CONTAMINANT_PREDICATE_STRING = "protein.contaminant = true";
     private static final String CANONICAL_PREDICATE_STRING = "protein.isoform = false";
     private static final String PEPTIDES_PREDICATE_STRING = "!empty(protein.peptides)";
     private static final String UNIQUE_PEPTIDES_PREDICATE_STRING = "any(protein.peptides).uniqueness = 1";
+    private static final String EVIDENCE_PREDICATE_STRING = "protein.evidence = 1";
+
 
 
     public void testHasTissue() throws Exception {
@@ -56,6 +60,12 @@ public class ProteinPredicatesTest extends TestCase {
         Predicate predicate = ProteinPredicates.hasUniquePeptides();
         String predicateAsString = predicate.toString();
         assertEquals(UNIQUE_PEPTIDES_PREDICATE_STRING, predicateAsString);
+    }
+
+    public void testHasEvidence() throws Exception {
+        Predicate predicate = ProteinPredicates.hasEvidence(EVIDENCE);
+        String predicateAsString = predicate.toString();
+        assertEquals(EVIDENCE_PREDICATE_STRING, predicateAsString);
     }
 
 }

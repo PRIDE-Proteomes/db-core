@@ -133,6 +133,8 @@ public abstract class RepositoryTest {
 
     protected static final int NUM_RELEASE_PER_TAXID = 1;
 
+    protected static final int EVIDENCE = 1;
+
     @Autowired
     protected EntityManagerFactory entityManagerFactory;
 

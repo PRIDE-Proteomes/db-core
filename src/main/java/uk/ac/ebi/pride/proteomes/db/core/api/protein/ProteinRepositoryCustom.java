@@ -46,4 +46,11 @@ public interface ProteinRepositoryCustom extends ProteomesRepository<Protein> {
     // Mapped isoform proteins with at least one unique peptide
     long countByTaxidAndIsNotContaminantAndIsIsoformAndHasUniquePeptides(Integer taxid);
 
+    // Calculate protein evidence for the total number of proteins
+    long countByTaxidAndEvidenceAndIsNotContaminant(Integer taxid, Integer evidence);
+
+    // Calculate protein evidence for the mapped proteins only
+    long countByTaxidAndEvidenceAndIsNotContaminantAndHasPeptides(Integer taxid, Integer evidence);
+
+
 }

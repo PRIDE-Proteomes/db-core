@@ -163,6 +163,12 @@ public class ProteinRepositoryTest extends RepositoryTest {
         humanTotal = proteinRepository.countByTaxidAndIsNotContaminantAndIsIsoformAndHasUniquePeptides(TAXID_HUMAN);
         assertEquals(0, humanTotal);
 
+        humanTotal = proteinRepository.countByTaxidAndEvidenceAndIsNotContaminant(TAXID_HUMAN, EVIDENCE);
+        assertEquals(3, humanTotal);
+
+        // Calculate protein evidence for the mapped proteins only
+        humanTotal = proteinRepository.countByTaxidAndEvidenceAndIsNotContaminantAndHasPeptides(TAXID_HUMAN, EVIDENCE);
+        assertEquals(1, humanTotal);
     }
 
     @Test
